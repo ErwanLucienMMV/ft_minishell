@@ -6,11 +6,31 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 12:21:35 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/28 16:19:35 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/01/30 14:47:38 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "envpath.h"
+
+void	del_env_node_by_key(t_envpath **head, char *key)
+{
+	t_envpath	*temp;
+
+	if (!head || !*head)
+		return ;
+	temp = *head;
+	while (temp)
+	{
+		if (ft_strncmp(temp->index, key, ft_strlen(key)) == 0)
+		{
+			if (temp == *head)
+				*head = temp->next;
+			envp_delone(temp);
+			return ;
+		}
+		temp = temp->next;
+	}
+}
 
 char	*get_env_value_by_key(t_envpath *envpath, char *key)
 {
@@ -26,7 +46,7 @@ char	*get_env_value_by_key(t_envpath *envpath, char *key)
 	return (0);
 }
 
-int	print_envpath_list(t_envpath *envpath)
+int	print_envpath_list(t_envpath *envpath, int is_export)
 {
 	t_envpath	*temp;
 
@@ -34,7 +54,12 @@ int	print_envpath_list(t_envpath *envpath)
 	while (temp)
 	{
 		if (temp->shown)
-			printf("%s=%s\n", temp->index, temp->value);
+		{
+			if (is_export)
+				printf("export %s=\"%s\"\n", temp->index, temp->value);
+			else
+				printf("%s=%s\n", temp->index, temp->value);
+		}
 		temp = temp->next;
 	}
 	return (0);
@@ -81,6 +106,8 @@ int	print_envpath_list_sorted(t_envpath *envpath)
 	t_envpath	*copy;
 	t_envpath	*temp;
 	int			swapped;
+	char 		*tmp_index;
+	char 		*tmp_value;
 
 	copy = envp_copy(envpath);
 	if (!copy)
@@ -94,8 +121,8 @@ int	print_envpath_list_sorted(t_envpath *envpath)
 		{
 			if (ft_strncmp(temp->index, temp->next->index, ft_strlen(temp->index)) > 0)
 			{
-				char *tmp_index = temp->index;
-				char *tmp_value = temp->value;
+				tmp_index = temp->index;
+				tmp_value = temp->value;
 				temp->index = temp->next->index;
 				temp->value = temp->next->value;
 				temp->next->index = tmp_index;
@@ -105,7 +132,7 @@ int	print_envpath_list_sorted(t_envpath *envpath)
 			temp = temp->next;
 		}
 	}
-	print_envpath_list(copy);
+	print_envpath_list(copy, 1);
 	envp_clear(&copy);
 	return (0);
 }

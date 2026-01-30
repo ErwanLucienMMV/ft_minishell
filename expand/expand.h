@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   terminal.h                                         :+:      :+:    :+:   */
+/*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/21 14:04:34 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/29 14:50:16 by abarthes         ###   ########.fr       */
+/*   Created: 2026/01/29 14:49:19 by abarthes          #+#    #+#             */
+/*   Updated: 2026/01/29 15:00:34 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TERMINAL_H
-# define TERMINAL_H
+#ifndef EXPAND_H
+# define EXPAND_H
 
-# include "../libft/libft.h"
-# include <readline/readline.h>
-# include <readline/history.h>
 # include "../parser/parser.h"
-# include "../buildins/buildins.h"
-# include "../envpath/envpath.h"
-# include "../expand/expand.h"
+# include "../terminal/terminal.h"
+
+int	send_to_expand(t_parser **parsed, t_envpath *envpath);
 
 #endif

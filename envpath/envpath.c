@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 18:31:45 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/28 16:22:09 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/01/29 16:05:39 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	new_envpath(t_envpath **head, char *index, char *value)
 {
 	t_envpath	*new_node;
 
+	if (get_env_value_by_key(*head, index))
+		del_env_node_by_key(head, index);
 	new_node = envp_node_new(index, value);
 	if (!new_node)
 		return (0);

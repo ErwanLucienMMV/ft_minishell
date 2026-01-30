@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/28 18:22:32 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/01/30 15:50:29 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,86 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	while (1)
 	{
-		line = readline("$miniswag>");
+		line = readline("$miniswag> ");
 		if (!line)
 				break ;
 		if (line && *line)
 		{
 			add_history(line);
-			t_parser *test = parsing(line);
-			char *str;
-			if (!test || !sanitize(&test))
+			t_parser *lineread = parsing(line);
+			if (!lineread || !sanitize(&lineread))
 				printf("syntax error\n");
 			else
 			{
+				t_parser *temp = lineread;
+				char *str;
+				while (temp)
+				{
+					if (temp->type == CMD)
+						str = "CMD";
+					else if (temp->type == REDIR_OUTPUT)
+						str = "REDIR_OUTPUT";
+					else if (temp->type == FILENAME)
+						str = "FILENAME";
+					else if (temp->type == CMD_ARG)
+						str = "CMD_ARG";
+					else if (temp->type == ENVVAR)
+						str = "ENVVAR";
+					else if (temp->type == SQUOTE)
+						str = "SQUOTE";
+					else if (temp->type == DQUOTE)
+						str = "DQUOTE";
+					else if (temp->type == PIPE)
+						str = "PIPE";
+					else if (temp->type == EXIT_STATUS)
+						str = "EXIT_STATUS";
+					else if (temp->type == REDIR_INPUT)
+						str = "REDIR_INPUT";
+					else if (temp->type == REDIR_OUTPUT_APP)
+						str = "REDIR_OUTPUT_APP";
+					else
+						str = "OTHER ?????";
+					printf("Type: %s | Str: %s\n", str, temp->s);
+					temp = temp->next;
+				}
 				//expand
-				buildins(&test, envpath);
+				printf("After expansion:\n");
+				send_to_expand(&lineread, envpath);
+				// redirection
+				temp = lineread;
+				while (temp)
+				{
+					if (temp->type == CMD)
+						str = "CMD";
+					else if (temp->type == REDIR_OUTPUT)
+						str = "REDIR_OUTPUT";
+					else if (temp->type == FILENAME)
+						str = "FILENAME";
+					else if (temp->type == CMD_ARG)
+						str = "CMD_ARG";
+					else if (temp->type == ENVVAR)
+						str = "ENVVAR";
+					else if (temp->type == SQUOTE)
+						str = "SQUOTE";
+					else if (temp->type == DQUOTE)
+						str = "DQUOTE";
+					else if (temp->type == PIPE)
+						str = "PIPE";
+					else if (temp->type == EXIT_STATUS)
+						str = "EXIT_STATUS";
+					else if (temp->type == REDIR_INPUT)
+						str = "REDIR_INPUT";
+					else if (temp->type == REDIR_OUTPUT_APP)
+						str = "REDIR_OUTPUT_APP";
+					else
+						str = "OTHER ?????";
+					printf("Type: %s | Str: %s\n", str, temp->s);
+					temp = temp->next;
+				}
+				//check buildin
+				buildins(&lineread, envpath);
 				//execve
+				parser_clear(&lineread);
 			}
 			free(line);
 		}

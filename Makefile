@@ -6,7 +6,7 @@
 #    By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/01/28 15:58:54 by abarthes         ###   ########.fr        #
+#    Updated: 2026/01/29 15:01:08 by abarthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC      = cc
 CFLAGS  = -Wall -Wextra -Werror -g
 
 SRC = terminal/terminal.c parser/tokenize.c parser/sanitize.c buildins/buildins.c \
-	  envpath/envpath.c envpath/envp_utils.c parser/utils.c
+	  envpath/envpath.c envpath/envp_utils.c parser/utils.c expand/expand.c
 
 OBJ = $(SRC:.c=.o)
 
