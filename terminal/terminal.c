@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/31 10:44:45 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/01/31 13:44:43 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			t_parser *lineread = parsing(line);
+			free(line);
 			if (!lineread || !sanitize(&lineread))
 				printf("syntax error\n");
 			else
@@ -83,7 +84,6 @@ int	main(int argc, char **argv, char **envp)
 				//expand
 				printf("After expansion:\n");
 				send_to_expand(&lineread, envpath);
-				// redirection
 				temp = lineread;
 				while (temp)
 				{
@@ -118,12 +118,40 @@ int	main(int argc, char **argv, char **envp)
 					printf("Type: %s | Str: %s\n", str, temp->s);
 					temp = temp->next;
 				}
+				// creation des fichiers
+				// redirections
+				int saved_stdin = dup(STDIN_FILENO);
+				int saved_stdout = dup(STDOUT_FILENO);
+				if (file_handler(&lineread))
+				{
+					if (saved_stdin >= 0)
+					{
+						dup2(saved_stdin, STDIN_FILENO);
+						close(saved_stdin);
+					}
+					if (saved_stdout >= 0)
+					{
+						dup2(saved_stdout, STDOUT_FILENO);
+						close(saved_stdout);
+					}
+					parser_clear(&lineread);
+					continue ;
+				}
 				//buildin
 				buildins(&lineread, envpath);
+				if (saved_stdin >= 0)
+				{
+					dup2(saved_stdin, STDIN_FILENO);
+					close(saved_stdin);
+				}
+				if (saved_stdout >= 0)
+				{
+					dup2(saved_stdout, STDOUT_FILENO);
+					close(saved_stdout);
+				}
 				//execve
 				parser_clear(&lineread);
 			}
-			free(line);
 		}
 	}
 	return (0);

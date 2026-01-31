@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:26 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/31 10:41:12 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/01/31 13:39:25 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,8 @@ int	buildins(t_parser **parser, t_envpath *envpath)
 {
 	t_parser	*temp;
 
+	if (!parser || !*parser)
+		return (0);
 	temp = *parser;
 	if (check_buildin(temp, envpath))
 		return (1);

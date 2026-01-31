@@ -6,7 +6,7 @@
 #    By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/01/30 17:06:37 by abarthes         ###   ########.fr        #
+#    Updated: 2026/01/31 13:13:17 by abarthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,9 @@ MAKEFLAGS += --no-print-directory
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror -g
 
-SRC = terminal/terminal.c parser/tokenize.c parser/sanitize.c buildins/buildins.c \
-	  envpath/envpath.c envpath/envp_utils.c parser/utils.c expand/expand.c signals/signals.c
+SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c buildins/buildins.c \
+		envpath/envpath.c envpath/envp_utils.c parser/utils.c expand/expand.c \
+		signals/signals.c files_handler/fhandler.c
 
 OBJ = $(SRC:.c=.o)
 
