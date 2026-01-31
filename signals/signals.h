@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/21 13:34:18 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/31 10:22:27 by abarthes         ###   ########.fr       */
+/*   Created: 2026/01/30 17:01:59 by abarthes          #+#    #+#             */
+/*   Updated: 2026/01/30 17:32:32 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
+# include <signal.h>
+# include <stdio.h>
 # include "../libft/libft.h"
 
-typedef enum e_lexer
-{
-	CMD,
-	CMD_ARG,
-	FILENAME,
-	ENVVAR,
-	SQUOTE,
-	DQUOTE,
-	PIPE,
-	EXIT_STATUS,
-	REDIR_INPUT,
-	REDIR_OUTPUT,
-	REDIR_OUTPUT_APP,
-	DELIMITER,
-	IS_DELIMITER
-} lexer;
-
+void	set_signal_action(void);
 
 #endif

@@ -6,11 +6,13 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/30 15:50:29 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/01/31 10:44:45 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "terminal.h"
+
+volatile sig_atomic_t g_signal;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -24,9 +26,17 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	while (1)
 	{
+		set_signal_action();
 		line = readline("$miniswag> ");
+		if (g_signal == SIGINT)
+		{
+			g_signal = 0;
+			if (line)
+				free(line);
+			continue;
+		}
 		if (!line)
-				break ;
+			break ;
 		if (line && *line)
 		{
 			add_history(line);
@@ -61,6 +71,10 @@ int	main(int argc, char **argv, char **envp)
 						str = "REDIR_INPUT";
 					else if (temp->type == REDIR_OUTPUT_APP)
 						str = "REDIR_OUTPUT_APP";
+					else if (temp->type == DELIMITER)
+						str = "DELIMITER";
+					else if (temp->type == IS_DELIMITER)
+						str = "IS_DELIMITER";
 					else
 						str = "OTHER ?????";
 					printf("Type: %s | Str: %s\n", str, temp->s);
@@ -95,12 +109,16 @@ int	main(int argc, char **argv, char **envp)
 						str = "REDIR_INPUT";
 					else if (temp->type == REDIR_OUTPUT_APP)
 						str = "REDIR_OUTPUT_APP";
+					else if (temp->type == DELIMITER)
+						str = "DELIMITER";
+					else if (temp->type == IS_DELIMITER)
+						str = "IS_DELIMITER";
 					else
 						str = "OTHER ?????";
 					printf("Type: %s | Str: %s\n", str, temp->s);
 					temp = temp->next;
 				}
-				//check buildin
+				//buildin
 				buildins(&lineread, envpath);
 				//execve
 				parser_clear(&lineread);

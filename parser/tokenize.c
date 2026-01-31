@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:53:10 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/28 17:52:20 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/01/31 10:29:58 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,13 @@ int	new_parser(t_parser **head, t_parser *new_node)
 	return (1);
 }
 
-#include <stdio.h>
+int	its_delimiter(t_parser **head, char *s, int *i)
+{
+	if (new_parser(head, parser_node_new(DELIMITER, (s), 2)) == 0)
+		return (0);
+	*i += 2;
+	return (1);
+}
 
 int	its_env_var(t_parser **head, char *s, int *i)
 {
@@ -133,11 +139,14 @@ int its_pipe(t_parser **head, char *s, int *i)
 	return (1);
 }
 
+#include <stdio.h>
+
 int	its_command(t_parser **head, char *s, int *i)
 {
 	int x;
 	t_parser *new;
 
+	// printf("%s\n", s);
 	x = 0;
 	while (s[x] && s[x] != ' ' && s[x] != '\t' && s[x] != '|' && s[x] != '<'
 		&& s[x] != '>' && s[x] != '\'' && s[x] != '"')
@@ -148,6 +157,8 @@ int	its_command(t_parser **head, char *s, int *i)
 	else if (get_last_parser(*head) && (get_last_parser(*head)->type == REDIR_OUTPUT
 			|| get_last_parser(*head)->type == REDIR_OUTPUT_APP || get_last_parser(*head)->type == REDIR_INPUT))
 		new = parser_node_new(FILENAME, (s), x);
+	else if (get_last_parser(*head) && get_last_parser(*head)->type == DELIMITER)
+		new = parser_node_new(IS_DELIMITER, (s), x);
 	else
 		new = parser_node_new(CMD, (s), x);
 	if (new == 0)
@@ -206,6 +217,8 @@ int	check_special_char(t_parser **head, char *s, int *i)
 		return (its_redirection_output(head, s, i));
 	else if (*s == '<' && *(s + 1) != '<')
 		return (its_redirection_input(head, s, i));
+	else if (*s == '<' && *(s + 1) == '<')
+		return (its_delimiter(head, s, i));
 	else
 		return (its_command(head, s, i));
 }
