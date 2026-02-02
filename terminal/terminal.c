@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/31 13:44:43 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/01 14:53:07 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int	main(int argc, char **argv, char **envp)
 					parser_clear(&lineread);
 					continue ;
 				}
+				// here doc
 				//buildin
 				buildins(&lineread, envpath);
 				if (saved_stdin >= 0)

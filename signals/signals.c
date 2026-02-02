@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 17:03:53 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/30 17:40:16 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/01 14:46:21 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void sigint_handler(int signal)
 {
 	(void)signal;
 	g_signal = SIGINT;
-	write(1, "\n", 1);
+	// write(1, "\n", 1);
 }
 
 void	set_signal_action(void)
