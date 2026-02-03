@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/03 19:58:10 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/03 21:25:10 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ void	do_command_piped(t_commands *cmd, char *path, char **envp);
 void	handle_the_child(int pipe_fd[2], t_program *program, t_commands *cmd);
 void	clearmatrix(char **tab);
 void	do_command(t_parser *cmd, char *path, char **envp);
+
+//				---Children---			//
+void	handle_middle_child(t_program *program,
+			t_commands *cmd, int pipe_fd[2]);
 
 //				---Checks---			//
 int		there_is_at_least_one_pipe(t_parser *lineread);

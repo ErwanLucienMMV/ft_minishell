@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_piped.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/03 20:04:30 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/03 21:20:50 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	middle_exec(t_program *program, t_commands *cmd)
 {
 	pid_t	pid;
 	int		pipe_fd[2];
-	char	*path;
 
 	if (pipe(pipe_fd) != 0)
 		return (perror("pipe"), exit (1));
@@ -73,16 +72,7 @@ void	middle_exec(t_program *program, t_commands *cmd)
 	}
 	else
 	{
-		close(pipe_fd[0]);
-		dup2(pipe_fd[1], STDOUT_FILENO);
-		close(pipe_fd[1]);
-		if (is_a_buildin(cmd->cmd->s))
-			check_buildin(cmd->cmd, *program->envpath, program);
-		else
-		{
-			path = get_env_value_by_key(program->envpath, "PATH");
-			do_command_piped(cmd, path, program->envp);
-		}
+		handle_middle_child(program, cmd, pipe_fd);
 	}
 }
 
