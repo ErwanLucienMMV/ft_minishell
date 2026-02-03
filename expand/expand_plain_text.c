@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_plain_text.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:11:25 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/03 02:12:45 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/03 13:59:56 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	expand_plain_text(t_parser *node, t_envpath *envpath)
 			while (node->s[start] && ft_isalnum(node->s[start]))
 				start++;
 			char *key = ft_substr(node->s, i + 1, start - (i + 1));
-			char *value = get_env_value_by_key(envpath, key);
+			char *value = get_env_value_by_key(&envpath, key);
 			free(key);
 			if (value)
 			{

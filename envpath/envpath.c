@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envpath.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 18:31:45 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/03 01:39:24 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/03 13:50:28 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	new_envpath(t_envpath **head, char *index, char *value)
 {
 	t_envpath	*new_node;
 
-	if (get_env_value_by_key(*head, index))
+	if (get_env_value_by_key(head, index))
 		del_env_node_by_key(head, index);
 	new_node = envp_node_new(index, value);
 	if (!new_node)

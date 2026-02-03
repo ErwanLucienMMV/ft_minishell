@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_d_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:16:39 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/03 04:44:15 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/03 13:59:50 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	expand_d_quote(t_parser *node, t_envpath *envpath)
 			while (node->s[start] && ft_isalnum(node->s[start]))
 				start++;
 			key = ft_substr(node->s, i + 1, start - (i + 1));
-			value = get_env_value_by_key(envpath, key);
+			value = get_env_value_by_key(&envpath, key);
 			char *temp = malloc((ft_strlen(new_str) + ft_strlen(value)) * sizeof(char));
 			if (!temp)
 			{

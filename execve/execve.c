@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:44:15 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/03 02:09:19 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/03 13:57:41 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	execve_without_pipe(t_parser **parsed, t_envpath *envpath, char **envp)
 	if (!cmd)
 		return (1);
 	make_redirection(*parsed);
-	exec_one_command(cmd, get_env_value_by_key(envpath, "PATH"), envp);
+	exec_one_command(cmd, get_env_value_by_key(&envpath, "PATH"), envp);
 	return (0);
 }
 

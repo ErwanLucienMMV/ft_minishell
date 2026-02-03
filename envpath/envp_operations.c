@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_operations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 01:25:10 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/03 01:25:38 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/03 13:56:47 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	del_env_node_by_key(t_envpath **head, char *key)
 	}
 }
 
-char	*get_env_value_by_key(t_envpath *envpath, char *key)
+char	*get_env_value_by_key(t_envpath **envpath, char *key)
 {
 	t_envpath	*temp;
 
-	temp = envpath;
+	temp = *envpath;
 	while (temp)
 	{
 		if (ft_strncmp(temp->index, key, ft_strlen(key)) == 0)
