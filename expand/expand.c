@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:27 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/03 13:55:34 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/03 22:44:02 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	expand_env_var(t_parser *node, t_envpath *envpath)
 	{
 		free(node->s);
 		node->s = ft_strdup(value);
-		if (node->prev && (node->prev->type == CMD || node->prev->type == CMD_ARG))
+		if (node->prev && (node->prev->type == CMD
+				|| node->prev->type == CMD_ARG))
 			node->type = CMD_ARG;
 		else
 			node->type = CMD;
@@ -43,7 +44,8 @@ int	expand_env_var(t_parser *node, t_envpath *envpath)
 	{
 		free(node->s);
 		node->s = ft_strdup("");
-		if (node->prev && (node->prev->type == CMD || node->prev->type == CMD_ARG))
+		if (node->prev && (node->prev->type == CMD
+				|| node->prev->type == CMD_ARG))
 			node->type = CMD_ARG;
 		else
 			node->type = CMD;

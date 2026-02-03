@@ -6,13 +6,13 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:16:39 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/03 22:22:06 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/03 22:44:31 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 
-int	handle_env_var(t_parser *node, t_envpath *envpath,
+int static	handle_env_var(t_parser *node, t_envpath *envpath,
 	char **new_str, int *indice)
 {
 	char	*value;
@@ -40,7 +40,7 @@ int	handle_env_var(t_parser *node, t_envpath *envpath,
 	return (free(key), 0);
 }
 
-void	set_node_type(t_parser *node)
+void static	set_node_type(t_parser *node)
 {
 	if (node->prev && node->prev->type == CMD)
 		node->type = CMD_ARG;
