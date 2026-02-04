@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:34 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/02 17:42:56 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/04 02:34:37 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,12 @@
 # include "../files_handler/fhandler.h"
 # include "../here_doc/here_doc.h"
 # include "../execve/execve.h"
+
+# ifndef IS_DEBUG
+#  define IS_DEBUG 0
+# endif
+
+//					---DEBUG---				//
+void		print_debug(t_program *program);
 
 #endif
