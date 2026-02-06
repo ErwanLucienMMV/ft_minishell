@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:44:15 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/03 13:57:41 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/06 12:59:12 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ int	execve_handler(t_program *program)
 			return (1);
 	}
 	waitpid(-1, &status, 0);
-	program->last_exit_status = status;
-	return (status);
+	program->last_exit_status = WEXITSTATUS(status);
+	return (WEXITSTATUS(status));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:30:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/04 04:24:18 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/06 15:42:58 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ int	doing_here_doc_util(t_parser *lineread)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || !ft_strncmp(line, lineread->next->s,
-				ft_strlen(lineread->next->s) + 1))
+		if (!line || (ft_strlen(line) == ft_strlen(lineread->next->s)
+			&& !ft_strncmp(line, lineread->next->s,
+			ft_strlen(lineread->next->s) + 1)))
 		{
 			free(line);
 			break ;

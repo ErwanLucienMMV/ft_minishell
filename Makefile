@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+         #
+#    By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/04 03:20:58 by emaigne          ###   ########.fr        #
+#    Updated: 2026/02/06 12:33:39 by abarthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,17 @@ RESET = \033[0m
 MAKEFLAGS += --no-print-directory
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror -g
+
+# Detect Homebrew readline prefix (empty if not installed)
+READLINE_PREFIX := $(shell brew --prefix readline 2>/dev/null || true)
+
+ifeq ($(READLINE_PREFIX),)
+READLINE_INCLUDES :=
+READLINE_LIBS := -lreadline -ledit
+else
+READLINE_INCLUDES := -I$(READLINE_PREFIX)/include
+READLINE_LIBS := -L$(READLINE_PREFIX)/lib -lreadline -lcurses
+endif
 
 SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c \
 		parser/parser_check_its.c parser/parser_list_operations.c buildins/buildins.c \
@@ -43,7 +54,7 @@ debug: all
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "$(YELLOW)[MINISHELL] $(GREEN).o created $(RESET)"
 	@$(CC) $(OBJ) \
-	-Llibft -lft -lreadline \
+	-Llibft -lft $(READLINE_LIBS) \
 	-o $(NAME)
 	@echo "$(YELLOW)[MINISHELL] $(GREEN)executable created$(RESET)"
 

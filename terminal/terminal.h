@@ -16,6 +16,14 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+
+# if defined(__APPLE__)
+/* On some macOS setups the readline header (or libedit compatibility) may
+	not declare these functions; provide minimal prototypes to avoid
+	implicit-declaration errors at compile time. */
+void rl_replace_line(const char *text, int clear_undo);
+void rl_redisplay(void);
+# endif
 # include "../parser/parser.h"
 # include "../buildins/buildins.h"
 # include "../envpath/envpath.h"

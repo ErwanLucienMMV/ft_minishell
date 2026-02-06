@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/03 20:03:46 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/06 14:40:13 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	handle_the_child(int pipe_fd[2], t_program *program, t_commands *cmd)
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	if (is_a_buildin(cmd->cmd->s))
-		check_buildin(cmd->cmd, *program->envpath, program);
+		exit(check_buildin(cmd->cmd, *program->envpath, program));
 	else
 	{
 		path = get_env_value_by_key(program->envpath, "PATH");
