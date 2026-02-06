@@ -37,7 +37,8 @@ SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c \
 		expand/expand.c expand/expand_plain_text.c expand/expand_d_quote.c \
 		signals/signals.c files_handler/fhandler.c here_doc/here_doc.c \
 		execve/execve.c execve/utils.c execve/find_command.c execve/execve_piped.c \
-		execve/parse_command.c execve/execve_checks.c 
+		execve/parse_command.c execve/execve_checks.c execve/execve_children.c \
+		terminal/terminal_debug.c terminal/terminal_utils_handlers.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -45,6 +46,10 @@ NAME = minishell
 LIBFT= libft/libft.a
 
 all: $(NAME) $(LIBFT)
+
+debug: CFLAGS += -D IS_DEBUG=1
+
+debug: all
 
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "$(YELLOW)[MINISHELL] $(GREEN).o created $(RESET)"

@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 12:56:56 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/03 02:18:26 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/04 05:56:14 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	check_exist_files(t_parser **parsed)
 {
 	t_parser	*temp;
 	int			fd;
+	char		src[1024];
 
 	temp = *parsed;
 	while (temp)
@@ -89,7 +90,7 @@ int	check_exist_files(t_parser **parsed)
 			fd = open(temp->next->s, O_RDONLY);
 			if (fd < 0)
 			{
-				char src[1024] = "minishell: ";
+				ft_strlcat(src, "minishell: ", 1024);
 				ft_strlcat(src, temp->next->s, 1010);
 				perror(src);
 				return (1);
@@ -107,7 +108,5 @@ int	file_handler(t_parser **parsed)
 		return (1);
 	if (create_files(parsed) != 0)
 		return (1);
-	// if (make_redirection(parsed) != 0)
-	// 	return (1);
 	return (0);
 }

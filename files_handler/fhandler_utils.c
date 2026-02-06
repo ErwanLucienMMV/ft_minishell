@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fhandler.h                                         :+:      :+:    :+:   */
+/*   fhandler_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/31 12:56:03 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/04 05:52:50 by emaigne          ###   ########.fr       */
+/*   Created: 2026/02/04 05:50:55 by emaigne           #+#    #+#             */
+/*   Updated: 2026/02/04 05:54:31 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FHANDLER_H
-# define FHANDLER_H
+#include "fhandler.h"
 
-# include "../parser/parser.h"
-# include "../envpath/envpath.h"
-# include <fcntl.h>
-
-//			---Utils---				//
-void		put_minishell_into_string(char *dest);
-
-int			file_handler(t_parser **parsed);
-t_parser	*get_last_output_file(t_parser **parsed);
-t_parser	*get_last_input_file(t_parser **parsed);
-
-#endif
+void	put_minishell_into_string(char *dest)
+{
+	return ;
+}

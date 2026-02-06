@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:34:18 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/03 02:21:29 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/04 04:23:36 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ typedef enum e_lexer
 	DELIMITER,
 	IS_DELIMITER
 }	t_lexer;
-
 
 #endif
