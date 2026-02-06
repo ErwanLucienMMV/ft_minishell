@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fhandler.h                                         :+:      :+:    :+:   */
+/*   execve_children.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/31 12:56:03 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/04 05:52:50 by emaigne          ###   ########.fr       */
+/*   Created: 2026/02/03 21:20:42 by emaigne           #+#    #+#             */
+/*   Updated: 2026/02/03 21:21:13 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FHANDLER_H
-# define FHANDLER_H
+#include "execve.h"
 
-# include "../parser/parser.h"
-# include "../envpath/envpath.h"
-# include <fcntl.h>
+void	handle_middle_child(t_program *program, t_commands *cmd, int pipe_fd[2])
+{
+	char	*path;
 
-//			---Utils---				//
-void		put_minishell_into_string(char *dest);
-
-int			file_handler(t_parser **parsed);
-t_parser	*get_last_output_file(t_parser **parsed);
-t_parser	*get_last_input_file(t_parser **parsed);
-
-#endif
+	close(pipe_fd[0]);
+	dup2(pipe_fd[1], STDOUT_FILENO);
+	close(pipe_fd[1]);
+	if (is_a_buildin(cmd->cmd->s))
+		check_buildin(cmd->cmd, *program->envpath, program);
+	else
+	{
+		path = get_env_value_by_key(program->envpath, "PATH");
+		do_command_piped(cmd, path, program->envp);
+	}
+}
