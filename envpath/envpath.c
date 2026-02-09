@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envpath.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 18:31:45 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/06 19:02:41 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/09 13:03:49 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ t_envpath	*envp_node_new(char *index, char *value)
 {
 	t_envpath	*new;
 
-	new = malloc(sizeof(t_envpath));
+	new = ft_calloc(1, sizeof(t_envpath));
 	if (!new)
 		return (0);
 	new->index = ft_strdup(index);
 	if (!value)
-		new->value = 0;
+		new->value = NULL;
 	else
 		new->value = ft_strdup(value);
 	new->shown = 1;

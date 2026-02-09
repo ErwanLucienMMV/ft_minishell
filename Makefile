@@ -6,7 +6,7 @@
 #    By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/06 22:39:38 by emaigne          ###   ########.fr        #
+#    Updated: 2026/02/09 11:50:27 by emaigne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ all: $(NAME) $(LIBFT)
 
 debug: CFLAGS += -g3 -D IS_DEBUG=1
 
-debug: all
+debug: re
 
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "$(YELLOW)[MINISHELL] $(GREEN).o created $(RESET)"

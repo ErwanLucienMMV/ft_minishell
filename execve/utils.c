@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/06 18:01:22 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/09 10:50:12 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ void	handle_the_child(int pipe_fd[2], t_program *program, t_commands *cmd)
 	else
 		fd = program->saved_stdin;
 	if (fd < 0)
-		return (perror("open"), exit(1));
+	{
+		perror("open"); 
+		exit(1);
+	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	if (is_a_buildin(cmd->cmd->s))

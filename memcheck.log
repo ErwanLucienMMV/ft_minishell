@@ -1,0 +1,182 @@
+==37551== Memcheck, a memory error detector
+==37551== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==37551== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==37551== Command: ./minishell
+==37551== 
+/pampa: No such file or directory
+==37554== 
+==37554== HEAP SUMMARY:
+==37554==     in use at exit: 212,752 bytes in 400 blocks
+==37554==   total heap usage: 831 allocs, 431 frees, 237,602 bytes allocated
+==37554== 
+==37554== 1 bytes in 1 blocks are still reachable in loss record 1 of 76
+==37554==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==37554==    by 0x406E74: ft_strdup (ft_strdup.c:23)
+==37554==    by 0x40325D: envp_node_new (envpath.c:57)
+==37554==    by 0x4032E3: new_envpath (envpath.c:70)
+==37554==    by 0x401455: init_program (terminal.c:113)
+==37554==    by 0x4015EE: main (terminal.c:163)
+==37554== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:ft_strdup
+   fun:envp_node_new
+   fun:new_envpath
+   fun:init_program
+   fun:main
+}
+==37554== 7 bytes in 1 blocks are still reachable in loss record 2 of 76
+==37554==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==37554==    by 0x406E74: ft_strdup (ft_strdup.c:23)
+==37554==    by 0x40322E: envp_node_new (envpath.c:53)
+==37554==    by 0x4032E3: new_envpath (envpath.c:70)
+==37554==    by 0x401455: init_program (terminal.c:113)
+==37554==    by 0x4015EE: main (terminal.c:163)
+==37554== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:ft_strdup
+   fun:envp_node_new
+   fun:new_envpath
+   fun:init_program
+   fun:main
+}
+==37554== 8 bytes in 1 blocks are still reachable in loss record 3 of 76
+==37554==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==37554==    by 0x401387: init_program (terminal.c:103)
+==37554==    by 0x4015EE: main (terminal.c:163)
+==37554== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:init_program
+   fun:main
+}
+==37554== 8 bytes in 1 blocks are still reachable in loss record 4 of 76
+==37554==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==37554==    by 0x4013BB: init_program (terminal.c:106)
+==37554==    by 0x4015EE: main (terminal.c:163)
+==37554== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:init_program
+   fun:main
+}
+==37554== 32 bytes in 1 blocks are still reachable in loss record 19 of 76
+==37554==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==37554==    by 0x40235B: parser_node_new (parser_list_operations.c:54)
+==37554==    by 0x4021E3: its_command (parser_check_its.c:99)
+==37554==    by 0x401991: check_special_char (tokenize.c:75)
+==37554==    by 0x401A1C: parsing (tokenize.c:92)
+==37554==    by 0x401488: process_parsing_and_sanitize (terminal.c:119)
+==37554==    by 0x40156B: main_loop (terminal.c:143)
+==37554==    by 0x401618: main (terminal.c:166)
+==37554== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:parser_node_new
+   fun:its_command
+   fun:check_special_char
+   fun:parsing
+   fun:process_parsing_and_sanitize
+   fun:main_loop
+   fun:main
+}
+==37554== 40 bytes in 1 blocks are still reachable in loss record 20 of 76
+==37554==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==37554==    by 0x403209: envp_node_new (envpath.c:50)
+==37554==    by 0x4032E3: new_envpath (envpath.c:70)
+==37554==    by 0x401455: init_program (terminal.c:113)
+==37554==    by 0x4015EE: main (terminal.c:163)
+==37554== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:envp_node_new
+   fun:new_envpath
+   fun:init_program
+   fun:main
+}
+
+Most likely not our problem
+==37554== 9 bytes in 2 blocks are still reachable in loss record 7 of 76
+==37554==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==37554==    by 0x48ADBAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==37554==    by 0x48A4B39: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==37554==    by 0x48A6F65: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==37554==    by 0x40155E: main_loop (terminal.c:142)
+==37554==    by 0x401618: main (terminal.c:166)
+==37554== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:alloc_history_entry
+   fun:add_history
+   fun:main_loop
+   fun:main
+}
+==37554== 24 bytes in 2 blocks are still reachable in loss record 17 of 76
+==37554==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==37554==    by 0x48ADBAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==37554==    by 0x48A6F28: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==37554==    by 0x40155E: main_loop (terminal.c:142)
+==37554==    by 0x401618: main (terminal.c:166)
+==37554== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:add_history
+   fun:main_loop
+   fun:main
+}
+
+==37554== 48 bytes in 2 blocks are still reachable in loss record 24 of 76
+==37554==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==37554==    by 0x48ADBAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==37554==    by 0x48A4B1D: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==37554==    by 0x48A6F65: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==37554==    by 0x40155E: main_loop (terminal.c:142)
+==37554==    by 0x401618: main (terminal.c:166)
+==37554== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:alloc_history_entry
+   fun:add_history
+   fun:main_loop
+   fun:main
+}
+==37551== LEAK SUMMARY:
+==37551==    definitely lost: 8 bytes in 1 blocks
+==37551==    indirectly lost: 0 bytes in 0 blocks
+==37551==      possibly lost: 0 bytes in 0 blocks
+==37551==    still reachable: 212,768 bytes in 393 blocks
+==37551==         suppressed: 0 bytes in 0 blocks
+==37551== 
+==37551== For lists of detected and suppressed errors, rerun with: -s
+==37551== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/06 23:29:01 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/09 13:02:56 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	main(int argc, char **argv, char **envp)
 
 	argc = 0;
 	argv = NULL;
-	program = malloc(sizeof(t_program));
+	program = ft_calloc(sizeof(t_program));
 	if (!program)
 		buildin_exit(program);
-	program->parsed = malloc(sizeof(t_parser *));
+	program->parsed = ft_calloc(sizeof(t_parser *));
 	if (!program->parsed)
 		buildin_exit(program);
 	program->envp = envp;
-	program->envpath = malloc(sizeof(t_envpath *));
+	program->envpath = ft_calloc(sizeof(t_envpath *));
 	if (!program->envpath)
 		buildin_exit(program);
 	*(program->envpath) = NULL;
@@ -97,13 +97,13 @@ int	handle_sigint(char *line)
 
 int	init_program(t_program **program, char **envp)
 {
-	*program = malloc(sizeof(t_program));
+	*program = ft_calloc(1, sizeof(t_program));
 	if (!*program)
 		return (0);
-	(*program)->parsed = malloc(sizeof(t_parser *));
+	(*program)->parsed = ft_calloc(1, sizeof(t_parser *));
 	if (!(*program)->parsed)
 		return (0);
-	(*program)->envpath = malloc(sizeof(t_envpath *));
+	(*program)->envpath = ft_calloc(1, sizeof(t_envpath *));
 	if (!(*program)->envpath)
 		return (0);
 	*(*program)->envpath = NULL;
@@ -134,7 +134,7 @@ void	main_loop(t_program *program)
 		set_signal_action();
 		line = readline("$miniswag> ");
 		if (handle_sigint(line))
-			continue ;
+			break ;
 		if (!line)
 			break ;
 		if (line && *line)
@@ -164,5 +164,5 @@ int	main(int argc, char **argv, char **envp)
 		buildin_exit(program);
 	tcgetattr(STDIN_FILENO, &program->g_term_orig);
 	main_loop(program);
-	return (0);
+	buildin_exit(program);
 }
