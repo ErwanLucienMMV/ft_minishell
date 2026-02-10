@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:34:15 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/03 23:28:42 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/10 09:11:18 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,11 @@ t_parser	*parser_node_new(t_lexer type, char *s, int x)
 
 	new = malloc(sizeof(t_parser));
 	if (!new)
-		return (0);
+		return (NULL);
 	new->type = type;
-	new->s = malloc((x + 1) * sizeof(char));
+	new->s = ft_calloc((x + 1), sizeof(char));
+	if (!new->s)
+		return (free(new), NULL);
 	ft_strlcpy(new->s, s, x + 1);
 	new->prev = 0;
 	new->next = 0;
