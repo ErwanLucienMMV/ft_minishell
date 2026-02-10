@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:50:18 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/10 13:34:56 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/10 14:56:46 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*test_all_paths(char *command, char *pathline)
 		i++;
 	}
 	clearmatrix(possiblepaths);
-	perror(command);
+	perror(command + 1);
 	return (NULL);
 }
 
