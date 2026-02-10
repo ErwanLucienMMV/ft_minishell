@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 18:31:45 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/10 08:59:37 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/10 09:08:23 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int	create_envpath_list(t_envpath **envpath, char **envp)
 		if (ft_strchr(envp[i], '='))
 		{
 			array = ft_split(envp[i], '=');
+			if (!array)
+				return (0);
 			if (new_envpath(envpath, array[0], array[1]) == 0)
 				return (0);
 			if (array)
