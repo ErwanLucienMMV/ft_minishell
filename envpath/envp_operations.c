@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 01:25:10 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/10 16:19:56 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:51:32 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,6 @@ int	print_envpath_list(t_envpath *envpath, int is_export)
 	t_envpath	*temp;
 
 	temp = envpath;
-	if (is_export == 0 && get_env_value_by_key(&envpath, "PATH") == NULL)
-	{
-		printf("minishell: env: No such file or directory\n");
-		return (0);
-	}
 	while (temp)
 	{
 		if (temp->shown)

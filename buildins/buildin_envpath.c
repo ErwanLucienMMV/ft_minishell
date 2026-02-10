@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:15:48 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/06 18:56:03 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:57:28 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,29 @@ void static	free_array_of_double(char **array)
 	free(array);
 }
 
-int	static	second_if_check(t_parser *cmd)
+int	static	second_if_check(t_parser *cmd, t_program *program)
 {
-	if (cmd->next->s[0] == '=' || !ft_isalpha(cmd->next->s[0]))
+	if (cmd->next->s[0] == '=' || (!ft_isalpha(cmd->next->s[0]) && cmd->next->s[0] != '_'))
+	{
+		printf("export: %s: not a valid identifier\n", cmd->next->s);
+		program->last_exit_status = 1;
 		return (1);
+	}
+	program->last_exit_status = 0;
 	return (0);
 }
 
-int	buildin_export(t_parser *cmd, t_envpath *envpath)
+int	buildin_export(t_parser *cmd, t_envpath *envpath, t_program *program)
 {
 	char	*key;
 	char	*value;
 	char	**array;
 
 	if (!cmd->next)
-		return (print_envpath_list_sorted(envpath));
+		return (program->last_exit_status = 0, print_envpath_list_sorted(envpath));
 	while (cmd->next && (cmd->next->type == CMD_ARG || cmd->next->type == CMD))
 	{
-		if (second_if_check(cmd))
-			printf("export: %s: not a valid identifier\n", cmd->next->s);
-		else
+		if (!second_if_check(cmd, program))
 		{
 			array = ft_split(cmd->next->s, '=');
 			if (!array)
@@ -59,7 +62,7 @@ int	buildin_export(t_parser *cmd, t_envpath *envpath)
 	return (0);
 }
 
-int	buildin_unset(t_parser *cmd, t_envpath *envpath)
+int	buildin_unset(t_parser *cmd, t_envpath *envpath, t_program *program)
 {
 	t_parser	*temp;
 	t_envpath	*env_temp;
@@ -79,5 +82,19 @@ int	buildin_unset(t_parser *cmd, t_envpath *envpath)
 		}
 		temp = temp->next;
 	}
+	program->last_exit_status = 0;
+	return (0);
+}
+
+int	buildin_env(t_program *program)
+{
+	if (get_env_value_by_key(program->envpath, "PATH") == NULL)
+	{
+		printf("minishell: env: No such file or directory\n");
+		program->last_exit_status = 127;
+		return (0);
+	}
+	program->last_exit_status = 0;
+	print_envpath_list(*program->envpath, 0);
 	return (0);
 }

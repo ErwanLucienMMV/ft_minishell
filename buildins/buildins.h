@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:06 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/10 16:02:00 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/10 17:21:18 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@
 # include <stdio.h>
 
 //			--- Handle the env ---			//
-int	buildin_export(t_parser *cmd, t_envpath *envpath);
-int	buildin_unset(t_parser *cmd, t_envpath *envpath);
+int	buildin_export(t_parser *cmd, t_envpath *envpath, t_program *program);
+int	buildin_unset(t_parser *cmd, t_envpath *envpath, t_program *program);
+int	buildin_env(t_program *program);
+
+int	buildin_echo(t_parser *cmd, t_program *program);
 
 //			--- Handle the exit ---			//
 int	buildin_exit(t_program *program);
