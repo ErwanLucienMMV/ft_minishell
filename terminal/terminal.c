@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/10 09:05:23 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/10 13:55:19 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	main_loop(t_program *program)
 		set_signal_action();
 		line = readline("$miniswag> ");
 		if (handle_sigint(line))
-			break ;
+			continue ;
 		if (!line)
 			break ;
 		if (line && *line)
