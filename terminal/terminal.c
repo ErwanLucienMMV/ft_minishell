@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/09 13:02:56 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/10 09:05:23 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,9 @@ int	init_program(t_program **program, char **envp)
 	*(*program)->envpath = NULL;
 	(*program)->envp = envp;
 	if (create_envpath_list((*program)->envpath, envp) == 0)
-		return (0);
-	new_envpath((*program)->envpath, "OLDPWD", "");
+		return (buildin_exit(*program), 0);
+	if (new_envpath((*program)->envpath, "OLDPWD", "") == 0)
+		buildin_exit(*program);
 	return (1);
 }
 
