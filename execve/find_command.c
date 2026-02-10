@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:50:18 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/06 18:00:29 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/10 12:39:07 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ char	*test_all_paths(char *command, char *pathline)
 	i = 0;
 	if (pathline == NULL)
 		return (NULL);
-	if (access(command, X_OK) == 0)
-		return (command);
 	possiblepaths = ft_split(pathline, ':');
 	while (possiblepaths && possiblepaths[i])
 	{
@@ -70,6 +68,12 @@ char	*find_command(char *command, char *pathline)
 	{
 		if (!(access(command, F_OK) == 0))
 			perror("Permission denied");
+		return (NULL);
+	}
+	if (ft_strrchr(command, '/') != 0)
+	{
+		if (access(command, X_OK) == 0)
+			return (command);
 		return (NULL);
 	}
 	if (access(command, X_OK) == 0)

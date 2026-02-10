@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 15:43:30 by abarthes          #+#    #+#             */
-/*   Updated: 2025/11/14 12:37:37 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/10 12:36:49 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//Search for a character in a string and return its pointer
 char	*ft_strrchr(const char *str, int schar)
 {
 	int	i;
