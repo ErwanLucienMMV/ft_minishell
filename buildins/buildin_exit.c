@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:10:31 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/10 11:05:58 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/10 11:30:02 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	buildin_exit(t_program *program)
 		free(program->envpath);
 	}
 	free(program);
+	ft_printf_fd(2, "exit\n");
 	exit(exit_status);
 	return (0);
 }
