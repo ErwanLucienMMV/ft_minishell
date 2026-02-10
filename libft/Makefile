@@ -6,7 +6,7 @@
 #    By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/11 14:50:09 by abarthes          #+#    #+#              #
-#    Updated: 2025/12/28 15:09:35 by abarthes         ###   ########.fr        #
+#    Updated: 2026/02/10 15:23:48 by abarthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c \
 ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c get_next_line.c \
 get_next_line_utils.c ft_putstrings.c ft_printf.c ft_print_params.c ft_lstnew.c \
 ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
-ft_lstclear.c ft_lstiter.c ft_lstmap.c
+ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_strtol.c
 OBJ=$(SRC:.c=.o)
 NAME= libft.a
 

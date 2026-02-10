@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 16:42:53 by abarthes          #+#    #+#             */
-/*   Updated: 2026/01/22 15:06:40 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/10 15:24:10 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 int		ft_atoi(const char *c);
+long	ft_strtol(const char *str);
 int		ft_isspace(char c);
 int		ft_isalnum(int a);
 int		ft_isalpha(int a);

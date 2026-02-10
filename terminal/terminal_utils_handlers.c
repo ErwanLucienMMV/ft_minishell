@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/06 17:33:07 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/10 15:59:43 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handle_redirections(t_program *program)
 	program->saved_stdin = dup(STDIN_FILENO);
 	program->saved_stdout = dup(STDOUT_FILENO);
 	file_handler(program->parsed);
-	program->here_doc_tempfile = ".here_doc_tempfile";
+	program->here_doc_tempfile = HERE_DOC_TMPFILE;
 	doing_here_doc(program->parsed);
 }
 

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/06 17:41:05 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:02:41 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int		execve_handler(t_program *program);
 void	do_command(t_program *program, t_parser *cmd, char *path, char **envp);
 int		execve_with_pipe(t_program *program);
 void	parse_commands_with_pipe(t_commands **commands, t_parser *parsed);
+int		make_redirection(t_parser *parsed);
 
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:06 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/07 00:22:17 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/10 16:02:00 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../parser/parser.h"
 # include "../envpath/envpath.h"
 # include "../terminal/program.h"
+# include "../execve/execve.h"
 # include <signal.h>
 # include <readline/history.h>
 # include <stdio.h>

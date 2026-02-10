@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:26 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/10 14:24:56 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/10 16:02:09 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	buildins(t_parser **parser, t_envpath *envpath, t_program *program)
 	if (!parser || !*parser)
 		return (0);
 	temp = *parser;
+	make_redirection(*parser);
 	if (check_buildin(temp, envpath, program))
 		return (1);
 	return (0);
