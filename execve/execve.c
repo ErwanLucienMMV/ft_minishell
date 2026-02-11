@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:44:15 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/11 09:08:40 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/11 13:36:54 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	execve_handler(t_program *program)
 	last_status = 0;
 	set_signal_action();
 	while (waitpid(-1, &status, 0) > 0)
-		last_status = status;
+		last_status = WEXITSTATUS(status);
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
 	program->last_exit_status = last_status;
 	return (last_status);

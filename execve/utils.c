@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/11 08:46:08 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/11 13:34:15 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,13 @@ void	do_command_piped(t_program *program, t_commands *cmd, char *path, char **en
 	if (cmd->cmd->type == DELIMITER)
 		exit(1);
 	new_cmd = find_command(cmd->cmd->s, path);
-	ft_printf_fd(2, "Command path: %s", new_cmd);
 	if (!new_cmd)
 		exit (1);
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
 	execve(new_cmd, cmd->args, envp);
-	perror("execve:");
+	error_message_command_not_found(cmd->cmd->s);
 	free(new_cmd);
-	exit(1);
+	exit(127);
 }
 
 void	handle_the_child(int pipe_fd[2], t_program *program, t_commands *cmd)
@@ -83,7 +82,7 @@ void	clean_exit(char **splited_cmd, char *new_cmd)
 		clearmatrix(splited_cmd);
 	if (new_cmd)
 		free(new_cmd);
-	exit(1);
+	exit(127);
 }
 
 void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
@@ -110,6 +109,6 @@ void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
 		clean_exit(splited_cmd, NULL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
 	execve(new_cmd, splited_cmd, envp);
-	perror("execve:");
+	error_message_command_not_found(cmd->s);
 	clean_exit(splited_cmd, new_cmd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check_its.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:24:30 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/03 02:30:17 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/11 13:13:21 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	its_d_quote(t_parser **head, char *s, int *i)
 	x++;
 	if (s[x - 1] != '"')
 		return (0);
-	if (get_last_parser(*head)->type == DELIMITER)
+	if (get_last_parser(*head) && get_last_parser(*head)->type == DELIMITER)
 	{
 		if (new_parser(head, parser_node_new(IS_DELIMITER,
 					(s + 1), x - 2)) == 0)
@@ -46,7 +46,7 @@ int	its_s_quote(t_parser **head, char *s, int *i)
 	x++;
 	if (s[x - 1] != '\'')
 		return (0);
-	if (get_last_parser(*head)->type == DELIMITER)
+	if (get_last_parser(*head) && get_last_parser(*head)->type == DELIMITER)
 	{
 		if (new_parser(head, parser_node_new(IS_DELIMITER,
 					(s + 1), x - 2)) == 0)
