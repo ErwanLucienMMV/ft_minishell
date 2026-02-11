@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+         #
+#    By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/10 18:03:49 by abarthes         ###   ########.fr        #
+#    Updated: 2026/02/11 18:10:06 by emaigne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c \
 		signals/signals.c files_handler/fhandler.c here_doc/here_doc.c \
 		execve/execve.c execve/utils.c execve/find_command.c execve/execve_piped.c \
 		execve/parse_command.c execve/execve_checks.c execve/execve_children.c \
+		execve/free_our_stuff.c \
 		terminal/terminal_debug.c terminal/terminal_utils_handlers.c buildins/buildin_echo.c \
 		errors/error.c
 

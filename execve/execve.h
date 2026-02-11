@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/11 17:53:33 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/11 18:11:46 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,14 @@ typedef struct s_commands
 	struct s_commands	*next;
 }	t_commands;
 
+//			---freeing functions---		//
+void	clearmatrix(char **tab);
+void	free_t_parser(t_parser *parser);
+void	free_t_command(t_commands *tofree);
+
 //				---Utils---				//
 void	do_command_piped(t_program *program, t_commands *cmd, char *path, char **envp);
 void	handle_the_child(int pipe_fd[2], t_program *program, t_commands *cmd);
-void	clearmatrix(char **tab);
 void	do_command(t_program *program, t_parser *cmd, char *path, char **envp);
 
 //				---Children---			//
