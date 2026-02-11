@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/09 10:50:12 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/11 08:46:08 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	do_command_piped(t_program *program, t_commands *cmd, char *path, char **en
 	if (cmd->cmd->type == DELIMITER)
 		exit(1);
 	new_cmd = find_command(cmd->cmd->s, path);
+	ft_printf_fd(2, "Command path: %s", new_cmd);
 	if (!new_cmd)
 		exit (1);
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_piped.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/06 17:57:00 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/11 09:09:18 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	execve_with_pipe(t_program *program)
 	t_commands	*commands;
 
 	commands = NULL;
+	ft_printf("Jvais execute mes baux\n");
 	parse_commands_with_pipe(&commands, *(program->parsed));
 	first_exec(program, commands);
 	commands = commands->next;
