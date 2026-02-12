@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/12 15:14:40 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/12 15:27:23 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,14 +135,14 @@ int		setinputs(t_commands *commands, int pipe_fd[2])
 int		setoutputs(t_commands *commands, int pipe_fd[2])
 {
 	int	fd;
-	
+
 	if (commands->inputtype == DELIMITER)
 		return ;
 	if (commands->outfile)
 	{
 		//TODO: Handle the different type of redir type to change the opening type
-		if (commands->redir_type == )
-			fd = open(commands->infile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (commands->redir_type == REDIR_OUTPUT)
+			fd = open(commands->infile, O_WRONLY, 0644);
 		if (fd < 0)
 			return (1);
 		dup2(fd, STDOUT_FILENO);
