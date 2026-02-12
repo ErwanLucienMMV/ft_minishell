@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:08:21 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/11 18:13:01 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/12 09:51:17 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,3 +55,13 @@ void	free_t_command(t_commands *tofree)
 		free(tofree->outfile);
 	free(tofree);
 }
+
+void	clean_exit(char **splited_cmd, char *new_cmd)
+{
+	if (splited_cmd)
+		clearmatrix(splited_cmd);
+	if (new_cmd)
+		free(new_cmd);
+	exit(127);
+}
+

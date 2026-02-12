@@ -6,14 +6,15 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/11 18:09:07 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/12 10:11:48 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execve.h"
 #include "../here_doc/here_doc.h"
 
-void	do_command_piped(t_program *program, t_commands *cmd, char *path, char **envp)
+void	do_command_piped(t_program *program, t_commands *cmd,
+	char *path, char **envp)
 {
 	char		*new_cmd;
 
@@ -29,6 +30,7 @@ void	do_command_piped(t_program *program, t_commands *cmd, char *path, char **en
 	exit(127);
 }
 
+//TODO: handle the clean exit if fd fails
 void	handle_the_child(int pipe_fd[2], t_program *program, t_commands *cmd)
 {
 	int			fd;
@@ -48,7 +50,7 @@ void	handle_the_child(int pipe_fd[2], t_program *program, t_commands *cmd)
 		fd = program->saved_stdin;
 	if (fd < 0)
 	{
-		perror("open"); 
+		perror("open");
 		exit(1);
 	}
 	dup2(fd, STDIN_FILENO);
@@ -60,15 +62,6 @@ void	handle_the_child(int pipe_fd[2], t_program *program, t_commands *cmd)
 		path = get_env_value_by_key(program->envpath, "PATH");
 		do_command_piped(program, cmd, path, program->envp);
 	}
-}
-
-void	clean_exit(char **splited_cmd, char *new_cmd)
-{
-	if (splited_cmd)
-		clearmatrix(splited_cmd);
-	if (new_cmd)
-		free(new_cmd);
-	exit(127);
 }
 
 void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)

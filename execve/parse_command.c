@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 18:12:28 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/11 18:08:47 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/12 12:35:56 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,22 @@ int	check_for_redirections(t_parser *cmd, t_commands *tofill)
 	{
 		if (temp->type == REDIR_INPUT && temp->next)
 		{
+			free(tofill->infile);
 			tofill->infile = ft_strdup(temp->next->s);
+			if (!tofill->infile)
+				return (1);
+		}
+		if (temp->type == DELIMITER && temp->next)
+		{
+			free(tofill->infile);
+			tofill->infile = ft_strdup("HEREDOC");
 			if (!tofill->infile)
 				return (1);
 		}
 		if ((temp->type == REDIR_OUTPUT
 				|| temp->type == REDIR_OUTPUT_APP) && temp->next)
 		{
+			free(tofill->outfile);
 			tofill->outfile = ft_strdup(temp->next->s);
 			if (!tofill->outfile)
 				return (1);
@@ -93,6 +102,8 @@ t_commands	*commands_node_new(t_parser *cmd)
 	new = ft_calloc(1, sizeof(t_commands));
 	if (!new)
 		return (0);
+	new->infile = NULL;
+	new->outfile = NULL;
 	new->cmd = cmd;
 	new->args = create_cmd_args(cmd);
 	if (!new->args)

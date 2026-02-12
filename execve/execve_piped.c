@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/11 17:31:54 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/12 11:16:29 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	first_exec(t_program *program, t_commands *cmd)
 {
 	pid_t	pid;
 	int		pipe_fd[2];
+	//int		fd;
 
 	if (pipe(pipe_fd) != 0)
 		return (perror("pipe"), exit (1));
@@ -95,6 +96,19 @@ void	first_exec(t_program *program, t_commands *cmd)
 	}
 	else
 	{
+		// if (cmd->infile)
+		// {
+		// 	fd = open(cmd->infile, O_RDONLY);
+		// 	if (fd < 0)
+		// 	{
+		// 		ft_printf_fd(2,
+		// 			"miniswag: %s: No such file or directory", cmd->infile);
+		// 		buildin_exit(program);
+		// 		return ;
+		// 	}
+		// 	dup2(pipe_fd[0], STDIN_FILENO);
+		// 	close(fd);
+		// }
 		handle_the_child(pipe_fd, program, cmd);
 	}
 }
@@ -106,14 +120,14 @@ int	execve_with_pipe(t_program *program)
 
 	commands = NULL;
 	parse_commands_with_pipe(&commands, *(program->parsed));
-	while (commands)
-	{
-		ft_printf_fd(1, "command: %s\n", commands->cmd->s);
-		ft_printf_fd(1, "infile (if any): %s\n", commands->infile);
-		ft_printf_fd(1, "outfile (if any): %s\n", commands->outfile);
-		commands = commands->next;
-	}
-	return (0);
+	// while (commands)
+	// {
+	// 	ft_printf_fd(1, "command: %s\n", commands->cmd->s);
+	// 	ft_printf_fd(1, "infile (if any): %s\n", commands->infile);
+	// 	ft_printf_fd(1, "outfile (if any): %s\n", commands->outfile);
+	// 	commands = commands->next;
+	// }
+	// return (0);
 	first_exec(program, commands);
 	commands = commands->next;
 	while (commands && commands->next)
