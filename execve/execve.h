@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/12 09:51:32 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/12 12:47:59 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_commands
 	t_parser			*cmd;
 	char				**args;
 	char				*infile;
+	t_lexer				inputtype;
 	char				*outfile;
 	t_lexer				redir_type;
 	struct s_commands	*next;

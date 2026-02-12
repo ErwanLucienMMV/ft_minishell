@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/12 11:16:29 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/12 15:14:40 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,68 @@ void	first_exec(t_program *program, t_commands *cmd)
 	}
 }
 
+int		setinputs(t_commands *commands, int pipe_fd[2])
+{
+	int	fd;
+
+	dup2(pipe_fd[0], STDIN_FILENO);
+	//check with get_last_input_node to handle HEREDOC redirections
+	if (commands->inputtype == DELIMITER)
+		return ;
+	if (commands->infile)
+	{
+		fd = open(commands->infile, O_RDONLY);
+		if (fd < 0)
+			return (1);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+	return (0);
+}
+
+int		setoutputs(t_commands *commands, int pipe_fd[2])
+{
+	int	fd;
+	
+	if (commands->inputtype == DELIMITER)
+		return ;
+	if (commands->outfile)
+	{
+		//TODO: Handle the different type of redir type to change the opening type
+		if (commands->redir_type == )
+			fd = open(commands->infile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (fd < 0)
+			return (1);
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	return (0);
+}
+
+void	piped_exec(t_program *program, t_commands *commands)
+{
+	pid_t	pid;
+	int		pipe_fd[2];
+
+	setinputs(commands, &pipe_fd);
+	setoutputs();
+	if (pipe(pipe_fd) != 0)
+		return (perror("pipe"), exit (1));
+	pid = fork();
+	if (pid == -1)
+		return (perror("pid"), close(pipe_fd[0]), close(pipe_fd[1]),
+			exit(1));
+	if (pid)
+	{
+		close(pipe_fd[1]);
+		dup2(pipe_fd[0], STDIN_FILENO);
+		close(pipe_fd[0]);
+	}
+	else
+	{
+		get_path_for_exec(commands, program);
+	}
+}
 
 int	execve_with_pipe(t_program *program)
 {

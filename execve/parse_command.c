@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 18:12:28 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/12 12:35:56 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/12 12:51:03 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**create_cmd_args(t_parser *cmd)
 	return (args);
 }
 
-//does not cover for tricky case such as double input files and redirection in the same command
+
 int	check_for_redirections(t_parser *cmd, t_commands *tofill)
 {
 	t_parser	*temp;
@@ -77,9 +77,7 @@ int	check_for_redirections(t_parser *cmd, t_commands *tofill)
 		if (temp->type == DELIMITER && temp->next)
 		{
 			free(tofill->infile);
-			tofill->infile = ft_strdup("HEREDOC");
-			if (!tofill->infile)
-				return (1);
+			tofill->inputtype = DELIMITER;
 		}
 		if ((temp->type == REDIR_OUTPUT
 				|| temp->type == REDIR_OUTPUT_APP) && temp->next)
