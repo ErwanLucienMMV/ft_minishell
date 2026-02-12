@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 01:25:10 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/10 16:51:32 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/12 19:41:37 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_env_value_by_key(t_envpath **envpath, char *key)
 	temp = *envpath;
 	while (temp)
 	{
-		if (ft_strncmp(temp->index, key, ft_strlen(key)) == 0)
+		if (ft_strncmp(temp->index, key, ft_strlen(key)) == 0 && ft_strlen(temp->index) == ft_strlen(key))
 			return (temp->value);
 		temp = temp->next;
 	}

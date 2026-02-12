@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_list_operations.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:34:15 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/10 09:11:18 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/12 19:30:49 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,17 @@ int	its_env_var(t_parser **head, char *s, int *i)
 	int		x;
 
 	x = 1;
-	while (s[x] && ft_isalnum(s[x]))
+	while (s[x] && (ft_isalnum(s[x]) || s[x] == '_') && s[x] != '"')
 		x++;
-	if (get_last_parser(*head)->type == DELIMITER)
+	if (get_last_parser(*head) && get_last_parser(*head)->type == DELIMITER)
 	{
 		if (new_parser(head, parser_node_new(IS_DELIMITER, (s), x)) == 0)
 			return (0);
 		*i += x;
 		return (1);
 	}
+	if (x == 1 && !s[x+1])
+		return (its_command(head, s, i));
 	if (new_parser(head, parser_node_new(ENVVAR,
 				ft_strtrim(s, "$"), x - 1)) == 0)
 		return (0);

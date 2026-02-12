@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_piped.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/12 15:27:23 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/12 15:50:33 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int		setinputs(t_commands *commands, int pipe_fd[2])
 	dup2(pipe_fd[0], STDIN_FILENO);
 	//check with get_last_input_node to handle HEREDOC redirections
 	if (commands->inputtype == DELIMITER)
-		return ;
+		return (0);
 	if (commands->infile)
 	{
 		fd = open(commands->infile, O_RDONLY);
@@ -136,8 +136,12 @@ int		setoutputs(t_commands *commands, int pipe_fd[2])
 {
 	int	fd;
 
+    //remove errors from makefile
+	(void) pipe_fd;
+	fd = 0;
+	////
 	if (commands->inputtype == DELIMITER)
-		return ;
+		return (0);
 	if (commands->outfile)
 	{
 		//TODO: Handle the different type of redir type to change the opening type
@@ -156,8 +160,10 @@ void	piped_exec(t_program *program, t_commands *commands)
 	pid_t	pid;
 	int		pipe_fd[2];
 
-	setinputs(commands, &pipe_fd);
-	setoutputs();
+	//remove errors from makefile
+	//setinputs(commands, &pipe_fd);
+	//setoutputs();
+	//
 	if (pipe(pipe_fd) != 0)
 		return (perror("pipe"), exit (1));
 	pid = fork();

@@ -6,11 +6,46 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:11:25 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/11 14:31:04 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/12 19:02:33 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
+
+static void free_and_reset_node(t_parser *node, char *new_str)
+{
+	free(node->s);
+	node->s = new_str;
+}
+
+int check_and_count_for_envvar(t_parser *n, t_envpath *ep)
+{
+	int		i;
+	int		j;
+	int		t_count;
+	char	*key;
+
+	i = -1;
+	t_count = 0;
+	while (n->s[++i])
+	{
+		if (n->s[i] == '$' && ft_isalnum(n->s[i+1]))
+		{
+			j = i + 1;
+			while (n->s[j] && ft_isalnum(n->s[j]))
+				j++; 
+			key = ft_substr(n->s, i + 1, j - i - 1);
+			if (!key)
+				return (-1);
+			t_count = t_count + ft_strlen(get_env_value_by_key(&ep, key));
+			i = j - 1;
+			free(key);
+		}
+		else
+			t_count++;
+	}
+	return (t_count);
+}
 
 int	copy_env_value(char *new_str, int *j, char *value)
 {
@@ -45,15 +80,16 @@ int	expand_plain_text(t_parser *node, t_envpath *envpath)
 {
 	char	*new_str;
 	int		indices[2];
-	int		len;
+	int		all_len;	
 
-	len = ft_strlen(node->s);
-	new_str = malloc((len + 1) * sizeof(char));
+	all_len = check_and_count_for_envvar(node, envpath);
+	if (all_len == -1)
+		return (1);
+	new_str = malloc((all_len + 1) * sizeof(char));
 	if (!new_str)
 		return (1);
-	indices[0] = 0;
-	indices[1] = 0;
-	while (indices[0] < len)
+	ft_memset(indices, 0, 2 * sizeof(int));
+	while (indices[0] < (int)ft_strlen(node->s))
 	{
 		if (node->s[indices[0]] == '$' && ft_isalnum(node->s[indices[0] + 1]))
 		{
@@ -64,12 +100,8 @@ int	expand_plain_text(t_parser *node, t_envpath *envpath)
 			new_str[indices[1]++] = node->s[indices[0]++];
 	}
 	new_str[indices[1]] = '\0';
-	free(node->s);
-	node->s = new_str;
-	if (node->prev && (node->prev->type == CMD || node->prev->type == CMD_ARG))
-		node->type = CMD_ARG;
-	else
-		node->type = CMD;
+	free_and_reset_node(node, new_str);
+	set_node_type(node);
 	return (0);
 }
 
@@ -81,7 +113,7 @@ int	expand_plain_text(t_parser *node, t_envpath *envpath)
 // 	int		len;
 
 // 	len = ft_strlen(node->s);
-// 	new_str = malloc((len + 1) * sizeof(char));
+// 	new_str = malloc((check_and_count_for_envvar(node, envpath) + 1) * sizeof(char));
 // 	if (!new_str)
 // 		return (1);
 // 	i = 0;

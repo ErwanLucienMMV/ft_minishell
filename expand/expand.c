@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:27 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/11 13:55:31 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/12 19:32:44 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,9 @@ int	expand_env_var(t_parser *node, t_envpath *envpath)
 
 	if (ft_strlen(node->s) == 0)
 	{
-		free(node->s);
-		node->s = ft_strdup("$");
-		if (node->prev && (node->prev->type == CMD
-				|| node->prev->type == CMD_ARG))
-			node->type = CMD_ARG;
-		else
-			node->type = CMD;
+		// free(node->s);
+		// node->s = ft_strdup("$");
+		set_node_type(node);
 		return (0);
 	}
 	value = get_env_value_by_key(&envpath, node->s);
@@ -45,21 +41,13 @@ int	expand_env_var(t_parser *node, t_envpath *envpath)
 	{
 		free(node->s);
 		node->s = ft_strdup(value);
-		if (node->prev && (node->prev->type == CMD
-				|| node->prev->type == CMD_ARG))
-			node->type = CMD_ARG;
-		else
-			node->type = CMD;
+		set_node_type(node);
 	}
 	else
 	{
 		free(node->s);
 		node->s = ft_strdup("");
-		if (node->prev && (node->prev->type == CMD
-				|| node->prev->type == CMD_ARG))
-			node->type = CMD_ARG;
-		else
-			node->type = CMD;
+		set_node_type(node);
 	}
 	return (0);
 }
@@ -76,10 +64,7 @@ int	expand_s_quote(t_parser *node)
 	ft_strlcpy(new_str, node->s + 1, len - 1);
 	free(node->s);
 	node->s = new_str;
-	if (node->prev && node->prev->type == CMD)
-		node->type = CMD_ARG;
-	else
-		node->type = CMD;
+	set_node_type(node);
 	return (0);
 }
 

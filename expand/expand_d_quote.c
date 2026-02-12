@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:16:39 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/11 14:30:46 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/12 18:48:40 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	handle_env_var(t_parser *node, t_envpath *envpath,
 	return (free(key), 0);
 }
 
-static void	set_node_type(t_parser *node)
+void	set_node_type(t_parser *node)
 {
 	if (node->prev && (node->prev->type == CMD || node->prev->type == CMD_ARG))
 		node->type = CMD_ARG;
