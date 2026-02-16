@@ -3,24 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   execve_children.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 21:20:42 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/06 16:41:10 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/16 18:56:57 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execve.h"
 
-void	handle_middle_child(t_program *program, t_commands *cmd, int pipe_fd[2])
+void	handle_middle_child(t_program *program, t_commands *cmd)
 {
 	char	*path;
 
-	close(pipe_fd[0]);
-	dup2(pipe_fd[1], STDOUT_FILENO);
-	close(pipe_fd[1]);
 	if (is_a_buildin(cmd->cmd->s))
-		exit(check_buildin(cmd->cmd, *program->envpath, program));
+		exit(check_buildin_piped(cmd->cmd, *program->envpath, program));
 	else
 	{
 		path = get_env_value_by_key(program->envpath, "PATH");
