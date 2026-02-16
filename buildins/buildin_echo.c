@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 17:19:35 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 14:35:29 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/16 15:27:36 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	valid_argument_n(char *str)
 
 int	buildin_echo(t_parser *cmd, t_program *program)
 {
-	ft_printf_fd(2, "Doing the echo\n");
 	t_parser	*temp;
 	int			is_n;
 
@@ -37,7 +36,8 @@ int	buildin_echo(t_parser *cmd, t_program *program)
 	if (!cmd->next)
 		return (printf("\n"), 0);
 	temp = cmd->next;
-	while (temp && temp->s && ((temp->s[0] == '-' && valid_argument_n(temp->s)) || temp->s[0] == ' '))
+	while (temp && temp->s && ((temp->s[0] == '-'
+				&& valid_argument_n(temp->s)) || temp->s[0] == ' '))
 	{
 		if (temp->s[0] != ' ')
 			is_n = 1;
