@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:44:15 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 12:06:10 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/16 14:39:05 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	exec_one_command(t_program *program, t_parser *cmd, char *path, char **envp
 
 int	make_redirection(t_parser *parsed)
 {
+	return (0);
 	t_parser	*last_file_output;
 	t_parser	*last_file_input;
 	t_lexer		input_type;

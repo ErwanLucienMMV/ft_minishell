@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:06 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/10 17:21:18 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/16 14:59:14 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ int	buildin_exit(t_program *program);
 //		--- Main buildin function ---		//
 int	buildins(t_parser **parser, t_envpath *envpath, t_program *program);
 int	check_buildin(t_parser *cmd, t_envpath *envpath, t_program *program);
+int	check_buildin_piped(t_parser *cmd, t_envpath *envpath, t_program *program);
 
 #endif

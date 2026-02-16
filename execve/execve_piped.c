@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 14:18:33 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/16 15:02:25 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	setoutputs(t_commands *commands)
 	// Handle output to pipe or file
 	if (commands->outfile)
 	{
-		ft_printf_fd(2, "Redirecting the output to outfile\n");
 		// Output to a file
 		if (commands->redir_type == REDIR_OUTPUT_APP)
 		{
@@ -58,10 +57,6 @@ int	setoutputs(t_commands *commands)
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
-	else
-	{
-		ft_printf_fd(2, "Not redirecting shit\n");
-	}
 	return (0);
 }
 
@@ -70,7 +65,7 @@ void	get_path_for_exec(t_commands *cmd, t_program *program)
 	char	*path;
 
 	if (is_a_buildin(cmd->cmd->s))
-		exit(check_buildin(cmd->cmd, *program->envpath, program));
+		exit(check_buildin_piped(cmd->cmd, *program->envpath, program));
 	else
 	{
 		path = get_env_value_by_key(program->envpath, "PATH");
@@ -130,9 +125,12 @@ void	middle_exec(t_program *program, t_commands *cmd)
 	}
 	else
 	{
+		close(pipe_fd[0]);
+		dup2(pipe_fd[1], STDOUT_FILENO);
+		close(pipe_fd[1]);
 		setinputs(cmd);
 		setoutputs(cmd);
-		handle_middle_child(program, cmd, pipe_fd);
+		handle_middle_child(program, cmd);
 	}
 }
 
@@ -171,16 +169,15 @@ int	execve_with_pipe(t_program *program)
 	commands = NULL;
 	parse_commands_with_pipe(&commands, *(program->parsed));
 
-	t_commands *head = commands;
-	while (commands)
-	{
-		ft_printf_fd(1, "command: %s\n", commands->cmd->s);
-		ft_printf_fd(1, "infile (if any): %s\n", commands->infile);
-		ft_printf_fd(1, "outfile (if any): %s\n", commands->outfile);
-		commands = commands->next;
-	}
-	//return (0);
-	commands = head;
+	// t_commands *head = commands;
+	// while (commands)
+	// {
+	// 	ft_printf_fd(1, "command: %s\n", commands->cmd->s);
+	// 	ft_printf_fd(1, "infile (if any): %s\n", commands->infile);
+	// 	ft_printf_fd(1, "outfile (if any): %s\n", commands->outfile);
+	// 	commands = commands->next;
+	// }
+	// commands = head;
 	ft_printf_fd(2, "first command about to be executed\n");
 	first_exec(program, commands);
 	commands = commands->next;

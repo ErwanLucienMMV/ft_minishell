@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 17:19:35 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/11 15:41:44 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/16 14:35:29 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	valid_argument_n(char *str)
 
 int	buildin_echo(t_parser *cmd, t_program *program)
 {
+	ft_printf_fd(2, "Doing the echo\n");
 	t_parser	*temp;
 	int			is_n;
 
