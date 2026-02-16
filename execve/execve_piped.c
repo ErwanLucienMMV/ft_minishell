@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 15:02:25 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/16 15:21:49 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	setinputs(t_commands *commands)
 {
 	int	fd;
 
-	// Handle input from pipe or file
 	if (commands->inputtype == DELIMITER)
 	{
 		// find exactly the name of heredoc
@@ -28,7 +27,6 @@ int	setinputs(t_commands *commands)
 	}
 	else if (commands->infile)
 	{
-		// Input from a file
 		fd = open(commands->infile, O_RDONLY);
 		if (fd < 0)
 			return (perror("open"), 1);
@@ -42,10 +40,8 @@ int	setoutputs(t_commands *commands)
 {
 	int	fd;
 
-	// Handle output to pipe or file
 	if (commands->outfile)
 	{
-		// Output to a file
 		if (commands->redir_type == REDIR_OUTPUT_APP)
 		{
 			fd = open(commands->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -76,33 +72,17 @@ void	get_path_for_exec(t_commands *cmd, t_program *program)
 void	last_exec(t_program *program, t_commands *cmd)
 {
 	pid_t		pid;
-	// int			fd;
-	// t_parser	*file;
 
 	pid = fork();
 	if (pid == -1)
 		return (perror("pid"), exit(1));
 	if (pid != 0)
 		return ;
-	else 
+	else
 	{
-	setinputs(cmd);
-	setoutputs(cmd);
-	// file = get_last_output_file(program->parsed);
-	// if (!file)
-	// 	fd = program->saved_stdout;
-	// else
-	// 	fd = open(file->s, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	// if (fd < 0)
-	// {
-	// 	perror("open");
-	// 	exit(1);
-	// }
-	// if (fd == 0)
-	// 	fd = program->saved_stdout;
-	// dup2(fd, STDOUT_FILENO);
-	// close(fd);
-	get_path_for_exec(cmd, program);
+		setinputs(cmd);
+		setoutputs(cmd);
+		get_path_for_exec(cmd, program);
 	}
 }
 
@@ -168,26 +148,13 @@ int	execve_with_pipe(t_program *program)
 
 	commands = NULL;
 	parse_commands_with_pipe(&commands, *(program->parsed));
-
-	// t_commands *head = commands;
-	// while (commands)
-	// {
-	// 	ft_printf_fd(1, "command: %s\n", commands->cmd->s);
-	// 	ft_printf_fd(1, "infile (if any): %s\n", commands->infile);
-	// 	ft_printf_fd(1, "outfile (if any): %s\n", commands->outfile);
-	// 	commands = commands->next;
-	// }
-	// commands = head;
-	ft_printf_fd(2, "first command about to be executed\n");
 	first_exec(program, commands);
 	commands = commands->next;
 	while (commands && commands->next)
 	{
-		ft_printf_fd(2, "Middle command about to be executed\n");
 		middle_exec(program, commands);
 		commands = commands->next;
 	}
-	ft_printf_fd(2, "Last command about to be executed\n");
 	last_exec(program, commands);
 	return (0);
 }
