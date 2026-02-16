@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/12 17:05:20 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/16 12:44:59 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ int	process_parsing_and_sanitize(t_program *program, char *line)
 	return (0);
 }
 
+int	check_at_least_one_node(t_program *program)
+{
+	*(program->parsed) = get_first_parser(*(program->parsed));
+	if (!*(program->parsed))
+		return (1);
+	return (0);
+}
+
 void	main_loop(t_program *program)
 {
 	char	*line;
@@ -80,6 +88,8 @@ void	main_loop(t_program *program)
 			}
 			free(line);
 			handle_expansions(program);
+			if (check_at_least_one_node(program))
+				continue ;
 			if (handle_redirections(program))
 				continue ;
 			execute_and_restore(program);

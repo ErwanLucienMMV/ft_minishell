@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:53:10 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/12 17:04:49 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/13 17:38:25 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,34 @@ t_parser	*parsing(char *s)
 		if (s[i] == ' ')
 		{
 			if (get_prev_echo(get_last_parser(head)))
+			{
+				if (new_parser(&head, parser_node_new(CMD_ARG, " ", 1)) == 0)
+					return (parser_clear(&head), NULL);
+			}
+			i++;
+			continue ;
+		}
+	}
+	return (head);
+}
+
+t_parser	*parsing_after_expand(char *s, int there_is_echo)
+{
+	int			i;
+	t_parser	*head;
+
+	head = 0;
+	i = 0;
+	while (s[i])
+	{
+		if (check_special_char(&head, (s + i), &i) == 0)
+		{
+			parser_clear(&head);
+			return (NULL);
+		}
+		if (s[i] == ' ')
+		{
+			if (there_is_echo || get_prev_echo(get_last_parser(head)))
 			{
 				if (new_parser(&head, parser_node_new(CMD_ARG, " ", 1)) == 0)
 					return (parser_clear(&head), NULL);

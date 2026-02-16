@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:15:48 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/10 17:52:52 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/13 13:47:50 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void static	free_array_of_double(char **array)
 
 int	static	second_if_check(t_parser *cmd, t_program *program)
 {
-	if (cmd->next->s[0] == '=' || (!ft_isalpha(cmd->next->s[0]) && cmd->next->s[0] != '_'))
+	if (cmd->s[0] == '=' || (!ft_isalpha(cmd->s[0]) && cmd->s[0] != '_'))
 	{
-		printf("export: %s: not a valid identifier\n", cmd->next->s);
+		printf("export: %s: not a valid identifier\n", cmd->s);
 		program->last_exit_status = 1;
 		return (1);
 	}
@@ -39,23 +39,34 @@ int	buildin_export(t_parser *cmd, t_envpath *envpath, t_program *program)
 
 	if (!cmd->next)
 		return (program->last_exit_status = 0, print_envpath_list_sorted(envpath));
-	while (cmd->next && (cmd->next->type == CMD_ARG || cmd->next->type == CMD))
+	cmd = cmd->next;
+	while (cmd)
 	{
 		if (!second_if_check(cmd, program))
 		{
-			array = ft_split(cmd->next->s, '=');
+			array = ft_split(cmd->s, '=');
 			if (!array)
 				return (1);
 			key = ft_strdup(array[0]);
-			if (!array[1] && ft_strchr(cmd->next->s, '='))
+			if (!array[1] && ft_strchr(cmd->s, '=') && !cmd->next)
 				value = ft_strdup("");
-			else if (!array[1] && !ft_strchr(cmd->next->s, '='))
+			else if (!array[1] && !ft_strchr(cmd->s, '=') && !cmd->next)
 				value = 0;
-			else
+			else if (array[1])
 				value = ft_strdup(array[1]);
+			else if (!array[1] && ft_strchr(cmd->s, '=') && cmd->next)
+			{
+				value = ft_strdup(cmd->next->s);
+				cmd = cmd->next;
+			}
+			else
+				value = 0;
 			free_array_of_double(array);
+			printf("exporting key %s with value %s\n", key, value);
 			if (!new_envpath(&envpath, key, value))
 				return (1);
+			free(key);
+			free(value);
 		}
 		cmd = cmd->next;
 	}

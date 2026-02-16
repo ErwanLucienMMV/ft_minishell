@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:53:07 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/11 17:06:27 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/16 12:14:29 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ int			its_command(t_parser **head, char *s, int *i);
 int			new_parser(t_parser **head, t_parser *new_node);
 
 t_parser	*parsing(char *s);
+t_parser	*parsing_after_expand(char *s, int there_is_echo);
 
 int			parser_clear(t_parser **lst);
 t_parser	*get_first_parser(t_parser *lst);
 t_parser	*get_last_parser(t_parser *lst);
-void		parser_clear_one(t_parser *node);
+void		parser_clear_one(t_parser **node);
 
 int			sanitize(t_parser **head);
 t_parser	*get_prev_echo(t_parser *node);

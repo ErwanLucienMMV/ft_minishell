@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+         #
+#    By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/11 18:10:06 by emaigne          ###   ########.fr        #
+#    Updated: 2026/02/13 17:45:25 by abarthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ YELLOW = \033[0;33m
 RESET = \033[0m
 MAKEFLAGS += --no-print-directory
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -g
+CFLAGS  = -Wall -Wextra -Werror -g -fsanitize=address
 
 # Detect Homebrew readline prefix (empty if not installed)
 READLINE_PREFIX := $(shell brew --prefix readline 2>/dev/null || true)
@@ -55,7 +55,7 @@ debug: re
 
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "$(YELLOW)[MINISHELL] $(GREEN).o created $(RESET)"
-	@$(CC) $(OBJ) \
+	@$(CC) $(CFLAGS) $(OBJ) \
 	-Llibft -lft $(READLINE_LIBS) \
 	-o $(NAME)
 	@echo "$(YELLOW)[MINISHELL] $(GREEN)executable created$(RESET)"

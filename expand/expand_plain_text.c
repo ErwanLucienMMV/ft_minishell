@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:11:25 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/12 19:02:33 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/13 18:00:56 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@ static void free_and_reset_node(t_parser *node, char *new_str)
 {
 	free(node->s);
 	node->s = new_str;
+}
+
+static int	contains_env_var(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '$' && ft_isalnum(s[i + 1]))
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int check_and_count_for_envvar(t_parser *n, t_envpath *ep)
@@ -82,6 +96,8 @@ int	expand_plain_text(t_parser *node, t_envpath *envpath)
 	int		indices[2];
 	int		all_len;	
 
+	if (!contains_env_var(node->s))
+		return (0);
 	all_len = check_and_count_for_envvar(node, envpath);
 	if (all_len == -1)
 		return (1);
@@ -102,6 +118,42 @@ int	expand_plain_text(t_parser *node, t_envpath *envpath)
 	new_str[indices[1]] = '\0';
 	free_and_reset_node(node, new_str);
 	set_node_type(node);
+	int there_is_echo = get_prev_echo(node) != NULL;
+	t_parser	*expanded_one = parsing_after_expand(node->s, there_is_echo);
+	t_parser	*expanded_next;
+	t_parser	*next;
+	t_parser	*prev;
+	if (!expanded_one)
+		return (1);
+	expanded_next = expanded_one->next;
+	prev = node->prev;
+	next = node->next;
+	free(node->s);
+	node->type = expanded_one->type;
+	node->s = expanded_one->s;
+	node->prev = prev;
+	node->next = expanded_next;
+	if (expanded_next)
+		expanded_next->prev = node;
+	if (prev)
+		prev->next = node;
+	if (next)
+	{
+		t_parser	*tail = get_last_parser(node);
+		next->prev = tail;
+		tail->next = next;
+	}
+	t_parser	*cur;
+	t_parser	*stop;
+
+	cur = node;
+	stop = next;
+	while (cur && cur != stop)
+	{
+		set_node_type(cur);
+		cur = cur->next;
+	}
+	free(expanded_one);
 	return (0);
 }
 

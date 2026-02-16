@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:53:12 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/12 19:43:25 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/13 15:28:05 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ int	sanitize_pipe(t_parser *token, t_parser **head)
 {
 	if (!token->next || !token->prev || token == *head)
 		return (error_near_pipe(), 1);
-	if (token->next->type != CMD)
+	if (token->next->type != CMD && token->next->type != ENVVAR)
 		return (error_near_pipe(), 1);
 	if (token->prev->type != CMD && token->prev->type != CMD_ARG
 		&& token->prev->type != ENVVAR && token->prev->type != EXIT_STATUS
-		&& token->prev->type != FILENAME && token->next->type != REDIR_INPUT)
+		&& token->prev->type != FILENAME && token->next->type != REDIR_INPUT
+		&& token->prev->type != IS_DELIMITER && token->prev->type != ENVVAR
+		&& token->prev->type != EXIT_STATUS)
 		return (error_near_pipe(), 1);
 	return (0);
 }

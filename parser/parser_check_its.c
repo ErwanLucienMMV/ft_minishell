@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:24:30 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/12 19:38:54 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/13 15:25:14 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int	its_command(t_parser **head, char *s, int *i)
 	if (get_last_parser(*head) && !(get_last_parser(*head)->type == REDIR_OUTPUT
 			|| get_last_parser(*head)->type == REDIR_OUTPUT_APP
 			|| get_last_parser(*head)->type == REDIR_INPUT
-			|| get_last_parser(*head)->type == DELIMITER))
+			|| get_last_parser(*head)->type == DELIMITER
+			|| get_last_parser(*head)->type == PIPE))
 		new = parser_node_new(CMD_ARG, (s), x);
 	if (get_last_parser(*head) && (get_last_parser(*head)->type == REDIR_OUTPUT
 			|| get_last_parser(*head)->type == REDIR_OUTPUT_APP
