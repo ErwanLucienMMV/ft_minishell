@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/12 12:47:59 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/16 12:07:45 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "../errors/errors.h"
 # include <sys/wait.h>
 # include "../buildins/buildins.h"
+# include "../here_doc/here_doc.h"
 
 typedef struct s_commands
 {

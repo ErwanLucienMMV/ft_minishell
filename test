@@ -1,0 +1,16 @@
+buildins
+envpath
+errors
+execve
+expand
+files_handler
+here_doc
+lexer
+libft
+Makefile
+minishell
+parser
+signals
+terminal
+test
+test2
