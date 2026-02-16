@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:27 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 12:47:58 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/16 12:59:43 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,12 @@ int	send_to_expand(t_parser **parsed, t_envpath *envpath, t_program *program)
 			return (1);
 		else if (temp && (temp->type == CMD || temp->type == CMD_ARG) && expand_plain_text(temp, envpath))
 			return (1);
-		if (temp)
-			temp = temp->next;
 		if (!temp && i == 0)
+		{
 			*parsed = 0;
+			return (1);
+		}
+		temp = temp->next;
 		i++;
 	}
 	return (0);
