@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/12 10:11:48 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/16 18:54:53 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,33 +30,33 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 	exit(127);
 }
 
-//TODO: handle the clean exit if fd fails
 void	handle_the_child(int pipe_fd[2], t_program *program, t_commands *cmd)
 {
-	int			fd;
+	//int			fd;
+	(void)		pipe_fd;
 	char		*path;
-	t_parser	*file;
-	t_lexer		input_type;
+	// t_parser	*file;
+	// t_lexer		input_type;
 
-	close(pipe_fd[0]);
-	dup2(pipe_fd[1], STDOUT_FILENO);
-	close(pipe_fd[1]);
-	file = get_last_input_node(*(program->parsed), &input_type);
-	if (input_type == REDIR_INPUT && file)
-		fd = open(file->s, O_RDONLY);
-	else if (input_type == DELIMITER)
-		fd = open(HERE_DOC_TMPFILE, O_RDONLY);
-	else
-		fd = program->saved_stdin;
-	if (fd < 0)
-	{
-		perror("open");
-		exit(1);
-	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
+	// close(pipe_fd[0]);
+	// dup2(pipe_fd[1], STDOUT_FILENO);
+	// close(pipe_fd[1]);
+	// file = get_last_input_node(*(program->parsed), &input_type);
+	// if (input_type == REDIR_INPUT && file)
+	// 	fd = open(file->s, O_RDONLY);
+	// else if (input_type == DELIMITER)
+	// 	fd = open(HERE_DOC_TMPFILE, O_RDONLY);
+	// else
+	// 	fd = program->saved_stdin;
+	// if (fd < 0)
+	// {
+	// 	perror("open");
+	// 	exit(1);
+	// }
+	// dup2(fd, STDIN_FILENO);
+	// close(fd);
 	if (is_a_buildin(cmd->cmd->s))
-		exit(check_buildin(cmd->cmd, *program->envpath, program));
+		exit(check_buildin_piped(cmd->cmd, *program->envpath, program));
 	else
 	{
 		path = get_env_value_by_key(program->envpath, "PATH");
