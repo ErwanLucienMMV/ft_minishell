@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:27 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 16:15:51 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 16:24:17 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int	expand_env_var(t_parser **node, t_envpath *envpath, t_program *program)
 	value = get_env_value_by_key(&envpath, (*node)->s);
 	if (value)
 	{
-		int there_is_echo = get_prev_echo(*node) != NULL;
-		t_parser	*expanded_one = parsing_after_expand(value, there_is_echo);
+		t_parser	*expanded_one = parsing(value);
 		t_parser	*expanded_next;
 		t_parser	*next;
 		t_parser	*prev;
@@ -67,7 +66,8 @@ int	expand_env_var(t_parser **node, t_envpath *envpath, t_program *program)
 		stop = next;
 		while (cur && cur != stop)
 		{
-			set_node_type(cur);
+			if (cur->type != SPACE)
+				cur->type = WAS_EXPANDED;
 			cur = cur->next;
 		}
 	}
@@ -95,7 +95,7 @@ int	expand_s_quote(t_parser **node, t_program *program)
 	(*node)->s = new_str;
 	if ((*node)->s[0] == 0)
 		return (parser_clear_one(node, program), 0);
-	set_node_type(*node);
+	(*node)->type = WAS_EXPANDED;
 	return (0);
 }
 
@@ -106,6 +106,11 @@ int	send_to_expand(t_parser **parsed, t_envpath *envpath, t_program *program)
 	temp = *program->parsed;
 	while (temp)
 	{
+		if (temp->type == SPACE)
+		{
+			temp = temp->next;
+			continue ;
+		}
 		if (temp && temp->type == ENVVAR && expand_env_var(&temp, envpath, program))
 			return (1);
 		else if (temp && temp->type == DQUOTE && expand_d_quote(&temp, envpath))

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:16:39 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/16 17:27:39 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/16 18:41:00 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,6 @@ int	expand_d_quote(t_parser **node, t_envpath *envpath)
 		(*node)->s = new_str;
 	// if (indice[1] == 0)
 	// 	return (parser_clear_one(node, program), 0);
-	
-	set_node_type((*node));
+	(*node)->type = WAS_EXPANDED;
 	return (0);
 }

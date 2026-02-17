@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:11:25 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/13 18:00:56 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 15:38:20 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,8 @@ int	expand_plain_text(t_parser *node, t_envpath *envpath)
 	}
 	new_str[indices[1]] = '\0';
 	free_and_reset_node(node, new_str);
-	set_node_type(node);
-	int there_is_echo = get_prev_echo(node) != NULL;
-	t_parser	*expanded_one = parsing_after_expand(node->s, there_is_echo);
+	node->type = WAS_EXPANDED;
+	t_parser	*expanded_one = parsing(node->s);
 	t_parser	*expanded_next;
 	t_parser	*next;
 	t_parser	*prev;
@@ -150,7 +149,8 @@ int	expand_plain_text(t_parser *node, t_envpath *envpath)
 	stop = next;
 	while (cur && cur != stop)
 	{
-		set_node_type(cur);
+		if (cur->type != SPACE)
+			cur->type = WAS_EXPANDED;
 		cur = cur->next;
 	}
 	free(expanded_one);

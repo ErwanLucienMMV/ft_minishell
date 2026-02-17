@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 15:48:39 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 15:44:06 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 16:19:05 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ t_parser	*get_prev_echo(t_parser *node)
 	temp = 0;
 	if (!node)
 		return (NULL);
+	node = node->prev;
 	while (node)
 	{
-		if (node->type != CMD && node->type != CMD_ARG && node->type != ENVVAR && node->type != EXIT_STATUS && node->type != DQUOTE && node->type != SQUOTE)
+		if (node->type == PIPE)
 			return (temp);
 		if ((node->type == CMD || node->type == CMD_ARG) && ft_strncmp(node->s, "echo", 4) == 0 && ft_strlen(node->s) == 4)
-			temp = node;
+			return (node);
 		node = node->prev;
 	}
 	return (temp);

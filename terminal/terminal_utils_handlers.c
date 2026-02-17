@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/16 16:52:54 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 16:19:44 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	handle_expansions(t_program *program)
 	print_debug(program);
 	send_to_expand(program->parsed, *program->envpath, program);
 	add_empty_nodes_to_their_next(program);
+	remove_useless_space_nodes(program);
 	restore_types_after_expansion(program->parsed);
 	print_debug(program);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal_debug.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 02:31:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/04 02:54:25 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/17 15:33:21 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ char static	*return_temptype(t_parser *temp)
 		str = "DELIMITER";
 	else if (temp->type == IS_DELIMITER)
 		str = "IS_DELIMITER";
+	else if (temp->type == SPACE)
+		str = "SPACE";
+	else if (temp->type == WAS_EXPANDED)
+		str = "WAS_EXPANDED";
 	else
 		str = "OTHER ?????";
 	return (str);

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:34:18 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 15:14:06 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/16 18:34:46 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ typedef enum e_lexer
 	REDIR_OUTPUT,
 	REDIR_OUTPUT_APP,
 	DELIMITER,
-	IS_DELIMITER
+	IS_DELIMITER,
+	SPACE,
+	WAS_EXPANDED
 }	t_lexer;
 
 #endif

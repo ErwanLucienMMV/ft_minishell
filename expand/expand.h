@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:19 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 16:50:19 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 16:12:51 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int check_and_count_for_envvar(t_parser *n, t_envpath *ep);
 int	restore_types_after_expansion(t_parser **tokens);
 void		parser_clear_one(t_parser **node, t_program *program);
 int		add_empty_nodes_to_their_next(t_program *program);
+int	remove_useless_space_nodes(t_program *program);
 
 #endif
