@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   terminal_debug.c                                   :+:      :+:    :+:   */
+/*   sanitize_debug.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/04 02:31:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/17 22:34:05 by emaigne          ###   ########.fr       */
+/*   Created: 2026/02/17 23:40:05 by emaigne           #+#    #+#             */
+/*   Updated: 2026/02/17 23:48:23 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "terminal.h"
+#include "parser.h"
 
-char static	*return_temptype(t_parser *temp)
+static char	*check_error(t_parser *temp)
 {
 	char	*str;
 
-	if (temp->type == CMD_ARG)
+	str = NULL;
+	if (temp->type == CMD)
+		str = "CMD";
+	else if (temp->type == REDIR_OUTPUT)
+		str = "REDIR_OUTPUT";
+	else if (temp->type == FILENAME)
+		str = "FILENAME";
+	else if (temp->type == CMD_ARG)
 		str = "CMD_ARG";
 	else if (temp->type == ENVVAR)
 		str = "ENVVAR";
@@ -32,42 +39,32 @@ char static	*return_temptype(t_parser *temp)
 		str = "REDIR_INPUT";
 	else if (temp->type == REDIR_OUTPUT_APP)
 		str = "REDIR_OUTPUT_APP";
-	else if (temp->type == DELIMITER)
-		str = "DELIMITER";
-	else if (temp->type == IS_DELIMITER)
-		str = "IS_DELIMITER";
-	else if (temp->type == T_SPACE)
-		str = "SPACE";
-	else if (temp->type == WAS_EXPANDED)
-		str = "WAS_EXPANDED";
-	else
-		str = "OTHER ?????";
 	return (str);
 }
 
-void	print_debug(t_program *program)
+void	print_error(t_parser *temp)
 {
-	static int	state;
-	t_parser	*temp;
-	char		*str;
+	char	*str;
 
-	if (IS_DEBUG == 1)
+	str = NULL;
+	if (IS_DEBUG)
 	{
-		if (state == 0)
-			state = 1;
-		else
-			printf("After expansion:\n");
-		temp = *(program->parsed);
+		printf("sanitizing..\n");
+
 		while (temp)
 		{
-			if (temp->type == CMD)
-				str = "CMD";
-			else if (temp->type == REDIR_OUTPUT)
-				str = "REDIR_OUTPUT";
-			else if (temp->type == FILENAME)
-				str = "FILENAME";
-			else
-				str = return_temptype(temp);
+			str = check_error(temp);
+			if (!str)
+			{
+				if (temp->type == DELIMITER)
+					str = "DELIMITER";
+				else if (temp->type == IS_DELIMITER)
+					str = "IS_DELIMITER";
+				else if (temp->type == T_SPACE)
+					str = "T_SPACE";
+				else
+					str = "OTHER ?????";
+			}
 			printf("Type: %s | Str: %s\n", str, temp->s);
 			temp = temp->next;
 		}

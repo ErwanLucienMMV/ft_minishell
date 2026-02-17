@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 18:12:28 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/12 12:51:03 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/17 23:00:21 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,32 @@ char	**create_cmd_args(t_parser *cmd)
 	return (args);
 }
 
+char	*get_a_valid_name(void)
+{
+	char	*filename;
+	char	*totry;
+	char	*it;
 
+	totry = ft_strdup(".heredoc_temp_file");
+	if (totry == NULL)
+		return (NULL);
+	it = ft_strdup("0");
+	if (it == NULL)
+		return (free(totry), NULL);
+	while (1)
+	{
+		it[0] += 1;
+		filename = ft_strjoin(totry, it);
+		if (!filename)
+			return (free(totry), free(it), NULL);
+		if (access(filename, F_OK) == -1)
+			return (free(totry), free(it), filename);
+		free(filename);
+		filename = NULL;
+	}
+	return (NULL);
+}
+//check with aurelien how does heredoc works and what kind of t_parser its expecting
 int	check_for_redirections(t_parser *cmd, t_commands *tofill)
 {
 	t_parser	*temp;
@@ -73,11 +98,14 @@ int	check_for_redirections(t_parser *cmd, t_commands *tofill)
 			tofill->infile = ft_strdup(temp->next->s);
 			if (!tofill->infile)
 				return (1);
+			if (access(tofill->infile, F_OK | R_OK) != 0)
+				return (1);
 		}
 		if (temp->type == DELIMITER && temp->next)
 		{
 			free(tofill->infile);
-			tofill->inputtype = DELIMITER;
+			tofill->infile = get_a_valid_name();
+			// doing_here_doc(&cmd, tofill->infile);
 		}
 		if ((temp->type == REDIR_OUTPUT
 				|| temp->type == REDIR_OUTPUT_APP) && temp->next)

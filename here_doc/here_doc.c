@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:30:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/06 17:41:05 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 21:18:36 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "here_doc.h"
 
-int	doing_here_doc_util(t_parser *lineread)
+int	doing_here_doc_util(t_parser *lineread, char *tempfile)
 {
 	int		fd;
 	char	*line;
 
-	fd = open(HERE_DOC_TMPFILE, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	fd = open(tempfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		return (perror("here_doc: open"), -1);
 	while (1)
 	{
 		line = readline("> ");
 		if (!line || (ft_strlen(line) == ft_strlen(lineread->next->s)
-			&& !ft_strncmp(line, lineread->next->s,
-			ft_strlen(lineread->next->s) + 1)))
+				&& !ft_strncmp(line, lineread->next->s,
+					ft_strlen(lineread->next->s) + 1)))
 		{
 			free(line);
 			break ;
@@ -37,7 +37,7 @@ int	doing_here_doc_util(t_parser *lineread)
 	return (0);
 }
 
-int	doing_here_doc(t_parser **lineread)
+int	doing_here_doc(t_parser **lineread, char *tempfile)
 {
 	t_parser	*temp;
 
@@ -45,7 +45,7 @@ int	doing_here_doc(t_parser **lineread)
 	while (temp)
 	{
 		if (temp->type == DELIMITER)
-			doing_here_doc_util(temp);
+			doing_here_doc_util(temp, tempfile);
 		temp = temp->next;
 	}
 	return (0);

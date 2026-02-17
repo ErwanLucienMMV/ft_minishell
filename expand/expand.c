@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:27 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/17 16:24:17 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 22:33:22 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	expand_env_var(t_parser **node, t_envpath *envpath, t_program *program)
 		stop = next;
 		while (cur && cur != stop)
 		{
-			if (cur->type != SPACE)
+			if (cur->type != T_SPACE)
 				cur->type = WAS_EXPANDED;
 			cur = cur->next;
 		}
@@ -106,7 +106,7 @@ int	send_to_expand(t_parser **parsed, t_envpath *envpath, t_program *program)
 	temp = *program->parsed;
 	while (temp)
 	{
-		if (temp->type == SPACE)
+		if (temp->type == T_SPACE)
 		{
 			temp = temp->next;
 			continue ;

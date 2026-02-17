@@ -3,54 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sanitize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:53:12 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 17:19:34 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 23:52:03 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-// void print_error(t_parser *temp)
-// {
-// 	printf("sanitizing..\n");
-// 	char	*str;
-
-// 	while (temp)
-// 	{
-// 		if (temp->type == CMD)
-// 			str = "CMD";
-// 		else if (temp->type == REDIR_OUTPUT)
-// 			str = "REDIR_OUTPUT";
-// 		else if (temp->type == FILENAME)
-// 			str = "FILENAME";
-// 		else if (temp->type == CMD_ARG)
-// 			str = "CMD_ARG";
-// 		else if (temp->type == ENVVAR)
-// 			str = "ENVVAR";
-// 		else if (temp->type == SQUOTE)
-// 			str = "SQUOTE";
-// 		else if (temp->type == DQUOTE)
-// 			str = "DQUOTE";
-// 		else if (temp->type == PIPE)
-// 			str = "PIPE";
-// 		else if (temp->type == EXIT_STATUS)
-// 			str = "EXIT_STATUS";
-// 		else if (temp->type == REDIR_INPUT)
-// 			str = "REDIR_INPUT";
-// 		else if (temp->type == REDIR_OUTPUT_APP)
-// 			str = "REDIR_OUTPUT_APP";
-// 		else if (temp->type == DELIMITER)
-// 			str = "DELIMITER";
-// 		else if (temp->type == IS_DELIMITER)
-// 			str = "IS_DELIMITER";
-// 		else
-// 			str = "OTHER ?????";
-// 		printf("Type: %s | Str: %s\n", str, temp->s);
-// 		temp = temp->next;
-// 	}
-// }
 
 int	sanitize_pipe(t_parser *token, t_parser **head)
 {
@@ -110,6 +70,7 @@ int	sanitize(t_parser **head)
 	temp = *head;
 	while (temp)
 	{
+		print_error(temp);
 		if (temp->type == PIPE && sanitize_pipe(temp, head))
 			return (1);
 		if (temp->type == REDIR_INPUT && sanitize_redir_input(temp))

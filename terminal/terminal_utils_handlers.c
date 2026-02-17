@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal_utils_handlers.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/17 16:19:44 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 21:10:28 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	handle_redirections(t_program *program)
 	if (file_handler(program->parsed))
 		return (1);
 	program->here_doc_tempfile = HERE_DOC_TMPFILE;
-	doing_here_doc(program->parsed);
+	doing_here_doc(program->parsed, HERE_DOC_TMPFILE);
 	return (0);
 }
 

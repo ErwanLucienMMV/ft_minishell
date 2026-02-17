@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_plain_text.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:11:25 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/17 15:38:20 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 22:33:13 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int	expand_plain_text(t_parser *node, t_envpath *envpath)
 	stop = next;
 	while (cur && cur != stop)
 	{
-		if (cur->type != SPACE)
+		if (cur->type != T_SPACE)
 			cur->type = WAS_EXPANDED;
 		cur = cur->next;
 	}

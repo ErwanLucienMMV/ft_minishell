@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:53:07 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 15:20:37 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 23:48:43 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 # include "../errors/errors.h"
+
 typedef struct s_parser
 {
 	t_lexer			type;
@@ -24,6 +25,13 @@ typedef struct s_parser
 	struct s_parser	*next;
 	struct s_parser	*prev;
 }	t_parser;
+
+# ifndef IS_DEBUG
+#  define IS_DEBUG 0
+# endif
+
+//				---Debug---					//
+void	print_error(t_parser *temp);
 
 //				---Operations---			//
 int			parser_clear(t_parser **lst);

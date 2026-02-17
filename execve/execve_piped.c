@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 18:55:50 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/17 23:18:16 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	setinputs(t_commands *commands)
 	if (commands->inputtype == DELIMITER)
 	{
 		// find exactly the name of heredoc
-		fd = open(HERE_DOC_TMPFILE, O_RDONLY);
+		fd = open(commands->infile, O_RDONLY);
 		if (fd < 0)
 			return (perror("open"), 1);
 		dup2(fd, STDIN_FILENO);
