@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:08:21 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/18 15:26:34 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/18 16:56:20 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ void	clean_exit(char **splited_cmd, char *new_cmd)
 		free_splited_cmd(splited_cmd);
 	if (new_cmd)
 		free(new_cmd);
-	exit(126);
+	exit(127);
 }
 

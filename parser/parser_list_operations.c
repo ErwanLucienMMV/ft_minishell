@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:34:15 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/18 14:14:16 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/18 16:58:40 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	its_env_var(t_parser **head, char *s, int *i)
 		*i += x;
 		return (1);
 	}
-	if (x == 1)
+	if (x == 1 && !s[x])
 		return (its_command(head, s, i));
 	if (new_parser(head, parser_node_new(ENVVAR,
 				ft_strtrim(s, "$"), x - 1)) == 0)

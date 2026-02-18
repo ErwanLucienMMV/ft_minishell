@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:53:12 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/18 14:26:47 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/18 16:30:55 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	sanitize_pipe(t_parser *token, t_parser **head)
 		&& get_prev_non_space(token)->type != EXIT_STATUS
 		&& get_prev_non_space(token)->type != FILENAME
 		&& get_prev_non_space(token)->type != IS_DELIMITER
-		&& get_prev_non_space(token)->type != ENVVAR
-		&& get_prev_non_space(token)->type != EXIT_STATUS)
+		&& get_prev_non_space(token)->type != DQUOTE
+		&& get_prev_non_space(token)->type != SQUOTE)
 		return (error_near_pipe(), 1);
 	return (0);
 }
@@ -59,7 +59,7 @@ int	sanitize(t_parser **head)
 	t_parser	*temp;
 
 	temp = *head;
-	print_error(temp);
+	// print_error(temp);
 	while (temp)
 	{
 		if (temp->type == PIPE && sanitize_pipe(temp, head))

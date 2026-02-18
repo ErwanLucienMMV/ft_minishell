@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:24:30 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/18 14:17:12 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/18 17:20:33 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	its_command(t_parser **head, char *s, int *i)
 	x = 0;
 	new = NULL;
 	while (s[x] && s[x] != ' ' && s[x] != '\t' && s[x] != '|' && s[x] != '<'
-		&& s[x] != '>' && s[x] != '\'' && s[x] != '"')
+		&& s[x] != '>' && s[x] != '\'' && s[x] != '"' && s[x] != '$')
 		x++;
 	if (get_prev_non_space(get_last_parser(*head)) && !(get_prev_non_space(get_last_parser(*head))->type == REDIR_OUTPUT
 			|| get_prev_non_space(get_last_parser(*head))->type == REDIR_OUTPUT_APP

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_plain_text.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:11:25 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/17 22:33:13 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/18 16:42:40 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int check_and_count_for_envvar(t_parser *n, t_envpath *ep)
 	int		j;
 	int		t_count;
 	char	*key;
+	char	*value;
+	// int		var_len;
 
 	i = -1;
 	t_count = 0;
@@ -51,7 +53,9 @@ int check_and_count_for_envvar(t_parser *n, t_envpath *ep)
 			key = ft_substr(n->s, i + 1, j - i - 1);
 			if (!key)
 				return (-1);
-			t_count = t_count + ft_strlen(get_env_value_by_key(&ep, key));
+			value = get_env_value_by_key(&ep, key);
+			if (value)
+				t_count += ft_strlen(value);
 			i = j - 1;
 			free(key);
 		}

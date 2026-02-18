@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:16:39 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/16 18:41:00 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/18 16:45:12 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,11 @@ static int	is_env_var(t_parser *node, int i)
 
 static int	append_value(char **new_str, int *indice, char *value)
 {
-	char	*temp;
-	size_t	value_len;
+	int	k;
 
-	value_len = 0;
-	if (value)
-		value_len = ft_strlen(value);
-	temp = malloc(indice[1] + value_len + 1);
-	if (!temp)
-		return (1);
-	ft_memcpy(temp, *new_str, indice[1]);
-	temp[indice[1]] = '\0';
-	free(*new_str);
-	*new_str = temp;
-	while (value && value[indice[2]])
-		(*new_str)[indice[1]++] = value[indice[2]++];
-	(*new_str)[indice[1]] = '\0';
+	k = 0;
+	while (value && value[k])
+		(*new_str)[indice[1]++] = value[k++];
 	return (0);
 }
 
@@ -65,7 +54,6 @@ static int	handle_env_var(t_parser *node, t_envpath *envpath,
 	if (get_env_key(node, indice, &key))
 		return (1);
 	value = get_env_value_by_key(&envpath, key);
-	indice[2] = 0;
 	if (append_value(new_str, indice, value))
 		return (free(key), 1);
 	return (free(key), 0);
@@ -83,16 +71,16 @@ void	set_node_type(t_parser *node)
 		node->type = CMD;
 }
 
-static int	init_expand(t_parser *node, char **new_str, int *indice, int *len)
-{
-	(void) node;
-	*new_str = malloc((*len - 1) * sizeof(char));
-	if (!*new_str)
-		return (1);
-	indice[0] = 1;
-	indice[1] = 0;
-	return (0);
-}
+// static int	init_expand(t_parser *node, char **new_str, int *indice, int *len)
+// {
+// 	(void) node;
+// 	*new_str = malloc((*len - 1) * sizeof(char));
+// 	if (!*new_str)
+// 		return (1);
+// 	indice[0] = 1;
+// 	indice[1] = 0;
+// 	return (0);
+// }
 
 void	parser_clear_one(t_parser **node, t_program *program)
 {
@@ -119,14 +107,15 @@ void	parser_clear_one(t_parser **node, t_program *program)
 int	expand_d_quote(t_parser **node, t_envpath *envpath)
 {
 	char	*new_str;
-	int		indice[3];
-	int		total_len;
+	int		indice[2];
 	int		len;
 
 	len = ft_strlen((*node)->s);
-	total_len = check_and_count_for_envvar((*node), envpath);
-	if (init_expand((*node), &new_str, indice, &total_len))
+	new_str = malloc(len * sizeof(char));
+	if (!new_str)
 		return (1);
+	indice[0] = 1;
+	indice[1] = 0;
 	while (indice[0] < len - 1)
 	{
 		if (is_env_var((*node), indice[0]))
@@ -136,7 +125,9 @@ int	expand_d_quote(t_parser **node, t_envpath *envpath)
 			continue;
 		}
 		else
+		{
 			new_str[indice[1]++] = (*node)->s[indice[0]++];
+		}
 	}
 	new_str[indice[1]] = '\0';
 	free((*node)->s);
@@ -144,8 +135,6 @@ int	expand_d_quote(t_parser **node, t_envpath *envpath)
 		(*node)->s = ft_strdup("");
 	else
 		(*node)->s = new_str;
-	// if (indice[1] == 0)
-	// 	return (parser_clear_one(node, program), 0);
 	(*node)->type = WAS_EXPANDED;
 	return (0);
 }
