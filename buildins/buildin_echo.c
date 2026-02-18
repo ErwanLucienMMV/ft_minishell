@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 17:19:35 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 17:57:22 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/18 00:49:48 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	buildin_echo(t_parser *cmd, t_program *program)
 	if (!cmd->next)
 		return (printf("\n"), 0);
 	temp = cmd->next;
-	while (temp && temp->s && ((temp->s[0] == '-' && valid_argument_n(temp->s)) || (temp->s[0] == ' ' && ft_strlen(temp->s) == 1)))
+	while (temp && temp->s && ((temp->s[0] == '-'
+				&& valid_argument_n(temp->s))
+			|| (temp->s[0] == ' ' && ft_strlen(temp->s) == 1)))
 	{
 		if (temp->s[0] != ' ')
 			is_n = 1;

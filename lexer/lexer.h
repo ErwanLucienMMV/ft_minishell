@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:34:18 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 18:34:46 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 22:27:43 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef enum e_lexer
 	REDIR_OUTPUT_APP,
 	DELIMITER,
 	IS_DELIMITER,
-	SPACE,
+	T_SPACE,
 	WAS_EXPANDED
 }	t_lexer;
 

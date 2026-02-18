@@ -3,54 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sanitize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:53:12 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 17:19:34 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/18 01:06:16 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-// void print_error(t_parser *temp)
-// {
-// 	printf("sanitizing..\n");
-// 	char	*str;
-
-// 	while (temp)
-// 	{
-// 		if (temp->type == CMD)
-// 			str = "CMD";
-// 		else if (temp->type == REDIR_OUTPUT)
-// 			str = "REDIR_OUTPUT";
-// 		else if (temp->type == FILENAME)
-// 			str = "FILENAME";
-// 		else if (temp->type == CMD_ARG)
-// 			str = "CMD_ARG";
-// 		else if (temp->type == ENVVAR)
-// 			str = "ENVVAR";
-// 		else if (temp->type == SQUOTE)
-// 			str = "SQUOTE";
-// 		else if (temp->type == DQUOTE)
-// 			str = "DQUOTE";
-// 		else if (temp->type == PIPE)
-// 			str = "PIPE";
-// 		else if (temp->type == EXIT_STATUS)
-// 			str = "EXIT_STATUS";
-// 		else if (temp->type == REDIR_INPUT)
-// 			str = "REDIR_INPUT";
-// 		else if (temp->type == REDIR_OUTPUT_APP)
-// 			str = "REDIR_OUTPUT_APP";
-// 		else if (temp->type == DELIMITER)
-// 			str = "DELIMITER";
-// 		else if (temp->type == IS_DELIMITER)
-// 			str = "IS_DELIMITER";
-// 		else
-// 			str = "OTHER ?????";
-// 		printf("Type: %s | Str: %s\n", str, temp->s);
-// 		temp = temp->next;
-// 	}
-// }
 
 int	sanitize_pipe(t_parser *token, t_parser **head)
 {
@@ -67,60 +27,25 @@ int	sanitize_pipe(t_parser *token, t_parser **head)
 	return (0);
 }
 
-int	sanitize_redir_input(t_parser *token)
-{
-	if (!token->next)
-		return (error_near_newline(), 1);
-	if (token->next->type != FILENAME && token->next->type != ENVVAR && token->next->type != EXIT_STATUS)
-		return (error_near_char("<"), 1);
-	return (0);
-}
-
-int	sanitize_redir_output(t_parser *token)
-{
-	if (!token->next)
-		return (error_near_newline(), 1);
-	if (token->next->type != FILENAME && token->next->type != ENVVAR && token->next->type != EXIT_STATUS)
-		return (error_near_char(">"), 1);
-	return (0);
-}
-
-int	sanitize_redir_output_app(t_parser *token)
-{
-	if (!token->next)
-		return (error_near_newline(), 1);
-	if (token->next->type != FILENAME && token->next->type != ENVVAR && token->next->type != EXIT_STATUS)
-		return (error_near_char(">>"), 1);
-	return (0);
-}
-
-int	sanitize_delimiter(t_parser *token)
-{
-	if (!token->next)
-		return (error_near_newline(), 1);
-	if (token->next->type != IS_DELIMITER)
-		return (error_near_char("<<"), 1);
-	return (0);
-}
-
 int	sanitize(t_parser **head)
 {
 	t_parser	*temp;
 
 	temp = *head;
-	while (temp)
-	{
-		if (temp->type == PIPE && sanitize_pipe(temp, head))
-			return (1);
-		if (temp->type == REDIR_INPUT && sanitize_redir_input(temp))
-			return (1);
-		if (temp->type == REDIR_OUTPUT && sanitize_redir_output(temp))
-			return (1);
-		if (temp->type == REDIR_OUTPUT_APP && sanitize_redir_output_app(temp))
-			return (1);
-		if (temp->type == DELIMITER && sanitize_delimiter(temp))
-			return (1);
-		temp = temp->next;
-	}
+	// while (temp)
+	// {
+	// 	print_error(temp);
+	// 	if (temp->type == PIPE && sanitize_pipe(temp, head))
+	// 		return (1);
+	// 	if (temp->type == REDIR_INPUT && sanitize_redir_input(temp))
+	// 		return (1);
+	// 	if (temp->type == REDIR_OUTPUT && sanitize_redir_output(temp))
+	// 		return (1);
+	// 	if (temp->type == REDIR_OUTPUT_APP && sanitize_redir_output_app(temp))
+	// 		return (1);
+	// 	if (temp->type == DELIMITER && sanitize_delimiter(temp))
+	// 		return (1);
+	// 	temp = temp->next;
+	// }
 	return (0);
 }

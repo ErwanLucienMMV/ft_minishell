@@ -6,55 +6,11 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 18:55:50 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/18 01:03:38 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execve.h"
-
-int	setinputs(t_commands *commands)
-{
-	int	fd;
-
-	if (commands->inputtype == DELIMITER)
-	{
-		// find exactly the name of heredoc
-		fd = open(HERE_DOC_TMPFILE, O_RDONLY);
-		if (fd < 0)
-			return (perror("open"), 1);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-	}
-	else if (commands->infile)
-	{
-		fd = open(commands->infile, O_RDONLY);
-		if (fd < 0)
-			return (perror("open"), 1);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-	}
-	return (0);
-}
-
-int	setoutputs(t_commands *commands)
-{
-	int	fd;
-
-	if (commands->outfile)
-	{
-		if (commands->redir_type == REDIR_OUTPUT_APP)
-		{
-			fd = open(commands->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		}
-		else
-			fd = open(commands->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd < 0)
-			return (perror("open"), 1);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-	}
-	return (0);
-}
 
 void	get_path_for_exec(t_commands *cmd, t_program *program)
 {
@@ -80,8 +36,8 @@ void	last_exec(t_program *program, t_commands *cmd)
 		return ;
 	else
 	{
-		setinputs(cmd);
-		setoutputs(cmd);
+		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
+			free_t_command(cmd); //create a tailored free_program function and exit and call this one
 		get_path_for_exec(cmd, program);
 	}
 }
@@ -108,8 +64,8 @@ void	middle_exec(t_program *program, t_commands *cmd)
 		close(pipe_fd[0]);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
-		setinputs(cmd);
-		setoutputs(cmd);
+		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
+			free_t_command(cmd); //create a tailored free_program function and exit and call this one
 		handle_middle_child(program, cmd);
 	}
 }
@@ -136,8 +92,8 @@ void	first_exec(t_program *program, t_commands *cmd)
 		close(pipe_fd[0]);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
-		setinputs(cmd);
-		setoutputs(cmd);
+		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
+			free_t_command(cmd); //create a tailored free_program function and exit and call this one
 		handle_the_child(pipe_fd, program, cmd);
 	}
 }

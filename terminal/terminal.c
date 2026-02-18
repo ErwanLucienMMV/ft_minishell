@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 15:02:16 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/18 01:01:40 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	process_parsing_and_sanitize(t_program *program, char *line)
 	*program->parsed = parsing(line);
 	if (!(*program->parsed) || sanitize(program->parsed))
 	{
-		parser_clear(program->parsed); 
-		return (1); 
+		parser_clear(program->parsed);
+		return (1);
 	}
 	return (0);
 }
@@ -88,9 +88,8 @@ void	main_loop(t_program *program)
 			}
 			free(line);
 			handle_expansions(program);
-			if (check_at_least_one_node(program))
-				continue ;
-			if (handle_redirections(program))
+			if (check_at_least_one_node(program)
+				|| handle_redirections(program))
 				continue ;
 			execute_and_restore(program);
 		}

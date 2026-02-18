@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 15:02:06 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/17 16:23:27 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 22:34:01 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	remove_useless_space_nodes(t_program *program)
 	while (cur)
 	{
 		next = cur->next;
-		if (cur->type == SPACE)
+		if (cur->type == T_SPACE)
 		{
 			parser_clear_one(&cur, program);
 		}
@@ -56,22 +56,22 @@ int	add_empty_nodes_to_their_next(t_program *program)
 	cur = *(program->parsed);
 	while (cur)
 	{
-		if (cur->type == SPACE)
+		if (cur->type == T_SPACE)
 		{
 			cur = cur->next;
 			continue ;
 		}
 		expanded = cur->next;
 		count = ft_strlen(cur->s);
-		while (expanded && expanded->type != SPACE)
+		while (expanded && expanded->type != T_SPACE)
 		{
 			count += ft_strlen(expanded->s);
 			expanded = expanded->next;
 		}
-		if (!expanded || expanded->type == SPACE)
+		if (!expanded || expanded->type == T_SPACE)
 		{
 			expanded = cur->next;
-			if (expanded && expanded->type != SPACE)
+			if (expanded && expanded->type != T_SPACE)
 			{
 				buf_size = count + 1;
 				str = malloc(buf_size * sizeof(char));
@@ -79,7 +79,7 @@ int	add_empty_nodes_to_their_next(t_program *program)
 					return (1);
 				str[0] = '\0';
 				ft_strlcat(str, cur->s, buf_size);
-				while (expanded && expanded->type != SPACE)
+				while (expanded && expanded->type != T_SPACE)
 				{
 					to_remove = expanded;
 					ft_strlcat(str, expanded->s, buf_size);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:53:10 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 18:42:07 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/17 23:51:25 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	its_redirection_input(t_parser **head, char *s, int *i)
 int	check_special_char(t_parser **head, char *s, int *i)
 {
 	if (*s == ' ')
-	    return (1);
+		return (1);
 	else if (*s == '$' && *(s + 1) == '?')
 		return (its_exit_status(head, s, i));
 	else if (*s == '$' && *(s + 1) != '?')
@@ -74,7 +74,9 @@ int	check_special_char(t_parser **head, char *s, int *i)
 	else if (*s == '<' && *(s + 1) == '<')
 		return (its_delimiter(head, s, i));
 	else if (*s == ';' || *s == '\\' || *s == '&' || *s == '!')
-		return (printf("minishell: syntax error near unexpected token `%c'\n", *s), 0);
+		return (
+			printf("minishell: syntax error near unexpected token `%c'\n", *s),
+			0);
 	else
 		return (its_command(head, s, i));
 }
@@ -95,7 +97,7 @@ t_parser	*parsing(char *s)
 		}
 		if (s[i] == ' ')
 		{
-			if (new_parser(&head, parser_node_new(SPACE, " ", 1)) == 0)
+			if (new_parser(&head, parser_node_new(T_SPACE, " ", 1)) == 0)
 				return (parser_clear(&head), NULL);
 			i++;
 			continue ;

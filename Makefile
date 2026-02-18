@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+         #
+#    By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/16 15:04:22 by abarthes         ###   ########.fr        #
+#    Updated: 2026/02/18 00:55:07 by emaigne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ READLINE_INCLUDES := -I$(READLINE_PREFIX)/include
 READLINE_LIBS := -L$(READLINE_PREFIX)/lib -lreadline -lcurses
 # endif
 
-SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c \
+SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c parser/sanitize_debug.c \
+		parser/sanitize_individual_token.c \
 		parser/parser_check_its.c parser/parser_list_operations.c buildins/buildins.c \
 		buildins/buildin_exit.c buildins/buildin_envpath.c \
 		envpath/envpath.c envpath/envp_utils.c parser/utils.c \
@@ -38,7 +39,7 @@ SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c \
 		signals/signals.c files_handler/fhandler.c here_doc/here_doc.c \
 		execve/execve.c execve/utils.c execve/find_command.c execve/execve_piped.c \
 		execve/parse_command.c execve/execve_checks.c execve/execve_children.c \
-		execve/free_our_stuff.c \
+		execve/free_our_stuff.c execve/execve_piped_redirections.c \
 		terminal/terminal_debug.c terminal/terminal_utils_handlers.c buildins/buildin_echo.c \
 		errors/error.c expand/utils.c
 
