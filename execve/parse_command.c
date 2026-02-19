@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 18:12:28 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/19 04:35:23 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/19 22:34:25 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int	check_for_redirections(t_parser *cmd, t_commands *tofill)
 	{
 		if (temp->type == REDIR_INPUT && temp->next)
 		{
+			ft_printf_fd(2, "Yup that's a file input\n");
 			free(tofill->infile);
 			tofill->infile = ft_strdup(temp->next->s);
 			if (!tofill->infile)
@@ -109,10 +110,12 @@ int	check_for_redirections(t_parser *cmd, t_commands *tofill)
 		//part responsible for handling heredocs in pipes
 		if (temp->type == DELIMITER && temp->next)
 		{
+			ft_printf_fd(2, "Getting in the heredoc\n");
 			free(tofill->infile);
 			tofill->infile = get_a_valid_name();
-			//ft_printf_fd(2, tofill->infile);
-			doing_here_doc(&cmd, tofill->infile);
+			ft_printf_fd(2, "%s\n", tofill->infile);
+			doing_here_doc_util(temp, tofill->infile);
+			temp = temp->next;
 		}
 		if ((temp->type == REDIR_OUTPUT
 				|| temp->type == REDIR_OUTPUT_APP) && temp->next)

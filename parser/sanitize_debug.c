@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sanitize_debug.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 23:40:05 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/18 14:11:32 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/19 22:37:59 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	print_error(t_parser *temp)
 	str = NULL;
 	if (IS_DEBUG)
 	{
-		printf("sanitizing..\n");
+		ft_printf_fd(2, "sanitizing..\n");
 
 		while (temp)
 		{

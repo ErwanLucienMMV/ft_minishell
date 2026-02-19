@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sanitize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:53:12 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/18 16:30:55 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/19 22:39:15 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	sanitize(t_parser **head)
 	t_parser	*temp;
 
 	temp = *head;
-	// print_error(temp);
+	print_error(temp);
 	while (temp)
 	{
 		if (temp->type == PIPE && sanitize_pipe(temp, head))

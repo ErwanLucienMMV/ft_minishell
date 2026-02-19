@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:30:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/19 01:53:48 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/19 22:32:36 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ int	doing_here_doc(t_parser **lineread, char *tempfile)
 			doing_here_doc_util(temp, tempfile);
 		temp = temp->next;
 	}
+	ft_printf_fd(2, "yup we got out\n");
 	return (0);
 }
