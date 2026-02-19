@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 18:12:28 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/17 23:00:21 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/18 22:41:55 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int	check_for_redirections(t_parser *cmd, t_commands *tofill)
 		{
 			free(tofill->infile);
 			tofill->infile = get_a_valid_name();
-			// doing_here_doc(&cmd, tofill->infile);
+			//ft_printf_fd(2, tofill->infile);
+			doing_here_doc(&cmd, tofill->infile);
 		}
 		if ((temp->type == REDIR_OUTPUT
 				|| temp->type == REDIR_OUTPUT_APP) && temp->next)

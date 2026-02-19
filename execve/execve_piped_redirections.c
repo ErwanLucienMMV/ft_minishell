@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exceve_piped_redirections.c                        :+:      :+:    :+:   */
+/*   execve_piped_redirections.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 00:51:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/18 00:51:43 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/18 01:25:39 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	setinputs(t_commands *commands)
 	{
 		fd = open(commands->infile, O_RDONLY);
 		if (fd < 0)
-			return (perror("open"), 1);
+			return (perror("minishell: heredoc"), 1);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
