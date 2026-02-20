@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 14:27:42 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 17:22:03 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include "../buildins/buildins.h"
 # include "../here_doc/here_doc.h"
+# include <sys/stat.h>
 
 typedef struct s_commands
 {
@@ -41,7 +42,7 @@ int				execve_without_pipe(t_program *program,
 void			clearmatrix(char **tab);
 void			free_t_parser(t_parser *parser);
 void			free_t_command(t_commands *tofree);
-void			clean_exit(char **splited_cmd, char *new_cmd);
+void			clean_exit(char **splited_cmd, char *new_cmd, int exit_code);
 void			free_t_program(t_program *program);
 void			free_all_commands(t_commands **commands);
 void			free_t_cmd_prgrm_exit(t_commands *cmd, t_program *program);

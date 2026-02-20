@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 18:01:03 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 08:24:01 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 17:03:28 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,9 @@ void	error_near_pipe(void)
 void	error_near_char(char *str)
 {
 	ft_printf_fd(2, "miniswag: syntax error near unexpected token `%s'\n", str);
+}
+
+void	error_message_is_a_directory(char *filename)
+{
+	ft_printf_fd(2, "miniswag: %s: Is a directory\n", filename);
 }

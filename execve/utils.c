@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 08:29:59 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 17:27:45 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 {
 	char		*new_cmd;
 	char		**args;
+	struct stat path_stat;
 
 	if (cmd->cmd->type == DELIMITER)
 	{
@@ -63,6 +64,12 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 		clearmatrix(args);
 		exit (1);
 	}
+	if (stat(new_cmd, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
+	{
+		error_message_is_a_directory(cmd->cmd->s);
+		free_t_program(program);
+		exit(126);
+	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
 	free_t_program(program);
 	execve(new_cmd, args, envp);
@@ -78,24 +85,28 @@ void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
 	char		*new_cmd;
 	t_parser	*temp;
 	int			i;
+	struct stat path_stat;
 
 	i = 1;
 	splited_cmd = malloc(sizeof(char *) * (count_cmd_args(cmd) + 2));
 	if (!splited_cmd)
 		exit(1);
-	splited_cmd[0] = cmd->s;
+	splited_cmd[0] = ft_strdup(cmd->s);
 	temp = cmd->next;
 	while (temp && temp->type == CMD_ARG)
 	{
-		splited_cmd[i++] = temp->s;
+		splited_cmd[i++] = ft_strdup(temp->s);
 		temp = temp->next;
 	}
 	splited_cmd[i] = NULL;
 	new_cmd = find_command(cmd->s, path);
-	if (!new_cmd)
-		clean_exit(splited_cmd, NULL);
+	if (stat(new_cmd, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
+	{
+		error_message_is_a_directory(cmd->s);
+		clean_exit(splited_cmd, new_cmd, 126);
+	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
 	execve(new_cmd, splited_cmd, envp);
-	error_message_command_not_found(cmd->s);
-	clean_exit(splited_cmd, new_cmd);
+	// error_message_command_not_found(cmd->s);
+	clean_exit(splited_cmd, new_cmd, 127);
 }
