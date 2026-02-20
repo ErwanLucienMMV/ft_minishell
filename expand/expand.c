@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:27 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/17 22:33:22 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 06:58:50 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,7 @@ int	expand_env_var(t_parser **node, t_envpath *envpath, t_program *program)
 	}
 	else
 	{
-		// free(node->s);
-		// node->s = ft_strdup("");
 		return (parser_clear_one(node, program), 0);
-		// set_node_type(node);
 	}
 	return (0);
 }

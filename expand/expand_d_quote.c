@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_d_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:16:39 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/18 16:45:12 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/20 06:57:41 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static int	get_env_key(t_parser *node, int *indice, char **key)
 
 static int	is_env_var(t_parser *node, int i)
 {
-	return (node->s[i] == '$' && (ft_isalnum(node->s[i + 1]) || node->s[i + 1] == '_'));
+	return (node->s[i] == '$'
+		&& (ft_isalnum(node->s[i + 1]) || node->s[i + 1] == '_'));
 }
 
 static int	append_value(char **new_str, int *indice, char *value)
@@ -61,26 +62,20 @@ static int	handle_env_var(t_parser *node, t_envpath *envpath,
 
 void	set_node_type(t_parser *node)
 {
-	if (node->type == REDIR_INPUT || node->type == REDIR_OUTPUT || node->type == REDIR_OUTPUT_APP || node->type == PIPE || node->type == DELIMITER)
+	if (node->type == REDIR_INPUT || node->type == REDIR_OUTPUT
+		|| node->type == REDIR_OUTPUT_APP || node->type == PIPE
+		|| node->type == DELIMITER)
 		return ;
-	if (node->prev && (node->prev->type == REDIR_INPUT || node->prev->type == REDIR_OUTPUT || node->prev->type == REDIR_OUTPUT_APP))
+	if (node->prev && (node->prev->type == REDIR_INPUT
+			|| node->prev->type == REDIR_OUTPUT
+			|| node->prev->type == REDIR_OUTPUT_APP))
 		node->type = FILENAME;
-	else if (node->prev && (node->prev->type == CMD || node->prev->type == CMD_ARG))
+	else if (node->prev && (node->prev->type == CMD
+			|| node->prev->type == CMD_ARG))
 		node->type = CMD_ARG;
 	else
 		node->type = CMD;
 }
-
-// static int	init_expand(t_parser *node, char **new_str, int *indice, int *len)
-// {
-// 	(void) node;
-// 	*new_str = malloc((*len - 1) * sizeof(char));
-// 	if (!*new_str)
-// 		return (1);
-// 	indice[0] = 1;
-// 	indice[1] = 0;
-// 	return (0);
-// }
 
 void	parser_clear_one(t_parser **node, t_program *program)
 {
@@ -122,7 +117,7 @@ int	expand_d_quote(t_parser **node, t_envpath *envpath)
 		{
 			if (handle_env_var((*node), envpath, &new_str, indice))
 				return (free(new_str), 1);
-			continue;
+			continue ;
 		}
 		else
 		{
