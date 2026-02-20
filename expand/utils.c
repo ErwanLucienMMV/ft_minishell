@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 15:02:06 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 07:08:06 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:02:05 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,3 @@ int	copy_env_value(char *new_str, int *j, char *value)
 		new_str[(*j)++] = value[k++];
 	return (0);
 }
-

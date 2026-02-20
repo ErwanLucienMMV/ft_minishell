@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 06:43:55 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:01:38 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	handle_redirections(t_program *program)
 void	handle_expansions(t_program *program)
 {
 	print_debug(program);
-	send_to_expand(program->parsed, *program->envpath, program);
+	send_to_expand(*program->envpath, program);
 	add_empty_nodes_to_their_next(program);
 	remove_useless_space_nodes(program);
 	restore_types_after_expansion(program->parsed);

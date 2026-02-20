@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:11:25 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 07:41:21 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:02:23 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int	expand_plain_text(t_parser *node, t_envpath *envpath)
 	return (0);
 }
 
-
 // int	expand_plain_text(t_parser *node, t_envpath *envpath)
 // {
 // 	char	*new_str;
@@ -175,4 +174,3 @@ int	expand_plain_text(t_parser *node, t_envpath *envpath)
 // 	free(expanded_one);
 // 	return (0);
 // }
-

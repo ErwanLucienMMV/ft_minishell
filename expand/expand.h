@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:19 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 07:43:20 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:02:39 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,13 @@
 # include "../terminal/terminal.h"
 # include "../envpath/envpath.h"
 
-
 //			---expand types functions---	//
 int		expand_plain_text(t_parser *node, t_envpath *envpath);
 int		expand_d_quote(t_parser **node, t_envpath *envpath);
 int		expand_s_quote(t_parser **node, t_program *program);
 int		expand_env_var(t_parser **node, t_envpath *envpath, t_program *program);
 
-int		send_to_expand(t_parser **parsed,
-			t_envpath *envpath, t_program *program);
+int		send_to_expand(t_envpath *envpath, t_program *program);
 int		restore_types_after_expansion(t_parser **tokens);
 
 //		----Nodes operations---				//
