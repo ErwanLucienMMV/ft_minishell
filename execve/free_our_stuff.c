@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_our_stuff.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:08:21 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/18 16:56:20 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/20 01:36:19 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,21 @@ void	clean_exit(char **splited_cmd, char *new_cmd)
 	if (new_cmd)
 		free(new_cmd);
 	exit(127);
+}
+
+void	free_t_program(t_program *program)
+{
+	unlink(program->here_doc_tempfile);
+	if (program->parsed)
+	{
+		free_parsers(*(program->parsed));
+		free(program->parsed);
+	}
+	if (program->envpath)
+	{
+		free_envpath(*(program->envpath));
+		free(program->envpath);
+	}
+	free(program);
 }
 

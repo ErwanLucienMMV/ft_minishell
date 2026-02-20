@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 00:38:49 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 01:37:05 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,16 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 		exit(1);
 	new_cmd = find_command(cmd->cmd->s, path);
 	if (!new_cmd)
+	{
+		free_t_command(cmd);
+		free_t_program(program);
 		exit (1);
+	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
 	execve(new_cmd, cmd->args, envp);
 	error_message_command_not_found(cmd->cmd->s);
 	free(new_cmd);
 	exit(127);
-}
-
-void	handle_the_child(t_program *program, t_commands *cmd)
-{
-	char		*path;
-
-	if (is_a_buildin(cmd->cmd->s))
-		exit(check_buildin_piped(cmd->cmd, *program->envpath, program));
-	else
-	{
-		path = get_env_value_by_key(program->envpath, "PATH");
-		do_command_piped(program, cmd, path, program->envp);
-	}
 }
 
 void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)

@@ -6,7 +6,7 @@
 #    By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/18 00:55:07 by emaigne          ###   ########.fr        #
+#    Updated: 2026/02/20 01:32:24 by emaigne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ YELLOW = \033[0;33m
 RESET = \033[0m
 MAKEFLAGS += --no-print-directory
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS  = -Wall -Wextra -Werror
 
 # Detect Homebrew readline prefix (empty if not installed)
 READLINE_PREFIX := $(shell brew --prefix readline 2>/dev/null || true)
@@ -50,7 +50,7 @@ LIBFT= libft/libft.a
 
 all: $(NAME) $(LIBFT)
 
-debug: CFLAGS += -g3 -D IS_DEBUG=1
+debug: CFLAGS += -g -fsanitize=address -D IS_DEBUG=1
 
 debug: re
 

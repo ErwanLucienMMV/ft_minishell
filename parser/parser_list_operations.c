@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_list_operations.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:34:15 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/18 16:58:40 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/20 01:45:34 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_parser	*parser_node_new(t_lexer type, char *s, int x)
 {
 	t_parser	*new;
 
-	new = malloc(sizeof(t_parser));
+	new = ft_calloc(1, sizeof(t_parser));
 	if (!new)
 		return (NULL);
 	new->type = type;
@@ -59,8 +59,8 @@ t_parser	*parser_node_new(t_lexer type, char *s, int x)
 	if (!new->s)
 		return (free(new), NULL);
 	ft_strlcpy(new->s, s, x + 1);
-	new->prev = 0;
-	new->next = 0;
+	new->prev = NULL;
+	new->next = NULL;
 	return (new);
 }
 
