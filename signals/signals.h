@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 17:01:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/06 12:30:09 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/20 06:44:47 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 
 # if defined(__APPLE__)
 /* Provide minimal prototypes when system headers don't declare them */
-void rl_replace_line(const char *text, int clear_undo);
-int rl_on_new_line(void);
-void rl_redisplay(void);
+void	rl_replace_line(const char *text, int clear_undo);
+int		rl_on_new_line(void);
+void	rl_redisplay(void);
 # endif
 
 void	set_signal_action(void);
