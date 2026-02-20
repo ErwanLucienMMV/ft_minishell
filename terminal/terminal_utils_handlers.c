@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/19 23:02:31 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 06:43:55 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	execute_and_restore(t_program *program)
 	{
 		buildins(program->parsed, *program->envpath, program);
 	}
-	if (!((*program->parsed)->s[0] == ':' && ft_strlen((*program->parsed)->s) == 1))
+	if (!((*program->parsed)->s[0] == ':'
+			&& ft_strlen((*program->parsed)->s) == 1))
 		execve_handler(program);
 	rl_replace_line("", 0);
 	rl_redisplay();
