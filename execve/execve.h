@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 11:54:57 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 12:10:27 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ int				make_redirection(t_parser *parsed);
 void			print_parser_node(t_parser *elem);
 void			print_matrix(char **tab);
 void			print_command_list(t_commands **head);
+void			print_size_of_structs(void);
 
 #endif

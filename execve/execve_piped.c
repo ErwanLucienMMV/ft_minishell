@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 11:56:17 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 12:10:44 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,7 @@ int	execve_with_pipe(t_program *program)
 	if (IS_DEBUG)
 	{
 		print_command_list(&commands);
-		ft_printf_fd(2, "size of a t_command: %d\n", sizeof(t_commands));
-		ft_printf_fd(2, "size of a t_program: %d\n", sizeof(t_program));
+		print_size_of_structs();
 	}
 	if (commands == NULL)
 		return (1);
