@@ -6,7 +6,7 @@
 #    By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/20 08:33:51 by emaigne          ###   ########.fr        #
+#    Updated: 2026/02/20 11:55:16 by emaigne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c \
 		expand/add_empty_nodes_to_their_next.c expand/expand_env_var.c \
 		signals/signals.c files_handler/fhandler.c here_doc/here_doc.c \
 		execve/execve.c execve/utils.c execve/find_command.c \
-		execve/execve_piped.c \
+		execve/execve_piped.c execve/execve_debug.c \
 		execve/parse_command.c execve/execve_checks.c execve/execve_children.c \
 		execve/free_our_stuff.c execve/execve_piped_redirections.c \
 		execve/free_structures.c \

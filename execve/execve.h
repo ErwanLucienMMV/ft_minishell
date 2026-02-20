@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 08:28:43 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 11:54:57 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,10 @@ int				execve_with_pipe(t_program *program);
 void			parse_commands_with_pipe(t_commands **commands,
 					t_parser *parsed);
 int				make_redirection(t_parser *parsed);
+
+//				---Debug---				//
+void			print_parser_node(t_parser *elem);
+void			print_matrix(char **tab);
+void			print_command_list(t_commands **head);
 
 #endif
