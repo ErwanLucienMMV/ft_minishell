@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 02:56:11 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 06:24:59 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void			handle_middle_child(t_program *program,
 void			handle_the_child(t_program *program, t_commands *cmd);
 
 //				---Piped redirections---	//
+int				check_for_redirections(t_parser *cmd, t_commands *tofill);
 int				setinputs(t_commands *commands);
 int				setoutputs(t_commands *commands);
 

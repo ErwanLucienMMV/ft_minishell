@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:44:15 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/19 23:30:43 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 06:30:19 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	make_redirection(t_parser *parsed)
 	return (0);
 }
 
-int	execve_without_pipe(t_program *program, t_parser **parsed, t_envpath *envpath, char **envp)
+int	execve_without_pipe(t_program *program,
+	t_parser **parsed, t_envpath *envpath, char **envp)
 {
 	t_parser	*cmd;
 
@@ -88,7 +89,8 @@ int	execve_without_pipe(t_program *program, t_parser **parsed, t_envpath *envpat
 	if (!cmd)
 		return (1);
 	make_redirection(*parsed);
-	exec_one_command(program, cmd, get_env_value_by_key(&envpath, "PATH"), envp);
+	exec_one_command(program, cmd,
+		get_env_value_by_key(&envpath, "PATH"), envp);
 	return (0);
 }
 

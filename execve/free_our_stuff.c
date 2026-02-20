@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:08:21 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 01:36:19 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 06:16:04 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,38 +29,9 @@ void	clearmatrix(char **tab)
 
 void	free_splited_cmd(char **splited_cmd)
 {
+	clearmatrix(splited_cmd);
 	if (splited_cmd)
 		free(splited_cmd);
-}
-
-void	free_t_parser(t_parser *parser)
-{
-	t_parser	*next;
-
-	next = NULL;
-	if (!parser)
-		return ;
-	if (parser->next)
-		next = parser->next;
-	if (parser->s)
-		free(parser->s);
-	free(parser);
-	free_t_parser(next);
-}
-
-void	free_t_command(t_commands *tofree)
-{
-	if (!tofree)
-		return ;
-	if (tofree->cmd)
-		free_t_parser(tofree->cmd);
-	if (tofree->args)
-		clearmatrix(tofree->args);
-	if (tofree->infile)
-		free(tofree->infile);
-	if (tofree->outfile)
-		free(tofree->outfile);
-	free(tofree);
 }
 
 void	clean_exit(char **splited_cmd, char *new_cmd)
@@ -70,21 +41,5 @@ void	clean_exit(char **splited_cmd, char *new_cmd)
 	if (new_cmd)
 		free(new_cmd);
 	exit(127);
-}
-
-void	free_t_program(t_program *program)
-{
-	unlink(program->here_doc_tempfile);
-	if (program->parsed)
-	{
-		free_parsers(*(program->parsed));
-		free(program->parsed);
-	}
-	if (program->envpath)
-	{
-		free_envpath(*(program->envpath));
-		free(program->envpath);
-	}
-	free(program);
 }
 
