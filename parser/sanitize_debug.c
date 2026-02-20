@@ -6,21 +6,35 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 23:40:05 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/19 22:37:59 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:37:50 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static char	*check_error(t_parser *temp)
+static char	*check_redir(t_parser *temp)
 {
 	char	*str;
 
 	str = NULL;
-	if (temp->type == CMD)
-		str = "CMD";
-	else if (temp->type == REDIR_OUTPUT)
+	if (temp->type == REDIR_OUTPUT)
 		str = "REDIR_OUTPUT";
+	else if (temp->type == REDIR_INPUT)
+		str = "REDIR_INPUT";
+	else if (temp->type == REDIR_OUTPUT_APP)
+		str = "REDIR_OUTPUT_APP";
+	return (str);
+}
+
+static char	*check_error(t_parser *temp)
+{
+	char	*str;
+
+	str = check_redir(temp);
+	if (str == NULL)
+		return (str);
+	else if (temp->type == CMD)
+		str = "CMD";
 	else if (temp->type == FILENAME)
 		str = "FILENAME";
 	else if (temp->type == CMD_ARG)
@@ -35,10 +49,6 @@ static char	*check_error(t_parser *temp)
 		str = "PIPE";
 	else if (temp->type == EXIT_STATUS)
 		str = "EXIT_STATUS";
-	else if (temp->type == REDIR_INPUT)
-		str = "REDIR_INPUT";
-	else if (temp->type == REDIR_OUTPUT_APP)
-		str = "REDIR_OUTPUT_APP";
 	return (str);
 }
 
@@ -50,7 +60,6 @@ void	print_error(t_parser *temp)
 	if (IS_DEBUG)
 	{
 		ft_printf_fd(2, "sanitizing..\n");
-
 		while (temp)
 		{
 			str = check_error(temp);

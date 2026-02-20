@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:53:07 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/18 14:13:01 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/20 08:34:44 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,12 @@ int			parser_clear(t_parser **lst);
 t_parser	*get_first_parser(t_parser *lst);
 t_parser	*get_last_parser(t_parser *lst);
 
-
 //			---Sanitize---					//
-
 //		---Single token functions---		//
 int			sanitize_redir_input(t_parser *token);
 int			sanitize_redir_output(t_parser *token);
 int			sanitize_redir_output_app(t_parser *token);
 int			sanitize_delimiter(t_parser *token);
-
 
 int			sanitize(t_parser **head);
 t_parser	*get_prev_echo(t_parser *node);

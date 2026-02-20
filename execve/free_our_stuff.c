@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:08:21 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 06:16:04 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:29:24 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,3 @@ void	clean_exit(char **splited_cmd, char *new_cmd)
 		free(new_cmd);
 	exit(127);
 }
-

@@ -6,13 +6,12 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 02:55:00 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:29:59 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execve.h"
 #include "../here_doc/here_doc.h"
-
 
 char	**ft_dup_matrix(char **tab)
 {

@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 08:12:36 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:28:43 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ typedef struct s_commands
 	t_lexer				redir_type;
 	struct s_commands	*next;
 }	t_commands;
+
+int				execve_without_pipe(t_program *program,
+					t_parser **parsed, t_envpath *envpath, char **envp);
 
 //			---freeing functions---		//
 void			clearmatrix(char **tab);
@@ -75,6 +78,5 @@ int				execve_with_pipe(t_program *program);
 void			parse_commands_with_pipe(t_commands **commands,
 					t_parser *parsed);
 int				make_redirection(t_parser *parsed);
-
 
 #endif

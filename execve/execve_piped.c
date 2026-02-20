@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 08:13:23 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:29:13 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	first_exec(t_program *program, t_commands *cmd)
 		handle_the_child(program, cmd);
 	}
 }
-
 
 int	execve_with_pipe(t_program *program)
 {
