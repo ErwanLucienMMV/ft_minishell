@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 12:10:27 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 14:27:42 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void			clean_exit(char **splited_cmd, char *new_cmd);
 void			free_t_program(t_program *program);
 void			free_all_commands(t_commands **commands);
 void			free_t_cmd_prgrm_exit(t_commands *cmd, t_program *program);
+void			free_t_commands_and_args(t_commands *elem);
 
 //				---Utils---				//
 

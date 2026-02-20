@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 06:15:20 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 12:25:02 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 14:33:51 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,24 @@ void	free_t_cmd_prgrm_exit(t_commands *cmd, t_program *program)
 	free_t_command(cmd);
 	free_t_program(program);
 	exit(1);
+}
+
+//free ONLY the structure and the args inside, leaving the rest unattended
+void	free_t_commands_and_args(t_commands *elem)
+{
+	t_commands	*next;
+
+	next = elem->next;
+	while (elem)
+	{
+		clearmatrix(elem->args);
+		elem->args = NULL;
+		free(elem);
+		elem = NULL;
+		elem = next;
+		if (elem && elem->next)
+			next = elem->next;
+		else
+			break ;
+	}
 }

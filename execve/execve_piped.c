@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 12:25:35 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 14:35:29 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	first_exec(t_program *program, t_commands *cmd)
 int	execve_with_pipe(t_program *program)
 {
 	t_commands	*commands;
-	t_commands	*next;
+	t_commands	*first;
 
 	commands = NULL;
 	parse_commands_with_pipe(&commands, *(program->parsed));
@@ -112,10 +112,10 @@ int	execve_with_pipe(t_program *program)
 	}
 	if (commands == NULL)
 		return (1);
+	first = commands;
 	first_exec(program, commands);
-	next = commands->next;
 	//free_t_command(commands); causes crash too
-	commands = next;
+	commands = commands->next;
 	while (commands && commands->next)
 	{
 		middle_exec(program, commands);
@@ -123,5 +123,6 @@ int	execve_with_pipe(t_program *program)
 	}
 	last_exec(program, commands);
 	//free_all_commands(&commands); causes issues with the sanitize
+	free_t_commands_and_args(first);
 	return (0);
 }
