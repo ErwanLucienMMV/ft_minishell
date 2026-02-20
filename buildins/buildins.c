@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:26 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/16 18:57:41 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:21:28 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ int	check_buildin(t_parser *cmd, t_envpath *envpath, t_program *program)
 {
 	if (cmd->type == CMD && ft_strncmp(cmd->s, "cd", 2) == 0
 		&& ft_strlen(cmd->s) == 2)
-		return (make_redirection(*program->parsed), buildin_cd(cmd, envpath, program));
+		return (make_redirection(*program->parsed),
+			buildin_cd(cmd, envpath, program));
 	else if (cmd->type == CMD && ft_strncmp(cmd->s, "echo", 4) == 0
 		&& ft_strlen(cmd->s) == 4)
 		return (make_redirection(*program->parsed), buildin_echo(cmd, program));
@@ -93,10 +94,12 @@ int	check_buildin(t_parser *cmd, t_envpath *envpath, t_program *program)
 		return (buildin_exit(program));
 	else if (cmd->type == CMD && ft_strncmp(cmd->s, "export", 6) == 0
 		&& ft_strlen(cmd->s) == 6)
-		return (make_redirection(*program->parsed), buildin_export(cmd, envpath, program));
+		return (make_redirection(*program->parsed),
+			buildin_export(cmd, envpath, program));
 	else if (cmd->type == CMD && ft_strncmp(cmd->s, "unset", 5) == 0
 		&& ft_strlen(cmd->s) == 5)
-		return (make_redirection(*program->parsed), buildin_unset(cmd, envpath, program));
+		return (make_redirection(*program->parsed),
+			buildin_unset(cmd, envpath, program));
 	else if (cmd->type == CMD && ft_strncmp(cmd->s, "pwd", 3) == 0
 		&& ft_strlen(cmd->s) == 3)
 		return (make_redirection(*program->parsed), buildin_pwd(program));

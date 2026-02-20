@@ -6,7 +6,7 @@
 #    By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/20 07:39:12 by emaigne          ###   ########.fr        #
+#    Updated: 2026/02/20 08:15:50 by emaigne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ READLINE_LIBS := -L$(READLINE_PREFIX)/lib -lreadline -lcurses
 SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c parser/sanitize_debug.c \
 		parser/sanitize_individual_token.c parser/parser_check_its_quotes.c \
 		parser/parser_check_its.c parser/parser_list_operations.c buildins/buildins.c \
-		buildins/buildin_exit.c buildins/buildin_envpath.c \
+		buildins/buildin_exit.c buildins/buildin_envpath.c buildins/buildin_unset_export.c \
 		envpath/envpath.c envpath/envp_utils.c parser/utils.c \
 		envpath/envp_operations.c \
 		expand/expand.c expand/expand_plain_text.c expand/expand_d_quote.c \

@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 21:20:42 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 06:13:58 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:09:10 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_middle_child(t_program *program, t_commands *cmd)
 
 	if (is_a_buildin(cmd->cmd->s))
 		exit(check_buildin_piped(cmd->cmd,
-				*program->envpath, program)); //free everything beside cmd->cmd
+				*program->envpath, program)); //TODO: free everything beside cmd->cmd
 	else
 	{
 		path = get_env_value_by_key(program->envpath, "PATH");

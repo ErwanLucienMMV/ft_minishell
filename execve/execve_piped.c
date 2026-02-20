@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 02:19:28 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:13:23 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ void	last_exec(t_program *program, t_commands *cmd)
 	else
 	{
 		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
-		{
-			free_t_command(cmd);
-			free_t_program(program);
-			exit(1);
-		}
+			free_t_cmd_prgrm_exit(cmd, program);
 		get_path_for_exec(cmd, program);
 	}
 }
@@ -69,11 +65,7 @@ void	middle_exec(t_program *program, t_commands *cmd)
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
 		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
-		{
-			free_t_command(cmd);
-			free_t_program(program);
-			exit(1);
-		}
+			free_t_cmd_prgrm_exit(cmd, program);
 		handle_middle_child(program, cmd);
 	}
 }
@@ -101,11 +93,7 @@ void	first_exec(t_program *program, t_commands *cmd)
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
 		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
-		{
-			free_t_command(cmd);
-			free_t_program(program);
-			exit(1);
-		}
+			free_t_cmd_prgrm_exit(cmd, program);
 		handle_the_child(program, cmd);
 	}
 }

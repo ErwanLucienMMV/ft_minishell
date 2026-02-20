@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:10:31 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 00:45:11 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 08:19:39 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	check_for_exit_arguments(t_program *program)
 {
 	t_parser	*current;
 
-	if (!program || !program->parsed || !*(program->parsed) || !(*program->parsed)->next)
+	if (!program->parsed || !*(program->parsed) || !(*program->parsed)->next)
 		return (0);
 	current = (*program->parsed)->next;
 	while (current)
@@ -81,14 +81,14 @@ int	check_for_exit_arguments(t_program *program)
 		}
 		current = current->next;
 	}
-	if (program->parsed && *(program->parsed) && (*program->parsed)->next && (*program->parsed)->next->next)
+	if (program->parsed && *(program->parsed)
+		&& (*program->parsed)->next && (*program->parsed)->next->next)
 	{
 		ft_printf_fd(2, "exit: too many arguments\n");
-		program->last_exit_status = 1;
-		return (0);
+		return (1);
 	}
 	if (program->parsed && *(program->parsed) && (*program->parsed)->next)
-		program->last_exit_status = ft_strtol((*program->parsed)->next->s) % 256;
+		return (ft_strtol((*program->parsed)->next->s) % 256);
 	return (0);
 }
 
@@ -100,9 +100,10 @@ int	buildin_exit(t_program *program)
 	if (!program)
 		exit(1);
 	ft_printf_fd(2, "exit\n");
-	check_for_exit_arguments(program);
+	exit_status = check_for_exit_arguments(program);
 	unlink(program->here_doc_tempfile);
-	exit_status = program->last_exit_status;
+	if (exit_status == 0)
+		exit_status = program->last_exit_status;
 	if (program->parsed)
 	{
 		free_parsers(*(program->parsed));
