@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/19 22:58:37 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 06:40:40 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,6 @@ int	process_parsing_and_sanitize(t_program *program, char *line)
 	return (0);
 }
 
-int	check_at_least_one_node(t_program *program)
-{
-	*(program->parsed) = get_first_parser(*(program->parsed));
-	if (!*(program->parsed))
-		return (1);
-	return (0);
-}
-
 void	main_loop(t_program *program)
 {
 	char	*line;
@@ -75,8 +67,6 @@ void	main_loop(t_program *program)
 	{
 		set_signal_action();
 		line = readline("$miniswag> ");
-		// if (handle_sigint(line))
-		// 	continue ;
 		if (!line)
 			break ;
 		if (line && *line)

@@ -6,7 +6,7 @@
 #    By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/20 06:35:13 by emaigne          ###   ########.fr        #
+#    Updated: 2026/02/20 06:41:17 by emaigne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c parser/sanitize_de
 		execve/free_our_stuff.c execve/execve_piped_redirections.c execve/free_structures.c \
 		execve/parse_commands_files.c \
 		terminal/terminal_debug.c terminal/terminal_utils_handlers.c buildins/buildin_echo.c \
+		terminal/terminal_checks.c \
 		errors/error.c expand/utils.c
 
 OBJ = $(SRC:.c=.o)
