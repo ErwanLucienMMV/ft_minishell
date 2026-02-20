@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 01:00:55 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 02:19:28 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ void	last_exec(t_program *program, t_commands *cmd)
 	else
 	{
 		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
-			free_t_command(cmd); //create a tailored free_program function and exit and call this one
+		{
+			free_t_command(cmd);
+			free_t_program(program);
+			exit(1);
+		}
 		get_path_for_exec(cmd, program);
 	}
 }
@@ -65,7 +69,11 @@ void	middle_exec(t_program *program, t_commands *cmd)
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
 		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
-			free_t_command(cmd); //create a tailored free_program function and exit and call this one
+		{
+			free_t_command(cmd);
+			free_t_program(program);
+			exit(1);
+		}
 		handle_middle_child(program, cmd);
 	}
 }
@@ -93,7 +101,11 @@ void	first_exec(t_program *program, t_commands *cmd)
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
 		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
+		{
 			free_t_command(cmd);
+			free_t_program(program);
+			exit(1);
+		}
 		handle_the_child(program, cmd);
 	}
 }
@@ -105,6 +117,13 @@ int	execve_with_pipe(t_program *program)
 
 	commands = NULL;
 	parse_commands_with_pipe(&commands, *(program->parsed));
+	if (IS_DEBUG)
+	{
+		ft_printf_fd(2, "size of a t_command: %d\n", sizeof(t_commands));
+		ft_printf_fd(2, "size of a t_program: %d\n", sizeof(t_program));
+	}
+	if (commands == NULL)
+		return (1);
 	first_exec(program, commands);
 	commands = commands->next;
 	while (commands && commands->next)

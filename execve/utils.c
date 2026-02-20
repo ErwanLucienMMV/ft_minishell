@@ -6,31 +6,70 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 01:37:05 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 02:32:58 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execve.h"
 #include "../here_doc/here_doc.h"
 
+
+char	**ft_dup_matrix(char **tab)
+{
+	char	**dup;
+	int		i;
+
+	if (!tab)
+		return (NULL);
+	i = 0;
+	while (tab[i])
+		i++;
+	dup = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!dup)
+		return (NULL);
+	i = -1;
+	while (tab[++i])
+	{
+		dup[i] = ft_strdup(tab[i]);
+		if (!dup[i])
+		{
+			while (i > 0)
+				free(dup[--i]);
+			free(dup);
+			return (NULL);
+		}
+	}
+	dup[i] = NULL;
+	return (dup);
+}
+
 void	do_command_piped(t_program *program, t_commands *cmd,
 	char *path, char **envp)
 {
 	char		*new_cmd;
+	char		**args;
 
 	if (cmd->cmd->type == DELIMITER)
-		exit(1);
-	new_cmd = find_command(cmd->cmd->s, path);
-	if (!new_cmd)
 	{
 		free_t_command(cmd);
 		free_t_program(program);
+		exit(1);
+	}
+	new_cmd = find_command(cmd->cmd->s, path);
+	args = ft_dup_matrix(cmd->args);
+	free_t_command(cmd);
+	if (!new_cmd || !args)
+	{
+		free_t_program(program);
+		clearmatrix(args);
 		exit (1);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
-	execve(new_cmd, cmd->args, envp);
+	free_t_program(program);
+	execve(new_cmd, args, envp);
 	error_message_command_not_found(cmd->cmd->s);
 	free(new_cmd);
+	free(args);
 	exit(127);
 }
 
