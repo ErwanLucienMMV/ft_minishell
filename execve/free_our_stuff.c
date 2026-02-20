@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:08:21 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 08:29:24 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 14:53:14 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@ void	clearmatrix(char **tab)
 		i++;
 	}
 	free(tab);
-	tab = 0;
+	tab = NULL;
 }
 
 void	free_splited_cmd(char **splited_cmd)
 {
 	clearmatrix(splited_cmd);
-	if (splited_cmd)
-		free(splited_cmd);
 }
 
 void	clean_exit(char **splited_cmd, char *new_cmd)
