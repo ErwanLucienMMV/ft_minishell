@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 14:35:29 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 14:38:58 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ int	execve_with_pipe(t_program *program)
 	last_exec(program, commands);
 	//free_all_commands(&commands); causes issues with the sanitize
 	free_t_commands_and_args(first);
+	//print_command_list(&first); causes crashes, indicating it seems like the first one is freed already
 	return (0);
 }
