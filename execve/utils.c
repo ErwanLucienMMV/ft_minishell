@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 02:32:58 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/20 02:47:23 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 	}
 	new_cmd = find_command(cmd->cmd->s, path);
 	args = ft_dup_matrix(cmd->args);
-	free_t_command(cmd);
+	//free_t_command(cmd); //somehow isn't usefull to reduce the leaks in ls | ls nor hello | hello scenarios, and even worst, causes issues with sanitize
 	if (!new_cmd || !args)
 	{
 		free_t_program(program);
