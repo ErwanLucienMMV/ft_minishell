@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:50:18 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/11 11:14:48 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 18:08:51 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*test_all_paths(char *command, char *pathline)
 		i++;
 	}
 	clearmatrix(possiblepaths);
-	ft_printf_fd(2, "miniswag: %s: command not found\n", command + 1);
 	return (NULL);
 }
 

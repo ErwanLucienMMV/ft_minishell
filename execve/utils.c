@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 17:56:59 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 18:08:22 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
 		exit(1);
 	splited_cmd = provision_commands(cmd, splited_cmd);
 	if (!splited_cmd)
-		clean_exit(program, NULL, NULL, 127);
+		clean_exit(program, NULL, 127);
 	new_cmd = find_command(cmd->s, path);
 	if (!new_cmd)
 		clean_exit(program, splited_cmd, 127);
