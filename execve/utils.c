@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 18:50:27 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 19:19:32 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../here_doc/here_doc.h"
 
 void	exit_check_args_cmd(t_program *program, char **args,
-	char *new_cmd, t_commands *cmd)
+	char *new_cmd)
 {
 	if (!args)
 	{
@@ -24,7 +24,6 @@ void	exit_check_args_cmd(t_program *program, char **args,
 	}
 	if (!new_cmd)
 	{
-		error_message_command_not_found(cmd->cmd->s);
 		free_t_program(program);
 		clearmatrix(args);
 		exit(127);
@@ -70,7 +69,7 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 	if (!args || !new_cmd)
 	{
 		free_t_commands_and_args(first);
-		exit_check_args_cmd(program, args, new_cmd, cmd);
+		exit_check_args_cmd(program, args, new_cmd);
 	}
 	if (stat(new_cmd, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
 		handle_is_dir(cmd, first, program, args);
