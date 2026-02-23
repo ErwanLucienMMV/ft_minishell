@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 21:20:42 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 16:37:17 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:55:05 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	handle_middle_child(t_program *program, t_commands *cmd,
 	else
 	{
 		path = get_env_value_by_key(program->envpath, "PATH");
-		do_command_piped(program, cmd, path, program->envp);
+		do_command_piped(program, cmd, path, first);
 	}
 }
 
@@ -48,6 +48,6 @@ void	handle_the_child(t_program *program, t_commands *cmd, t_commands *first)
 	else
 	{
 		path = get_env_value_by_key(program->envpath, "PATH");
-		do_command_piped(program, cmd, path, program->envp);
+		do_command_piped(program, cmd, path, first);
 	}
 }

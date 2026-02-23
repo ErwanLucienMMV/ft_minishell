@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 17:46:46 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 17:48:01 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void			clearmatrix(char **tab);
 void			free_t_parser(t_parser *parser);
 void			free_t_command(t_commands *tofree);
 void			clean_exit(t_program *program, char **splited_cmd,
-					char *new_cmd, int exit_code);
+					int exit_code);
 void			free_t_program(t_program *program);
 void			free_all_commands(t_commands **commands);
 void			free_t_cmd_prgrm_exit(t_commands *cmd, t_program *program);
@@ -52,7 +52,7 @@ void			free_t_commands_and_args(t_commands *elem);
 //				---Utils---				//
 
 void			do_command_piped(t_program *program,
-					t_commands *cmd, char *path, char **envp);
+					t_commands *cmd, char *path, t_commands *first);
 void			handle_the_child(t_program *program, t_commands *cmd,
 					t_commands *first);
 void			do_command(t_program *program,
