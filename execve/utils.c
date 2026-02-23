@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 17:27:45 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 12:39:05 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,25 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 	}
 	new_cmd = find_command(cmd->cmd->s, path);
 	args = ft_dup_matrix(cmd->args);
-	//free_t_command(cmd); //somehow isn't usefull to reduce the leaks in ls | ls nor hello | hello scenarios, and even worst, causes issues with sanitize
-	if (!new_cmd || !args)
+	// free_t_commands_and_args(cmd);
+	if (!args)
 	{
 		free_t_program(program);
 		clearmatrix(args);
 		exit (1);
 	}
+	if (!new_cmd)
+	{
+		error_message_command_not_found(cmd->cmd->s);
+		free_t_program(program);
+		clearmatrix(args);
+		exit(127);
+	}
 	if (stat(new_cmd, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
 	{
 		error_message_is_a_directory(cmd->cmd->s);
 		free_t_program(program);
+		clearmatrix(args);
 		exit(126);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
@@ -100,13 +108,14 @@ void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
 	}
 	splited_cmd[i] = NULL;
 	new_cmd = find_command(cmd->s, path);
+	if (!new_cmd)
+		clean_exit(program, splited_cmd, new_cmd, 127);
 	if (stat(new_cmd, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
 	{
 		error_message_is_a_directory(cmd->s);
-		clean_exit(splited_cmd, new_cmd, 126);
+		clean_exit(program, splited_cmd, new_cmd, 126);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
 	execve(new_cmd, splited_cmd, envp);
-	// error_message_command_not_found(cmd->s);
-	clean_exit(splited_cmd, new_cmd, 127);
+	clean_exit(program, splited_cmd, new_cmd, 127);
 }

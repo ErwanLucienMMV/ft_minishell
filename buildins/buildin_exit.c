@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:10:31 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 08:19:39 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 14:04:33 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,25 @@ void	free_envpath(t_envpath *envpath)
 	t_envpath	*next;
 
 	next = NULL;
-	if (!envpath)
-		return ;
-	if (envpath->next)
+	if (envpath && envpath->next)
 		next = envpath->next;
-	if (envpath->index)
+	if (envpath && envpath->index)
+	{
 		free(envpath->index);
-	if (envpath->value)
+		envpath->index = NULL;
+	}
+	if (envpath && envpath->value)
 	{
 		free(envpath->value);
+		envpath->value = NULL;
 	}
-	free(envpath);
-	free_envpath(next);
+	if (envpath)
+	{
+		free(envpath);
+		envpath = NULL;
+	}
+	if (next)
+		free_envpath(next);
 }
 
 void	free_parsers(t_parser *parser)
@@ -36,14 +43,20 @@ void	free_parsers(t_parser *parser)
 	t_parser	*next;
 
 	next = NULL;
-	if (!parser)
-		return ;
-	if (parser->next)
+	if (parser && parser->next)
 		next = parser->next;
-	if (parser->s)
+	if (parser && parser->s)
+	{
 		free(parser->s);
-	free(parser);
-	free_parsers(next);
+		parser->s = NULL;
+	}
+	if (parser)
+	{
+		free(parser);
+		parser = NULL;
+	}
+	if (next)
+		free_parsers(next);
 }
 
 int	is_numeric_string(char *str)

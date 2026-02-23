@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_piped.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 14:38:58 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 13:58:14 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,16 @@
 void	get_path_for_exec(t_commands *cmd, t_program *program)
 {
 	char	*path;
+	int		i;
 
 	if (is_a_buildin(cmd->cmd->s))
-		exit(check_buildin_piped(cmd->cmd, *program->envpath, program));
+	{
+		i = check_buildin_piped(cmd->cmd, *program->envpath, program);
+		free_t_commands_and_args(cmd);
+		// free_t_command(cmd);
+		free_t_program(program);
+		exit(i);
+	}
 	else
 	{
 		path = get_env_value_by_key(program->envpath, "PATH");

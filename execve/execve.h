@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 17:22:03 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 12:06:13 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int				execve_without_pipe(t_program *program,
 void			clearmatrix(char **tab);
 void			free_t_parser(t_parser *parser);
 void			free_t_command(t_commands *tofree);
-void			clean_exit(char **splited_cmd, char *new_cmd, int exit_code);
+void			clean_exit(t_program *program, char **splited_cmd, char *new_cmd, int exit_code);
 void			free_t_program(t_program *program);
 void			free_all_commands(t_commands **commands);
 void			free_t_cmd_prgrm_exit(t_commands *cmd, t_program *program);

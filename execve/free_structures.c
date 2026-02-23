@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_structures.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 06:15:20 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 14:33:51 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 14:07:33 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	free_t_command(t_commands *tofree)
 
 void	free_t_program(t_program *program)
 {
-	unlink(program->here_doc_tempfile);
+	close(program->saved_stdin);
+	close(program->saved_stdout);
+	if (program->here_doc_tempfile)
+		unlink(program->here_doc_tempfile);
 	if (program->parsed)
 	{
 		free_parsers(*(program->parsed));
@@ -51,18 +54,20 @@ void	free_t_parser(t_parser *parser)
 	t_parser	*next;
 
 	next = NULL;
-	if (!parser)
-		return ;
-	if (parser->next)
+	if (parser && parser->next)
 		next = parser->next;
-	if (parser->s)
+	if (parser && parser->s)
 	{
 		free(parser->s);
 		parser->s = NULL;
 	}
-	free(parser);
-	parser = NULL;
-	free_t_parser(next);
+	if (parser)
+	{
+		free(parser);
+		parser = NULL;
+	}
+	if (next)
+		free_t_parser(next);
 }
 
 void	free_t_cmd_prgrm_exit(t_commands *cmd, t_program *program)
@@ -85,14 +90,21 @@ void	free_t_commands_and_args(t_commands *elem)
 	next = elem->next;
 	while (elem)
 	{
+		next = elem->next;
 		clearmatrix(elem->args);
 		elem->args = NULL;
+		if (elem->infile)
+		{
+			free(elem->infile);
+			elem->infile = NULL;
+		}
+		if (elem->outfile)
+		{
+			free(elem->outfile);
+			elem->outfile = NULL;
+		}
 		free(elem);
 		elem = NULL;
 		elem = next;
-		if (elem && elem->next)
-			next = elem->next;
-		else
-			break ;
 	}
 }

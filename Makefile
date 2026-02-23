@@ -6,7 +6,7 @@
 #    By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/20 18:05:20 by abarthes         ###   ########.fr        #
+#    Updated: 2026/02/23 12:51:02 by abarthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ LIBFT= libft/libft.a
 
 all: $(NAME) $(LIBFT)
 
-debug: CFLAGS += -g -fsanitize=address -D IS_DEBUG=1
+debug: CFLAGS += -g -D IS_DEBUG=1
 
 debug: re
 

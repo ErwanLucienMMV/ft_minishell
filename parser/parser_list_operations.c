@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_list_operations.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:34:15 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 06:46:05 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 14:12:43 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	its_env_var(t_parser **head, char *s, int *i)
 	if (x == 1 && !s[x])
 		return (its_command(head, s, i));
 	if (new_parser(head, parser_node_new(ENVVAR,
-				ft_strtrim(s, "$"), x - 1)) == 0)
+				s + 1, x - 1)) == 0)
 		return (0);
 	*i += x;
 	return (1);
