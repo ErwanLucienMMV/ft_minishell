@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:50:18 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 18:08:51 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 18:12:22 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*test_all_paths(char *command, char *pathline)
 		free(pathtested);
 		i++;
 	}
+	ft_printf_fd(2, "miniswag: %s: command not found\n", command + 1);
 	clearmatrix(possiblepaths);
 	return (NULL);
 }

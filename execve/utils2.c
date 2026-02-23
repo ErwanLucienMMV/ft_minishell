@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 17:45:14 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 17:45:55 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 18:23:49 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,14 @@ char	**provision_commands(t_parser *temp, char **splited_cmd)
 {
 	int		i;
 
-	i = 0;
+	i = 1;
+	splited_cmd[0] = ft_strdup(temp->s);
+	if (!splited_cmd[0])
+	{
+		free_incomplete_matrix(splited_cmd, 0);
+		return (NULL);
+	}
+	temp = temp->next;
 	while (temp && temp->type == CMD_ARG)
 	{
 		splited_cmd[i++] = ft_strdup(temp->s);
