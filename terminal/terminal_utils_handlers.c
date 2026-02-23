@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 14:31:14 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 14:46:19 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int	handle_redirections(t_program *program)
 {
-	program->saved_stdin = dup(STDIN_FILENO);
-	program->saved_stdout = dup(STDOUT_FILENO);
+	if (!program->saved_stdin)
+		program->saved_stdin = dup(STDIN_FILENO);
+	if (!program->saved_stdout)
+		program->saved_stdout = dup(STDOUT_FILENO);
 	if (file_handler(program->parsed))
 		return (1);
 	if (!there_is_at_least_one_pipe(*program->parsed))
@@ -50,6 +52,8 @@ void	execute_and_restore(t_program *program)
 	dup2(program->saved_stdin, STDIN_FILENO);
 	dup2(program->saved_stdout, STDOUT_FILENO);
 	close(program->saved_stdin);
+	program->saved_stdin = 0;
 	close(program->saved_stdout);
+	program->saved_stdout = 0;
 	parser_clear(program->parsed);
 }
