@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
 /*   Updated: 2026/02/23 17:56:59 by abarthes         ###   ########.fr       */
@@ -13,33 +13,30 @@
 #include "execve.h"
 #include "../here_doc/here_doc.h"
 
-char	**ft_dup_matrix(char **tab)
+void	exit_is_dir(t_program *program, t_commands *cmd, char **args)
 {
-	char	**dup;
-	int		i;
+	error_message_is_a_directory(cmd->cmd->s);
+	free_t_program(program);
+	clearmatrix(args);
+	exit(126);
+}
 
-	if (!tab)
-		return (NULL);
-	i = 0;
-	while (tab[i])
-		i++;
-	dup = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!dup)
-		return (NULL);
-	i = -1;
-	while (tab[++i])
+void	exit_check_args_cmd(t_program *program, char **args,
+	char *new_cmd, t_commands *cmd)
+{
+	if (!args)
 	{
-		dup[i] = ft_strdup(tab[i]);
-		if (!dup[i])
-		{
-			while (i > 0)
-				free(dup[--i]);
-			free(dup);
-			return (NULL);
-		}
+		free_t_program(program);
+		clearmatrix(args);
+		exit (1);
 	}
-	dup[i] = NULL;
-	return (dup);
+	if (!new_cmd)
+	{
+		error_message_command_not_found(cmd->cmd->s);
+		free_t_program(program);
+		clearmatrix(args);
+		exit(127);
+	}
 }
 
 void	do_command_piped(t_program *program, t_commands *cmd,
@@ -96,7 +93,6 @@ void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
 {
 	char		**splited_cmd;
 	char		*new_cmd;
-	t_parser	*temp;
 	int			i;
 	struct stat	path_stat;
 
@@ -104,14 +100,9 @@ void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
 	splited_cmd = malloc(sizeof(char *) * (count_cmd_args(cmd) + 2));
 	if (!splited_cmd)
 		exit(1);
-	splited_cmd[0] = ft_strdup(cmd->s);
-	temp = cmd->next;
-	while (temp && temp->type == CMD_ARG)
-	{
-		splited_cmd[i++] = ft_strdup(temp->s);
-		temp = temp->next;
-	}
-	splited_cmd[i] = NULL;
+	splited_cmd = provision_commands(cmd, splited_cmd);
+	if (!splited_cmd)
+		clean_exit(program, NULL, NULL, 127);
 	new_cmd = find_command(cmd->s, path);
 	if (!new_cmd)
 		clean_exit(program, splited_cmd, 127);

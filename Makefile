@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+         #
+#    By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/23 16:50:16 by abarthes         ###   ########.fr        #
+#    Updated: 2026/02/23 17:53:40 by emaigne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,10 @@ SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c \
 		parser/sanitize_debug.c \
 		parser/sanitize_individual_token.c parser/parser_check_its_quotes.c \
 		parser/parser_check_its.c parser/parser_list_operations.c \
+		parser/utils_get_prev_next.c \
 		buildins/buildins.c \
-		buildins/buildin_exit.c buildins/utils_exit.c buildins/buildin_envpath.c \
+		buildins/buildin_exit.c buildins/utils_exit.c \
+		buildins/buildin_envpath.c \
 		buildins/buildin_unset_export.c buildins/buildin_cd.c \
 		envpath/envpath.c envpath/envp_utils.c parser/utils.c \
 		envpath/envp_operations.c \
@@ -47,9 +49,10 @@ SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c \
 		execve/execve_piped.c execve/execve_debug.c \
 		execve/parse_command.c execve/execve_checks.c execve/execve_children.c \
 		execve/free_our_stuff.c execve/execve_piped_redirections.c \
-		execve/free_structures.c \
+		execve/free_structures.c execve/parse_commands_helper.c \
 		execve/parse_commands_files.c execve/execve_without_pipe.c \
 		execve/execve_no_pipes_redirections.c \
+		execve/utils2.c \
 		terminal/terminal_debug.c terminal/terminal_utils_handlers.c \
 		buildins/buildin_echo.c \
 		terminal/terminal_checks.c \

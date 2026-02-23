@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 18:12:28 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 14:24:24 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:26:46 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,12 @@ void	commands_add_back(t_commands **lst, t_commands *new)
 
 char	**create_cmd_args(t_parser *cmd)
 {
-	t_parser	*temp;
 	int			j;
 	int			i;
 	char		**args;
 
-	temp = cmd;
 	j = 0;
-	i = 0;
-	while (temp && (temp->type == CMD || temp->type == CMD_ARG))
-	{
-		i++;
-		temp = temp->next;
-	}
+	i = parse_count_cmd_args(cmd);
 	args = malloc((i + 1) * sizeof(char *));
 	if (!args)
 		return (NULL);
@@ -49,18 +42,9 @@ char	**create_cmd_args(t_parser *cmd)
 	{
 		args[j] = malloc((ft_strlen(cmd->s) + 1) * sizeof(char));
 		if (!args[j])
-		{
-			while (j > 0)
-			{
-				j--;
-				free(args[j]);
-			}
-			free(args);
-			return (NULL);
-		}
-		ft_strlcpy(args[j], cmd->s, ft_strlen(cmd->s) + 1);
+			return (free_incomplete_matrix(args, j));
+		ft_strlcpy(args[j++], cmd->s, ft_strlen(cmd->s) + 1);
 		cmd = cmd->next;
-		j++;
 	}
 	args[j] = NULL;
 	return (args);
