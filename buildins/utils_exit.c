@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 16:47:56 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 16:55:37 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:58:06 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_exit(t_program *program)
 {
-	clear_history();
+	rl_clear_history();
 	if (program->here_doc_tempfile)
 		unlink(program->here_doc_tempfile);
 	if (program->saved_stdin != -1)
