@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:10:31 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 15:48:56 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 16:23:29 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,15 @@ int	check_for_exit_arguments(t_program *program)
 
 int	buildin_exit(t_program *program)
 {
-	int	exit_status;
+	int    exit_status;
 
 	clear_history();
 	if (!program)
 		exit(1);
 	ft_printf_fd(2, "exit\n");
 	exit_status = check_for_exit_arguments(program);
-	unlink(program->here_doc_tempfile);
+	if (program->here_doc_tempfile)
+		unlink(program->here_doc_tempfile);
 	if (exit_status == 0)
 		exit_status = program->last_exit_status;
 	if (program->parsed)

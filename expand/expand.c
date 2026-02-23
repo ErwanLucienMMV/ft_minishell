@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:27 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 08:08:14 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 16:23:08 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	expand_specifics(t_envpath *envpath, t_program *program, t_parser *temp)
 int	send_to_expand(t_envpath *envpath, t_program *program)
 {
 	t_parser	*temp;
+	t_parser	*next;
+	t_parser	*head_before;
 
 	temp = *program->parsed;
 	while (temp)
@@ -56,16 +58,14 @@ int	send_to_expand(t_envpath *envpath, t_program *program)
 			temp = temp->next;
 			continue ;
 		}
+		next = temp->next;
+		head_before = *program->parsed;
 		if (expand_specifics(envpath, program, temp) == 1)
 			return (1);
-		if (temp)
-			temp = temp->next;
-		else if (*(program->parsed))
-		{
-			temp = *(program->parsed);
-		}
+		if (temp == head_before && *program->parsed != head_before)
+			temp = *program->parsed;
 		else
-			temp = 0;
+			temp = next;
 	}
 	return (0);
 }
