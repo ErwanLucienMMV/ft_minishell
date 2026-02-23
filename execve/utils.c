@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 18:23:27 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 18:50:27 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execve.h"
 #include "../here_doc/here_doc.h"
-
-void	exit_is_dir(t_program *program, t_commands *cmd, char **args)
-{
-	error_message_is_a_directory(cmd->cmd->s);
-	free_t_program(program);
-	clearmatrix(args);
-	exit(126);
-}
 
 void	exit_check_args_cmd(t_program *program, char **args,
 	char *new_cmd, t_commands *cmd)
@@ -39,6 +31,26 @@ void	exit_check_args_cmd(t_program *program, char **args,
 	}
 }
 
+void	handle_is_dir(t_commands *cmd, t_commands *first,
+	t_program *program, char **args)
+{
+	error_message_is_a_directory(cmd->cmd->s);
+	free_t_commands_and_args(first);
+	free_t_program(program);
+	clearmatrix(args);
+	exit(126);
+}
+
+void	handle_execve_error(t_commands *cmd, char *new_cmd,
+	char **args, t_commands *first)
+{
+	error_message_command_not_found(cmd->cmd->s);
+	free(new_cmd);
+	clearmatrix(args);
+	free_t_commands_and_args(first);
+	exit(127);
+}
+
 void	do_command_piped(t_program *program, t_commands *cmd,
 	char *path, t_commands *first)
 {
@@ -55,37 +67,18 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 	}
 	new_cmd = find_command(cmd->cmd->s, path);
 	args = ft_dup_matrix(cmd->args);
-	if (!args)
+	if (!args || !new_cmd)
 	{
 		free_t_commands_and_args(first);
-		free_t_program(program);
-		clearmatrix(args);
-		exit (1);
-	}
-	if (!new_cmd)
-	{
-		free_t_commands_and_args(first);
-		free_t_program(program);
-		clearmatrix(args);
-		exit(127);
+		exit_check_args_cmd(program, args, new_cmd, cmd);
 	}
 	if (stat(new_cmd, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
-	{
-		error_message_is_a_directory(cmd->cmd->s);
-		free_t_commands_and_args(first);
-		free_t_program(program);
-		clearmatrix(args);
-		exit(126);
-	}
+		handle_is_dir(cmd, first, program, args);
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
 	envp = program->envp;
 	free_t_program(program);
 	execve(new_cmd, args, envp);
-	error_message_command_not_found(cmd->cmd->s);
-	free(new_cmd);
-	clearmatrix(args);
-	free_t_commands_and_args(first);
-	exit(127);
+	handle_execve_error(cmd, new_cmd, args, first);
 }
 
 void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
