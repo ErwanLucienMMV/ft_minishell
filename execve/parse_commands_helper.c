@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parse_commands_helper.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/28 15:48:39 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 17:27:57 by emaigne          ###   ########.fr       */
+/*   Created: 2026/02/23 17:22:21 by emaigne           #+#    #+#             */
+/*   Updated: 2026/02/23 17:26:23 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "execve.h"
 
-t_parser	*get_last_parser(t_parser *lst)
+void	*free_incomplete_matrix(char **tab, int lines)
 {
-	if (!lst)
-		return (0);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
+	while (lines > 0)
+		free(tab[lines--]);
+	free(tab);
+	return (NULL);
 }
 
-t_parser	*get_first_parser(t_parser *lst)
+int	parse_count_cmd_args(t_parser *cmd)
 {
-	if (!lst)
-		return (0);
-	while (lst->prev)
-		lst = lst->prev;
-	return (lst);
-}
+	int		i;
 
-int	new_parser(t_parser **head, t_parser *new_node)
-{
-	if (!new_node)
-		return (0);
-	parser_add_back(head, new_node);
-	return (1);
+	i = 0;
+	while (cmd && (cmd->type == CMD || cmd->type == CMD_ARG))
+	{
+		i++;
+		cmd = cmd->next;
+	}
+	return (i);
 }
