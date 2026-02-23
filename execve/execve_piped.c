@@ -6,13 +6,13 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 13:58:14 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 14:29:35 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execve.h"
 
-void	get_path_for_exec(t_commands *cmd, t_program *program)
+void	get_path_for_exec(t_commands *cmd, t_program *program, t_commands *first)
 {
 	char	*path;
 	int		i;
@@ -20,8 +20,7 @@ void	get_path_for_exec(t_commands *cmd, t_program *program)
 	if (is_a_buildin(cmd->cmd->s))
 	{
 		i = check_buildin_piped(cmd->cmd, *program->envpath, program);
-		free_t_commands_and_args(cmd);
-		// free_t_command(cmd);
+		free_t_commands_and_args(first);
 		free_t_program(program);
 		exit(i);
 	}
@@ -32,7 +31,7 @@ void	get_path_for_exec(t_commands *cmd, t_program *program)
 	}
 }
 
-void	last_exec(t_program *program, t_commands *cmd)
+void	last_exec(t_program *program, t_commands *cmd, t_commands *first)
 {
 	pid_t		pid;
 
@@ -45,11 +44,11 @@ void	last_exec(t_program *program, t_commands *cmd)
 	{
 		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
 			free_t_cmd_prgrm_exit(cmd, program);
-		get_path_for_exec(cmd, program);
+		get_path_for_exec(cmd, program, first);
 	}
 }
 
-void	middle_exec(t_program *program, t_commands *cmd)
+void	middle_exec(t_program *program, t_commands *cmd, t_commands *first)
 {
 	pid_t	pid;
 	int		pipe_fd[2];
@@ -73,11 +72,11 @@ void	middle_exec(t_program *program, t_commands *cmd)
 		close(pipe_fd[1]);
 		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
 			free_t_cmd_prgrm_exit(cmd, program);
-		handle_middle_child(program, cmd);
+		handle_middle_child(program, cmd, first);
 	}
 }
 
-void	first_exec(t_program *program, t_commands *cmd)
+void	first_exec(t_program *program, t_commands *cmd, t_commands *first)
 {
 	pid_t	pid;
 	int		pipe_fd[2];
@@ -101,7 +100,7 @@ void	first_exec(t_program *program, t_commands *cmd)
 		close(pipe_fd[1]);
 		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
 			free_t_cmd_prgrm_exit(cmd, program);
-		handle_the_child(program, cmd);
+		handle_the_child(program, cmd, first);
 	}
 }
 
@@ -120,15 +119,15 @@ int	execve_with_pipe(t_program *program)
 	if (commands == NULL)
 		return (1);
 	first = commands;
-	first_exec(program, commands);
+	first_exec(program, commands, first);
 	//free_t_command(commands); causes crash too
 	commands = commands->next;
 	while (commands && commands->next)
 	{
-		middle_exec(program, commands);
+		middle_exec(program, commands, first);
 		commands = commands->next;
 	}
-	last_exec(program, commands);
+	last_exec(program, commands, first);
 	//free_all_commands(&commands); causes issues with the sanitize
 	free_t_commands_and_args(first);
 	//print_command_list(&first); causes crashes, indicating it seems like the first one is freed already

@@ -40,6 +40,8 @@ int	init_program(t_program **program, char **envp)
 		return (0);
 	*(*program)->envpath = NULL;
 	(*program)->envp = envp;
+	(*program)->saved_stdin = -1;
+	(*program)->saved_stdout = -1;
 	if (create_envpath_list((*program)->envpath, envp) == 0)
 		return (buildin_exit(*program), 0);
 	if (new_envpath((*program)->envpath, "OLDPWD", "") == 0)

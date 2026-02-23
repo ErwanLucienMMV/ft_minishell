@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 18:12:28 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 06:22:37 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 14:24:24 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	commands_add_back(t_commands **lst, t_commands *new)
 	}
 }
 
-//a proteger prcq si malloc de args[j] fail on ne protege pas ni ne free pas
 char	**create_cmd_args(t_parser *cmd)
 {
 	t_parser	*temp;
@@ -49,6 +48,16 @@ char	**create_cmd_args(t_parser *cmd)
 	while (cmd && (cmd->type == CMD || cmd->type == CMD_ARG))
 	{
 		args[j] = malloc((ft_strlen(cmd->s) + 1) * sizeof(char));
+		if (!args[j])
+		{
+			while (j > 0)
+			{
+				j--;
+				free(args[j]);
+			}
+			free(args);
+			return (NULL);
+		}
 		ft_strlcpy(args[j], cmd->s, ft_strlen(cmd->s) + 1);
 		cmd = cmd->next;
 		j++;
@@ -69,9 +78,16 @@ t_commands	*commands_node_new(t_parser *cmd)
 	new->cmd = cmd;
 	new->args = create_cmd_args(cmd);
 	if (!new->args)
-		return (free_t_command(new), NULL);
+	{
+		free(new);
+		return (NULL);
+	}
 	if (check_for_redirections(cmd, new) == 1)
-		return (free_t_command(new), NULL);
+	{
+		clearmatrix(new->args);
+		free(new);
+		return (NULL);
+	}
 	new->next = NULL;
 	return (new);
 }

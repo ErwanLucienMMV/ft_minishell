@@ -3,22 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   execve_children.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 21:20:42 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 08:09:10 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 14:29:35 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execve.h"
 
-void	handle_middle_child(t_program *program, t_commands *cmd)
+void	handle_middle_child(t_program *program, t_commands *cmd, t_commands *first)
 {
 	char	*path;
 
 	if (is_a_buildin(cmd->cmd->s))
-		exit(check_buildin_piped(cmd->cmd,
-				*program->envpath, program)); //TODO: free everything beside cmd->cmd
+	{
+		int exitcode = check_buildin_piped(cmd->cmd,
+				*program->envpath, program);
+		free_t_commands_and_args(first);
+		free_t_program(program);
+		exit(exitcode);
+	}
 	else
 	{
 		path = get_env_value_by_key(program->envpath, "PATH");
@@ -26,12 +31,18 @@ void	handle_middle_child(t_program *program, t_commands *cmd)
 	}
 }
 
-void	handle_the_child(t_program *program, t_commands *cmd)
+void	handle_the_child(t_program *program, t_commands *cmd, t_commands *first)
 {
 	char		*path;
+	int			exitcode;
 
 	if (is_a_buildin(cmd->cmd->s))
-		exit(check_buildin_piped(cmd->cmd, *program->envpath, program));
+	{
+		exitcode = check_buildin_piped(cmd->cmd, *program->envpath, program);
+		free_t_commands_and_args(first);
+		free_t_program(program);
+		exit(exitcode);
+	}
 	else
 	{
 		path = get_env_value_by_key(program->envpath, "PATH");
