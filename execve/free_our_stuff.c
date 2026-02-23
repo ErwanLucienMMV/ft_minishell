@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_our_stuff.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:08:21 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 17:35:45 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 18:30:33 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_splited_cmd(char **splited_cmd)
 	clearmatrix(splited_cmd);
 }
 
-void	clean_exit(t_program *program, char **splited_cmd, 
+void	clean_exit(t_program *program, char **splited_cmd,
 		int exit_code)
 {
 	if (splited_cmd)
