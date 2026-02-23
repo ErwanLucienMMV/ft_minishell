@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 16:36:19 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:47:10 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	get_path_for_exec(t_commands *cmd, t_program *program,
 	else
 	{
 		path = get_env_value_by_key(program->envpath, "PATH");
-		do_command_piped(program, cmd, path, program->envp);
+		do_command_piped(program, cmd, path, first);
 	}
 }
 

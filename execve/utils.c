@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 16:35:02 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:56:59 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ char	**ft_dup_matrix(char **tab)
 }
 
 void	do_command_piped(t_program *program, t_commands *cmd,
-	char *path, char **envp)
+	char *path, t_commands *first)
 {
 	char		*new_cmd;
 	char		**args;
+	char		**envp;
 	struct stat	path_stat;
 
 	if (cmd->cmd->type == DELIMITER)
@@ -59,6 +60,7 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 	args = ft_dup_matrix(cmd->args);
 	if (!args)
 	{
+		free_t_commands_and_args(first);
 		free_t_program(program);
 		clearmatrix(args);
 		exit (1);
@@ -66,6 +68,7 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 	if (!new_cmd)
 	{
 		error_message_command_not_found(cmd->cmd->s);
+		free_t_commands_and_args(first);
 		free_t_program(program);
 		clearmatrix(args);
 		exit(127);
@@ -73,16 +76,19 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 	if (stat(new_cmd, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
 	{
 		error_message_is_a_directory(cmd->cmd->s);
+		free_t_commands_and_args(first);
 		free_t_program(program);
 		clearmatrix(args);
 		exit(126);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
+	envp = program->envp;
 	free_t_program(program);
 	execve(new_cmd, args, envp);
 	error_message_command_not_found(cmd->cmd->s);
 	free(new_cmd);
-	free(args);
+	clearmatrix(args);
+	free_t_commands_and_args(first);
 	exit(127);
 }
 
@@ -108,15 +114,15 @@ void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
 	splited_cmd[i] = NULL;
 	new_cmd = find_command(cmd->s, path);
 	if (!new_cmd)
-		clean_exit(program, splited_cmd, new_cmd, 127);
+		clean_exit(program, splited_cmd, 127);
 	if (stat(new_cmd, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
 	{
 		error_message_is_a_directory(cmd->s);
-		clean_exit(program, splited_cmd, new_cmd, 126);
+		clean_exit(program, splited_cmd, 126);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
 	close (program->saved_stdin);
 	close (program->saved_stdout);
 	execve(new_cmd, splited_cmd, envp);
-	clean_exit(program, splited_cmd, new_cmd, 127);
+	clean_exit(program, splited_cmd, 127);
 }
