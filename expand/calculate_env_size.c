@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 18:04:04 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 18:04:25 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 16:34:28 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	add_env_size(t_parser *node, t_envpath *envpath,
 	if (!key)
 		return (1);
 	value = get_env_value_by_key(&envpath, key);
-	if (value)		
+	if (value)
 		*size += ft_strlen(value);
 	free(key);
 	return (0);

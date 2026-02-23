@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 17:01:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 15:29:12 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 16:56:34 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@
 # include "../libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
-
-# if defined(__APPLE__)
-/* Provide minimal prototypes when system headers don't declare them */
-void	rl_replace_line(const char *text, int clear_undo);
-int		rl_on_new_line(void);
-void	rl_redisplay(void);
-# endif
 
 typedef struct s_signal_handlers
 {

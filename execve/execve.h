@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 14:58:01 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 16:49:24 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int				execve_without_pipe(t_program *program,
 void			clearmatrix(char **tab);
 void			free_t_parser(t_parser *parser);
 void			free_t_command(t_commands *tofree);
-void			clean_exit(t_program *program, char **splited_cmd, char *new_cmd, int exit_code);
+void			clean_exit(t_program *program, char **splited_cmd,
+					char *new_cmd, int exit_code);
 void			free_t_program(t_program *program);
 void			free_all_commands(t_commands **commands);
 void			free_t_cmd_prgrm_exit(t_commands *cmd, t_program *program);
@@ -89,5 +90,7 @@ void			print_matrix(char **tab);
 void			print_command_list(t_commands **head);
 void			print_size_of_structs(void);
 void			print_command_node(t_commands *node);
+
+void			ft_exit(t_program *program);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:10:31 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 16:23:29 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 16:55:56 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,47 +77,46 @@ int	is_numeric_string(char *str)
 	return (1);
 }
 
-int	check_for_exit_arguments(t_program *program)
+int	check_for_exit_arguments(t_program *p)
 {
 	t_parser	*current;
 
-	if (!program->parsed || !*(program->parsed) || !(*program->parsed)->next)
+	if (!p->parsed || !*(p->parsed) || !(*p->parsed)->next)
 		return (0);
-	current = (*program->parsed)->next;
+	current = (*p->parsed)->next;
 	while (current)
 	{
 		if (!is_numeric_string(current->s) || !ft_strtol(current->s))
 		{
 			ft_printf_fd(2, "exit: %s: numeric argument required\n", current->s);
-			program->last_exit_status = 255;
+			p->last_exit_status = 255;
 			return (0);
 		}
 		current = current->next;
 	}
-	if (program->parsed && *(program->parsed)
-		&& (*program->parsed)->next && (*program->parsed)->next->next)
+	if (p->parsed && *(p->parsed)
+		&& (*p->parsed)->next && (*p->parsed)->next->next)
 	{
 		ft_printf_fd(2, "exit: too many arguments\n");
-		return (1);
+		p->last_exit_status = 1;
+		return (-1);
 	}
-	if (program->parsed && *(program->parsed) && (*program->parsed)->next)
-		return (ft_strtol((*program->parsed)->next->s) % 256);
+	if (p->parsed && *(p->parsed) && (*p->parsed)->next)
+		p->last_exit_status = ft_strtol((*p->parsed)->next->s) % 256;
 	return (0);
 }
 
 int	buildin_exit(t_program *program)
 {
-	int    exit_status;
+	int	exit_status;
 
-	clear_history();
 	if (!program)
 		exit(1);
 	ft_printf_fd(2, "exit\n");
-	exit_status = check_for_exit_arguments(program);
-	if (program->here_doc_tempfile)
-		unlink(program->here_doc_tempfile);
-	if (exit_status == 0)
-		exit_status = program->last_exit_status;
+	if (check_for_exit_arguments(program) == -1)
+		return (1);
+	ft_exit(program);
+	exit_status = program->last_exit_status;
 	if (program->parsed)
 	{
 		free_parsers(*(program->parsed));
@@ -128,10 +127,6 @@ int	buildin_exit(t_program *program)
 		free_envpath(*(program->envpath));
 		free(program->envpath);
 	}
-	if (program->saved_stdin != -1)
-		close (program->saved_stdin);
-	if (program->saved_stdout != -1)
-		close (program->saved_stdout);
 	free(program);
 	exit(exit_status);
 	return (0);

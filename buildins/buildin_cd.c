@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:40:00 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 16:51:00 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 16:29:46 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	cd_arg_case(t_parser *cmd, t_envpath *envpath, t_program *program)
 
 static int	cd_dash_case(t_envpath *envpath, t_program *program)
 {
-	char *oldpwd;
+	char	*oldpwd;
 
 	oldpwd = get_env_value_by_key(&envpath, "OLDPWD");
 	if (!oldpwd || !oldpwd[0])

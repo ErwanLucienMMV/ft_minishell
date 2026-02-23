@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 16:17:11 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 16:35:02 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 {
 	char		*new_cmd;
 	char		**args;
-	struct stat path_stat;
+	struct stat	path_stat;
 
 	if (cmd->cmd->type == DELIMITER)
 	{
@@ -57,7 +57,6 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 	}
 	new_cmd = find_command(cmd->cmd->s, path);
 	args = ft_dup_matrix(cmd->args);
-	// free_t_commands_and_args(cmd);
 	if (!args)
 	{
 		free_t_program(program);
@@ -93,7 +92,7 @@ void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
 	char		*new_cmd;
 	t_parser	*temp;
 	int			i;
-	struct stat path_stat;
+	struct stat	path_stat;
 
 	i = 1;
 	splited_cmd = malloc(sizeof(char *) * (count_cmd_args(cmd) + 2));

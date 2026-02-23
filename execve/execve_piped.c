@@ -6,13 +6,14 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 14:29:35 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 16:36:19 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execve.h"
 
-void	get_path_for_exec(t_commands *cmd, t_program *program, t_commands *first)
+void	get_path_for_exec(t_commands *cmd, t_program *program,
+	t_commands *first)
 {
 	char	*path;
 	int		i;
@@ -120,7 +121,6 @@ int	execve_with_pipe(t_program *program)
 		return (1);
 	first = commands;
 	first_exec(program, commands, first);
-	//free_t_command(commands); causes crash too
 	commands = commands->next;
 	while (commands && commands->next)
 	{
@@ -128,8 +128,6 @@ int	execve_with_pipe(t_program *program)
 		commands = commands->next;
 	}
 	last_exec(program, commands, first);
-	//free_all_commands(&commands); causes issues with the sanitize
 	free_t_commands_and_args(first);
-	//print_command_list(&first); causes crashes, indicating it seems like the first one is freed already
 	return (0);
 }
