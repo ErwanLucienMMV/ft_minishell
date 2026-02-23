@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal_utils_handlers.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 14:45:36 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 16:04:16 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int	handle_redirections(t_program *program)
 {
+	if (program->saved_stdin == -1)
+		program->saved_stdin = dup(STDIN_FILENO);
+	if (program->saved_stdout == -1)
+		program->saved_stdout = dup(STDOUT_FILENO);
 	if (file_handler(program->parsed))
 		return (1);
-	program->saved_stdin = dup(STDIN_FILENO);
-	program->saved_stdout = dup(STDOUT_FILENO);
 	if (!there_is_at_least_one_pipe(*program->parsed))
 	{
 		program->here_doc_tempfile = HERE_DOC_TMPFILE;
@@ -36,6 +38,13 @@ void	handle_expansions(t_program *program)
 	print_debug(program);
 }
 
+// execute_and_restore(t_program *program) 
+// runs the parsed command(s) in the given program: 
+// if there are no pipes it calls buildins(...), 
+// unless the parsed token is a single ":" it calls execve_handler(program). 
+// After execution it clears the readline line/display, 
+// restores any saved stdin/stdout file descriptors
+// and finally clears the parser state.
 void	execute_and_restore(t_program *program)
 {
 	if (!there_is_at_least_one_pipe(*(program->parsed)))

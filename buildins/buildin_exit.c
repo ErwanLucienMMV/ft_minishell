@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:10:31 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 14:04:33 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 15:48:56 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,10 @@ int	buildin_exit(t_program *program)
 		free_envpath(*(program->envpath));
 		free(program->envpath);
 	}
+	if (program->saved_stdin != -1)
+		close (program->saved_stdin);
+	if (program->saved_stdout != -1)
+		close (program->saved_stdout);
 	free(program);
 	exit(exit_status);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 12:39:05 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 16:17:11 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
 		clean_exit(program, splited_cmd, new_cmd, 126);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
+	close (program->saved_stdin);
+	close (program->saved_stdout);
 	execve(new_cmd, splited_cmd, envp);
 	clean_exit(program, splited_cmd, new_cmd, 127);
 }
