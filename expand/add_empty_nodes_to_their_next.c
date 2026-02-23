@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_empty_nodes_to_their_next.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:14:17 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 07:17:21 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 15:44:02 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,20 @@ static int	merge_nodes(t_program *program, t_parser *cur, int len)
 	return (0);
 }
 
+static int	has_was_expanded_next(t_parser *cur)
+{
+	t_parser	*tmp;
+
+	tmp = cur->next;
+	while (tmp && tmp->type != T_SPACE)
+	{
+		if (tmp->type == WAS_EXPANDED)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 int	add_empty_nodes_to_their_next(t_program *program)
 {
 	t_parser	*cur;
@@ -63,7 +77,7 @@ int	add_empty_nodes_to_their_next(t_program *program)
 	cur = *(program->parsed);
 	while (cur)
 	{
-		if (cur->type != T_SPACE)
+		if (cur->type != T_SPACE && has_was_expanded_next(cur))
 		{
 			len = calc_group_len(cur);
 			if (merge_nodes(program, cur, len))

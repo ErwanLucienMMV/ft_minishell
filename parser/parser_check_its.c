@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check_its.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:24:30 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 06:50:20 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 15:17:43 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ int	its_command(t_parser **head, char *s, int *i)
 	while (s[x] && s[x] != ' ' && s[x] != '\t' && s[x] != '|' && s[x] != '<'
 		&& s[x] != '>' && s[x] != '\'' && s[x] != '"' && s[x] != '$')
 		x++;
-	if (get_prev_non_space(get_last_parser(*head)) && !(is_parser_redir(head)
-			|| get_prev_non_space(get_last_parser(*head))->type == DELIMITER
-			|| get_prev_non_space(get_last_parser(*head))->type == PIPE))
-		new = parser_node_new(CMD_ARG, (s), x);
 	if (get_prev_non_space(get_last_parser(*head)) && is_parser_redir(head))
 		new = parser_node_new(FILENAME, (s), x);
+	if (get_prev_non_space(get_last_parser(*head)) && (
+		get_prev_non_space(get_last_parser(*head))->type == CMD_ARG
+		|| get_prev_non_space(get_last_parser(*head))->type == CMD))
+			new = parser_node_new(CMD_ARG, (s), x);
 	if (get_prev_non_space(get_last_parser(*head))
 		&& get_prev_non_space(get_last_parser(*head))->type == DELIMITER)
 		new = parser_node_new(IS_DELIMITER, (s), x);

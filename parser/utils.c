@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 15:48:39 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 06:45:25 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 15:47:05 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,22 @@ t_parser	*get_prev_echo(t_parser *node)
 		node = node->prev;
 	}
 	return (temp);
+}
+
+t_parser	*get_next_non_space(t_parser *token)
+{
+	if (!token)
+		return (NULL);
+	while (token && token->type == T_SPACE && token->next)
+		token = token->next;
+	return (token);
+}
+
+t_parser	*get_prev_non_space(t_parser *token)
+{
+	if (!token)
+		return (NULL);
+	while (token && token->type == T_SPACE && token->prev)
+		token = token->prev;
+	return (token);
 }

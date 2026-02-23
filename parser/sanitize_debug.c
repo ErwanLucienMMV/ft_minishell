@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sanitize_debug.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 23:40:05 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 08:37:50 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 14:59:01 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ static char	*check_error(t_parser *temp)
 	char	*str;
 
 	str = check_redir(temp);
-	if (str == NULL)
-		return (str);
-	else if (temp->type == CMD)
+	if (temp->type == CMD)
 		str = "CMD";
 	else if (temp->type == FILENAME)
 		str = "FILENAME";
@@ -63,17 +61,12 @@ void	print_error(t_parser *temp)
 		while (temp)
 		{
 			str = check_error(temp);
-			if (!str)
-			{
-				if (temp->type == DELIMITER)
-					str = "DELIMITER";
-				else if (temp->type == IS_DELIMITER)
-					str = "IS_DELIMITER";
-				else if (temp->type == T_SPACE)
-					str = "T_SPACE";
-				else
-					str = "OTHER ?????";
-			}
+			if (temp->type == DELIMITER)
+				str = "DELIMITER";
+			else if (temp->type == IS_DELIMITER)
+				str = "IS_DELIMITER";
+			else if (temp->type == T_SPACE)
+				str = "T_SPACE";
 			printf("Type: %s | Str: %s\n", str, temp->s);
 			temp = temp->next;
 		}
