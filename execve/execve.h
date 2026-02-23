@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 12:06:13 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 14:17:15 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ void			print_parser_node(t_parser *elem);
 void			print_matrix(char **tab);
 void			print_command_list(t_commands **head);
 void			print_size_of_structs(void);
+void			print_command_node(t_commands *node);
 
 #endif
