@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_without_pipe.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 08:26:42 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 08:31:12 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 19:07:45 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	execve_without_pipe(t_program *program,
 	if (!cmd)
 		return (1);
 	make_redirection(*parsed);
+	if (unlink(HERE_DOC_TMPFILE) < 0)
+		return (perror("here_doc: unlink"), -1);
 	exec_one_command(program, cmd,
 		get_env_value_by_key(&envpath, "PATH"), envp);
 	return (0);

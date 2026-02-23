@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 00:51:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 16:35:38 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/23 18:47:22 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int	setinputs(t_commands *commands)
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 		if (commands->inputtype == DELIMITER)
-			unlink(commands->infile);
+		{
+			if (unlink(commands->infile) < 0)
+				return (perror("unlink"), 1);
+		}
 	}
 	return (0);
 }

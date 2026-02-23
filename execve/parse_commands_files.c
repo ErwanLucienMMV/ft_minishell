@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands_files.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 06:22:16 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 06:30:43 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/23 18:45:58 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static int	handle_here_doc(t_parser **temp, t_commands *tofill)
 	tofill->infile = get_a_valid_name();
 	if (!tofill->infile)
 		return (1);
+	tofill->inputtype = DELIMITER;
 	doing_here_doc_util(*temp, tofill->infile);
 	*temp = (*temp)->next;
 	return (0);
