@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_piped.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 17:47:10 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/26 14:55:24 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void	get_path_for_exec(t_commands *cmd, t_program *program,
 
 	if (is_a_buildin(cmd->cmd->s))
 	{
+		if (is_exit(cmd->cmd->s))
+		{
+			exit_piped(program, cmd, first);
+		}
 		i = check_buildin_piped(cmd->cmd, *program->envpath, program);
 		free_t_commands_and_args(first);
 		free_t_program(program);
@@ -32,20 +36,24 @@ void	get_path_for_exec(t_commands *cmd, t_program *program,
 	}
 }
 
-void	last_exec(t_program *program, t_commands *cmd, t_commands *first)
+int	last_exec(t_program *program, t_commands *cmd, t_commands *first)
 {
 	pid_t		pid;
 
 	pid = fork();
 	if (pid == -1)
-		return (perror("pid"), exit(1));
+	{
+		perror("pid");
+		exit(1);
+	}
 	if (pid != 0)
-		return ;
+		return (pid);
 	else
 	{
 		if (setinputs(cmd) == 1 || setoutputs(cmd) == 1)
 			free_t_cmd_prgrm_exit(cmd, program);
 		get_path_for_exec(cmd, program, first);
+		return (0);
 	}
 }
 
@@ -109,6 +117,7 @@ int	execve_with_pipe(t_program *program)
 {
 	t_commands	*commands;
 	t_commands	*first;
+	int			lpid;
 
 	commands = NULL;
 	parse_commands_with_pipe(&commands, *(program->parsed));
@@ -118,7 +127,7 @@ int	execve_with_pipe(t_program *program)
 		print_size_of_structs();
 	}
 	if (commands == NULL)
-		return (1);
+		return (0);
 	first = commands;
 	first_exec(program, commands, first);
 	commands = commands->next;
@@ -127,7 +136,7 @@ int	execve_with_pipe(t_program *program)
 		middle_exec(program, commands, first);
 		commands = commands->next;
 	}
-	last_exec(program, commands, first);
+	lpid = last_exec(program, commands, first);
 	free_t_commands_and_args(first);
-	return (0);
+	return (lpid);
 }

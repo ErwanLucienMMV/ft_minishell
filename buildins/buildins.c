@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:26 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 14:27:15 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/26 11:30:44 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	buildin_pwd(t_program *program)
 	}
 }
 
-int	check_buildin_piped(t_parser *cmd, t_envpath *envpath, t_program *program)
+int	check_buildin_piped(t_parser *cmd, t_envpath *envpath,
+	t_program *program)
 {
 	if (cmd->type == CMD && ft_strncmp(cmd->s, "cd", 2) == 0
 		&& ft_strlen(cmd->s) == 2)

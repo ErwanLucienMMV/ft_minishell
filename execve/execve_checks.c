@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 01:48:20 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/06 17:41:05 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/26 11:33:08 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,11 @@ t_parser	*get_last_input_node(t_parser *parsed, t_lexer *input_type)
 		temp = temp->next;
 	}
 	return (last);
+}
+
+int	is_exit(char *cmd)
+{
+	if (ft_strncmp(cmd, "exit", 4) == 0 && ft_strlen(cmd) == 4)
+		return (1);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:53:07 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 15:47:23 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/24 16:01:37 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int			its_command(t_parser **head, char *s, int *i);
 
 //				---Utils---					//
 int			new_parser(t_parser **head, t_parser *new_node);
+int			print_error_token(char *s);
 
 t_parser	*parsing(char *s);
 t_parser	*parsing_after_expand(char *s, int there_is_echo);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal_utils_handlers.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 16:04:16 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/26 17:55:51 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,6 @@ void	handle_expansions(t_program *program)
 	print_debug(program);
 }
 
-// execute_and_restore(t_program *program) 
-// runs the parsed command(s) in the given program: 
-// if there are no pipes it calls buildins(...), 
-// unless the parsed token is a single ":" it calls execve_handler(program). 
-// After execution it clears the readline line/display, 
-// restores any saved stdin/stdout file descriptors
-// and finally clears the parser state.
 void	execute_and_restore(t_program *program)
 {
 	if (!there_is_at_least_one_pipe(*(program->parsed)))

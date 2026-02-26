@@ -6,13 +6,13 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:44:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 14:16:56 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/26 12:14:47 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execve.h"
 
-void	print_parser_node(t_parser *elem)
+void	print_parsers_node(t_parser *elem)
 {
 	if (IS_DEBUG)
 	{
@@ -21,7 +21,12 @@ void	print_parser_node(t_parser *elem)
 			ft_printf_fd(2, "no t_parser provided\n");
 			return ;
 		}
-		ft_printf_fd(2, "t_parser string: %s\n", elem->s);
+		while (elem)
+		{
+			ft_printf_fd(2, "t_parser string: %s\n", elem->s);
+			ft_printf_fd(2, "t_parser type is: %d\n", elem->type);
+			elem = elem->next;
+		}
 	}
 }
 
@@ -46,7 +51,7 @@ void	print_command_node(t_commands *node)
 			ft_printf_fd(2, "Node does not exist or is set to NULL\n");
 			return ;
 		}
-		print_parser_node(node->cmd);
+		print_parsers_node(node->cmd);
 		print_matrix(node->args);
 		ft_printf_fd(2, "Infile: %s\nOufile: %s\n\n",
 			node->infile, node->outfile);
@@ -67,7 +72,7 @@ void	print_command_list(t_commands **head)
 		while (elem)
 		{
 			ft_printf_fd(2, "%dth of the list:\n", i++);
-			print_parser_node(elem->cmd);
+			print_parsers_node(elem->cmd);
 			print_matrix(elem->args);
 			ft_printf_fd(2, "Infile: %s\nOufile: %s\n\n",
 				elem->infile, elem->outfile);

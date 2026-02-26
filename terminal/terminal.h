@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:34 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 06:41:48 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/26 18:01:34 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@
 # include "../files_handler/fhandler.h"
 # include "../here_doc/here_doc.h"
 # include "../execve/execve.h"
-
-# if defined(__APPLE__)
-/* On some macOS setups the readline header (or libedit compatibility) may
-	not declare these functions; provide minimal prototypes to avoid
-	implicit-declaration errors at compile time. */
-void		rl_replace_line(const char *text, int clear_undo);
-void		rl_redisplay(void);
-# endif
 
 # ifndef IS_DEBUG
 #  define IS_DEBUG 0

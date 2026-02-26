@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 15:48:39 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 17:27:57 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/24 16:07:03 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,10 @@ int	new_parser(t_parser **head, t_parser *new_node)
 		return (0);
 	parser_add_back(head, new_node);
 	return (1);
+}
+
+int	print_error_token(char *s)
+{
+	printf("minishell: syntax error near unexpected token `%c'\n", *s);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:44:15 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 15:33:56 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/26 18:01:51 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,46 @@
 int	execve_maker(t_program *program)
 {
 	t_signal_handlers	handlers;
+	int					lpid;
 
 	handlers = setup_signals_before_fork();
 	if (there_is_at_least_one_pipe(*(program->parsed)))
 	{
-		if (execve_with_pipe(program))
-			return (restore_signals(handlers), 1);
+		lpid = execve_with_pipe(program);
+		if (lpid == 0)
+			return (restore_signals(handlers), 0);
+		else
+			return (restore_signals(handlers), lpid);
 	}
 	else
 	{
-		if (execve_without_pipe(program, program->parsed,
-				*(program->envpath), program->envp))
-			return (restore_signals(handlers), 1);
+		lpid = execve_without_pipe(program, program->parsed,
+				*(program->envpath), program->envp);
+		if (lpid == 0)
+			return (restore_signals(handlers), 0);
+		else
+			return (restore_signals(handlers), lpid);
 	}
-	return (restore_signals(handlers), 0);
+	return (restore_signals(handlers), 1);
 }
 
-int	execve_handler(t_program *program)
+void	handle_piped_exec_exit(t_program *program, int pid)
 {
-	int					status;
-	int					last_status;
-	int					already_n;
-	t_signal_handlers	handlers;
+	int	store_status;
 
-	handlers = setup_signals_before_fork();
-	already_n = 0;
-	if (execve_maker(program))
-		return (1);
-	last_status = 0;
-	setup_signals_after_fork();
+	waitpid(pid, &store_status, 0);
+	if (WIFEXITED(store_status))
+		program->last_exit_status = WEXITSTATUS(store_status);
+	else if (WIFSIGNALED(store_status))
+		program->last_exit_status = 128 + WTERMSIG(store_status);
+}
+
+int	wait_for_childrens(void)
+{
+	int	status;
+	int	already_n;
+	int	last_status;
+
 	while (waitpid(-1, &status, 0) > 0)
 	{
 		if (WIFSIGNALED(status) && !already_n)
@@ -56,8 +67,28 @@ int	execve_handler(t_program *program)
 		}
 		last_status = WEXITSTATUS(status);
 	}
+	return (last_status);
+}
+
+int	execve_handler(t_program *program)
+{
+	int					last_status;
+	int					already_n;
+	t_signal_handlers	handlers;
+
+	program->last_exit_status = 0;
+	handlers = setup_signals_before_fork();
+	already_n = 0;
+	last_status = execve_maker(program);
+	if (last_status == 0)
+		return (1);
+	setup_signals_after_fork();
+	if (last_status != 1)
+		handle_piped_exec_exit(program, last_status);
+	last_status = wait_for_childrens();
 	restore_signals(handlers);
 	tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
-	program->last_exit_status = last_status;
+	if (program->last_exit_status == -1)
+		program->last_exit_status = last_status;
 	return (last_status);
 }

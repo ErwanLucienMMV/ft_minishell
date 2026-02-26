@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:53:10 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/18 14:13:42 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/26 17:59:34 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ int	check_special_char(t_parser **head, char *s, int *i)
 	else if (*s == '<' && *(s + 1) == '<')
 		return (its_delimiter(head, s, i));
 	else if (*s == ';' || *s == '\\' || *s == '&' || *s == '!')
-		return (
-			printf("minishell: syntax error near unexpected token `%c'\n", *s),
-			0);
+		return (print_error_token(s));
 	else
 		return (its_command(head, s, i));
 }
@@ -105,28 +103,3 @@ t_parser	*parsing(char *s)
 	}
 	return (head);
 }
-
-// t_parser	*parsing_after_expand(char *s, int there_is_echo)
-// {
-// 	int			i;
-// 	t_parser	*head;
-
-// 	head = 0;
-// 	i = 0;
-// 	while (s[i])
-// 	{
-// 		if (check_special_char(&head, (s + i), &i) == 0)
-// 		{
-// 			parser_clear(&head);
-// 			return (NULL);
-// 		}
-// 		if (s[i] == ' ')
-// 		{
-// 			if (new_parser(&head, parser_node_new(SPACE, " ", 1)) == 0)
-// 				return (parser_clear(&head), NULL);
-// 			i++;
-// 			continue ;
-// 		}
-// 	}
-// 	return (head);
-// }

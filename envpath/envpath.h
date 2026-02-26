@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envpath.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 18:30:47 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/06 18:09:50 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/24 14:27:02 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ typedef struct s_envpath
 	struct s_envpath	*next;
 	struct s_envpath	*prev;
 }	t_envpath;
+
+//			---free utils---			//
+void		free_matrix(char **tab);
 
 //			---Operations---			//
 void		del_env_node_by_key(t_envpath **head, char *key);

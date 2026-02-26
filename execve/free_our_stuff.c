@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_our_stuff.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:08:21 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 18:30:33 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/26 17:45:53 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ void	clean_exit(t_program *program, char **splited_cmd,
 	{
 		free_parsers(*(program->parsed));
 		free(program->parsed);
+		program->parsed = NULL;
 	}
 	if (program->envpath)
 	{
 		free_envpath(*(program->envpath));
 		free(program->envpath);
+		program->envpath = NULL;
 	}
 	free(program);
+	program = NULL;
 	exit(exit_code);
 }

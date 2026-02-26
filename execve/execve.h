@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 17:48:01 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/26 14:54:42 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "../files_handler/fhandler.h"
 # include "../terminal/program.h"
 # include "../errors/errors.h"
+# include "../libft/libft.h"
 # include <sys/wait.h>
 # include "../buildins/buildins.h"
 # include "../here_doc/here_doc.h"
@@ -73,12 +74,15 @@ void			handle_the_child(t_program *program, t_commands *cmd,
 int				check_for_redirections(t_parser *cmd, t_commands *tofill);
 int				setinputs(t_commands *commands);
 int				setoutputs(t_commands *commands);
+int				exit_piped(t_program *program, t_commands *cmd,
+					t_commands *first);
 
 //				---Checks---			//
 int				there_is_at_least_one_pipe(t_parser *lineread);
 int				count_cmd_args(t_parser *cmd);
 int				is_a_buildin(char *cmd);
 t_parser		*get_last_input_node(t_parser *parsed, t_lexer *input_type);
+int				is_exit(char *cmd);
 
 char			*find_command(char *command, char *pathline);
 int				execve_handler(t_program *program);

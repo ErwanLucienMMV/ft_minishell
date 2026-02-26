@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:06 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 16:50:46 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/26 12:26:44 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	free_parsers(t_parser *parser);
 int		buildin_exit(t_program *program);
 int		check_buildin_piped(t_parser *cmd,
 			t_envpath *envpath, t_program *program);
+int		check_for_exit_arguments(t_program *p);
+int		is_numeric_string(char *str);
 
 //		--- Main buildin function ---		//
 int		buildins(t_parser **parser, t_envpath *envpath, t_program *program);
