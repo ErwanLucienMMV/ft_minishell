@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/27 11:51:32 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/27 15:31:32 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,12 @@ int	handle_redirections(t_program *program)
 	if (!there_is_at_least_one_pipe(*program->parsed))
 	{
 		program->here_doc_tempfile = HERE_DOC_TMPFILE;
-		doing_here_doc(program->parsed, HERE_DOC_TMPFILE);
+		if(doing_here_doc(program, HERE_DOC_TMPFILE))
+		{
+			program->last_exit_status = 1;
+			parser_clear(program->parsed);
+			return (1);
+		}
 	}
 	return (0);
 }

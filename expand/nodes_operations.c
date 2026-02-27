@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes_operations.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:04:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 07:14:29 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/27 14:25:53 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	set_node_type(t_parser *node)
 {
 	if (node->type == REDIR_INPUT || node->type == REDIR_OUTPUT
 		|| node->type == REDIR_OUTPUT_APP || node->type == PIPE
-		|| node->type == DELIMITER)
+		|| node->type == DELIMITER || node->type == IS_DELIMITER)
 		return ;
 	if (node->prev && (node->prev->type == REDIR_INPUT
 			|| node->prev->type == REDIR_OUTPUT

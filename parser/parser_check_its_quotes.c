@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check_its_quotes.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 06:19:24 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 06:46:18 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/02/27 15:29:46 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	its_d_quote(t_parser **head, char *s, int *i)
 		&& get_prev_non_space(get_last_parser(*head))->type == DELIMITER)
 	{
 		if (new_parser(head, parser_node_new(IS_DELIMITER,
-					(s + 1), x - 2)) == 0)
+					(s), x)) == 0)
 			return (0);
 		*i += x;
 		return (1);
@@ -51,7 +51,7 @@ int	its_s_quote(t_parser **head, char *s, int *i)
 		&& get_prev_non_space(get_last_parser(*head))->type == DELIMITER)
 	{
 		if (new_parser(head, parser_node_new(IS_DELIMITER,
-					(s + 1), x - 2)) == 0)
+					(s), x)) == 0)
 			return (0);
 		*i += x;
 		return (1);
