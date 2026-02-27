@@ -6,13 +6,13 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 02:31:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 14:53:19 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/27 17:54:40 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "terminal.h"
 
-char static	*return_temp_type_helper(t_parser *temp)
+static char	*return_temp_type_helper(t_parser *temp)
 {
 	char	*str;
 
@@ -28,7 +28,7 @@ char static	*return_temp_type_helper(t_parser *temp)
 	return (str);
 }
 
-char static	*return_temptype(t_parser *temp)
+static char	*return_temptype(t_parser *temp)
 {
 	char	*str;
 

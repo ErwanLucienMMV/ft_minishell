@@ -6,13 +6,14 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:34 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/26 18:01:34 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/27 17:02:32 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TERMINAL_H
 # define TERMINAL_H
 
+# include <stdio.h>
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
