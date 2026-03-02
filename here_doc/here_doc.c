@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:30:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 16:40:12 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 17:02:31 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	doing_here_doc_util(t_program *p, t_parser *lr, char *tempfile, int mode)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
-	return (close(fd), 0);
+	return (get_next_line(-1), close(fd), 0);
 }
 
 int	checking_is_delimiter(t_parser *temp, int *mode)
@@ -111,5 +111,6 @@ int	doing_here_doc(t_program *program, char *tempfile)
 		mode = 1;
 		temp = temp->next;
 	}
+	get_next_line(-1);
 	return (0);
 }

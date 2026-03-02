@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 17:11:34 by abarthes          #+#    #+#             */
-/*   Updated: 2025/12/28 14:42:50 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 17:00:10 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,14 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < -1 || BUFFER_SIZE <= 0)
 		return (0);
+	if (fd == -1)
+	{
+		free(buffer);
+		buffer = NULL;
+		return (0);
+	}
 	buffer = ft_get_buffer(fd, buffer);
 	if (!buffer || !buffer[0])
 	{
