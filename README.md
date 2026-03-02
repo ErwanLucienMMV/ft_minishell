@@ -11,34 +11,34 @@ pour les machines sous unbuntu ou si vous avez installer un shell custom (type O
 
 Our shell should:
 
--Display a prompt when waiting for a new command.
--Have a working history.
+-Display a prompt when waiting for a new command. \n
+-Have a working history. \n
 -Search and launch the right executable (based on the PATH variable or using a
-relative or an absolute path).
--Use at most one global variable to indicate a received signal.
+relative or an absolute path). \n
+-Use at most one global variable to indicate a received signal. \n
 -Not interpret unclosed quotes or special characters which are not required by the
-subject such as \ or ;
+subject such as \ or ; \n
 -Handle ’ (single quote) which should prevent the shell from interpreting the meta-
-characters in the quoted sequence.
+characters in the quoted sequence. \n
 -Handle " (double quote) which should prevent the shell from interpreting the meta-
-characters in the quoted sequence except for $ (dollar sign).
--Implement the following redirections:
-	< should redirect input.
-	> should redirect output.
-	<< should be given a delimiter, then read the input until a line containing the delimiter is seen
-	>> should redirect output in append mode.
--Implement pipes |
--Handle environnement variables
--Handle $?
--Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash
--Your shell must implement the following built-in commands:
-	echo with option -n
-	cd with only a relative or absolute path
-	pwd with no options
-	export with no options
-	unset with no options
-	env with no options or arguments
-	exit with no options
+characters in the quoted sequence except for $ (dollar sign). \n
+-Implement the following redirections: \n
+	< should redirect input. \n
+	> should redirect output. \n
+	<< should be given a delimiter, then read the input until a line containing the delimiter is seen \n
+	>> should redirect output in append mode. \n
+-Implement pipes | \n
+-Handle environnement variables \n
+-Handle $? \n
+-Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash \n
+-Your shell must implement the following built-in commands: \n
+	echo with option -n \n
+	cd with only a relative or absolute path \n
+	pwd with no options \n
+	export with no options \n
+	unset with no options \n
+	env with no options or arguments \n
+	exit with no options \n
 
 Do not forget readline() might leak and it is not our concerns, to ignore it with valgrind we can use the following:
 
