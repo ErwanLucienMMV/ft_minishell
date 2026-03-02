@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/24 16:09:36 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 16:21:24 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,13 @@
 
 volatile sig_atomic_t	g_signal;
 
-static int	handle_sigint(t_program *program, char *line)
+static void	handle_sigint(t_program *program)
 {
 	if (g_signal == SIGINT)
 	{
 		g_signal = 0;
 		program->last_exit_status = 130;
-		if (!line || !*line)
-		{
-			if (line)
-				free(line);
-			return (1);
-		}
 	}
-	return (0);
 }
 
 int	init_program(t_program **program, char **envp)
@@ -75,8 +68,7 @@ void	main_loop(t_program *program)
 	{
 		set_signal_action();
 		line = readline("$miniswag> ");
-		if (handle_sigint(program, line))
-			continue ;
+		handle_sigint(program);
 		if (!line)
 			break ;
 		if (line && *line)

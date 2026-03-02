@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 18:00:43 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 17:03:30 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 16:11:23 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ void	error_message_command_not_found(char *command);
 void	error_near_pipe(void);
 void	error_near_char(char *str);
 void	error_message_is_a_directory(char *filename);
+void	error_message_error_heredoc(char *s);
 
 #endif

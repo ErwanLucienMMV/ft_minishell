@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:29:58 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 15:52:21 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 16:14:04 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@
 # include "../terminal/program.h"
 # include "../signals/signals.h"
 
-int	doing_here_doc_util(t_program *program, t_parser *lineread,
-		char *tempfile, int mode);
-int	doing_here_doc(t_program *program, char *tempfile);
+int		doing_here_doc_util(t_program *program, t_parser *lineread,
+			char *tempfile, int mode);
+int		doing_here_doc(t_program *program, char *tempfile);
+char	*expand_line(t_program *program, char *line, t_parser *lineread);
+void	sigint_handler_heredoc(int signal);
+void	create_signal(void);
+int		handle_signal(t_program *program, int fd, char *line);
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+         #
+#    By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/21 13:32:07 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/26 12:24:54 by emaigne          ###   ########.fr        #
+#    Updated: 2026/03/02 16:15:08 by abarthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRC =	terminal/terminal.c parser/tokenize.c parser/sanitize.c \
 		expand/checks_for_expand.c expand/calculate_env_size.c \
 		expand/add_empty_nodes_to_their_next.c expand/expand_env_var.c \
 		signals/signals.c files_handler/fhandler.c here_doc/here_doc.c \
+		here_doc/here_doc_expand.c here_doc/here_doc_signal.c \
 		execve/execve.c execve/utils.c execve/find_command.c \
 		execve/execve_piped.c execve/execve_debug.c \
 		execve/parse_command.c execve/execve_checks.c \
