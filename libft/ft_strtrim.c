@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:23:35 by abarthes          #+#    #+#             */
-/*   Updated: 2025/11/13 13:40:34 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:53:04 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	ft_countend(const char *s1, const char *set)
 		size++;
 	size--;
 	while (size >= 0 && ft_isset(s1[size], set))
-	{	
+	{
 		count++;
 		size--;
 	}
@@ -74,11 +74,3 @@ char	*ft_strtrim(const char *s1, const char *set)
 	ft_memcpy(str, s1 + cstart, len - cstart - cend);
 	return (str);
 }
-
-// int	main(void)
-// {
-// 	char *s1 = "  \t \t \n   \n\n\n\t";
-//  	char *s2 = "";
-// 	printf("c : %s \n", ft_strtrim(s1," \n\t"));
-// 	return (1);
-// }

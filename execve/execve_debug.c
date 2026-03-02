@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_debug.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 11:44:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/26 12:14:47 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 15:51:24 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	print_command_list(t_commands **head)
 	if (IS_DEBUG)
 	{
 		if (!elem)
-			ft_printf_fd(2, "List appears to be empty or the head is invalid\n");
+			ft_printf_fd(2, "List appears to be empty\n");
 		while (elem)
 		{
 			ft_printf_fd(2, "%dth of the list:\n", i++);

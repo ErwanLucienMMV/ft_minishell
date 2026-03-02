@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands_files.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 06:22:16 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/02 14:49:28 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 15:51:58 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	handle_output_redir(t_parser *temp, t_commands *tofill)
 	return (0);
 }
 
-int	check_for_redirections(t_parser *cmd, t_commands *tofill, t_program *program)
+int	check_for_redirections(t_parser *cmd, t_commands *tofill, t_program *p)
 {
 	t_parser	*temp;
 
@@ -93,7 +93,7 @@ int	check_for_redirections(t_parser *cmd, t_commands *tofill, t_program *program
 			if (handle_input_redir(temp, tofill))
 				return (1);
 		if (temp->type == DELIMITER && temp->next)
-			if (handle_here_doc(&temp, tofill, program))
+			if (handle_here_doc(&temp, tofill, p))
 				return (1);
 		if ((temp->type == REDIR_OUTPUT
 				|| temp->type == REDIR_OUTPUT_APP) && temp->next)

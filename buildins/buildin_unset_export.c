@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 08:14:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 17:28:01 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:50:32 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	process_export_arg(t_parser *cmd, t_envpath *envpath)
 int	buildin_export(t_parser *cmd, t_envpath *envpath, t_program *program)
 {
 	if (!cmd->next || cmd->next->type != CMD_ARG)
-		return (program->last_exit_status = 0, \
+		return (program->last_exit_status = 0,
 			print_envpath_list_sorted(envpath));
 	cmd = cmd->next;
 	program->last_exit_status = 0;

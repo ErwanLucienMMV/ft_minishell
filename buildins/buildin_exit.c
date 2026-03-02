@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:10:31 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/02 11:16:48 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 15:50:18 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,21 +79,20 @@ int	is_numeric_string(char *str)
 
 int	check_for_exit_arguments(t_program *p)
 {
-	t_parser	*current;
+	t_parser	*cur;
 
 	if (!p->parsed || !*(p->parsed) || !(*p->parsed)->next)
 		return (0);
-	current = (*p->parsed)->next;
-	while (current)
+	cur = (*p->parsed)->next;
+	while (cur)
 	{
-		if (!is_numeric_string(current->s) || !ft_strtol(current->s))
+		if (!is_numeric_string(cur->s) || !ft_strtol(cur->s))
 		{
-			ft_printf_fd(2, "exit: %s: numeric argument required\n",
-				current->s);
+			ft_printf_fd(2, "exit: %s: numeric argument required\n", cur->s);
 			p->last_exit_status = 255;
 			return (0);
 		}
-		current = current->next;
+		cur = cur->next;
 	}
 	if (p->parsed && *(p->parsed)
 		&& (*p->parsed)->next && (*p->parsed)->next->next)

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 02:31:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/27 17:54:40 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 15:53:31 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*return_temp_type_helper(t_parser *temp)
 
 	str = NULL;
 	if (temp->type == CMD_ARG)
-			str = "CMD_ARG";
+		str = "CMD_ARG";
 	else if (temp->type == ENVVAR)
 		str = "ENVVAR";
 	else if (temp->type == SQUOTE)

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/27 15:31:32 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:53:21 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	handle_redirections(t_program *program)
 	if (!there_is_at_least_one_pipe(*program->parsed))
 	{
 		program->here_doc_tempfile = HERE_DOC_TMPFILE;
-		if(doing_here_doc(program, HERE_DOC_TMPFILE))
+		if (doing_here_doc(program, HERE_DOC_TMPFILE))
 		{
 			if (access(HERE_DOC_TMPFILE, F_OK) == 0)
 				unlink(HERE_DOC_TMPFILE);

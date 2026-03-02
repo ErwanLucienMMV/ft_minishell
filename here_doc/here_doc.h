@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:29:58 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/27 15:26:55 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 15:52:21 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # include "../terminal/program.h"
 # include "../signals/signals.h"
 
-int	doing_here_doc_util(t_program *program, t_parser *lineread, char *tempfile, int mode);
+int	doing_here_doc_util(t_program *program, t_parser *lineread,
+		char *tempfile, int mode);
 int	doing_here_doc(t_program *program, char *tempfile);
 
 #endif
