@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:30:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 16:26:49 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 16:32:46 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	is_only_delimiter(t_parser *lr, char *line)
 	return (0);
 }
 
-static char	*read_heredoc_line(t_parser *lineread)
+static char	*read_heredoc_line()
 {
 	char	*line;
 	size_t	len;
@@ -31,10 +31,7 @@ static char	*read_heredoc_line(t_parser *lineread)
 	write(1, "> ", 2);
 	line = get_next_line(STDIN_FILENO);
 	if (!line)
-	{
-		error_message_error_heredoc(lineread->next->s);
 		return (NULL);
-	}
 	len = ft_strlen(line);
 	if (len > 0 && line[len - 1] == '\n')
 		line[len - 1] = '\0';
@@ -52,11 +49,14 @@ int	doing_here_doc_util(t_program *p, t_parser *lr, char *tempfile, int mode)
 		return (perror("here_doc: open"), -1);
 	while (1)
 	{
-		line = read_heredoc_line(lr);
+		line = read_heredoc_line();
 		if (handle_signal(p, fd, line))
 			return (1);
 		if (!line)
+		{
+			error_message_error_heredoc(lr->next->s);
 			break ;
+		}
 		else if (is_only_delimiter(lr, line))
 			break ;
 		if (mode == 1)
@@ -64,8 +64,7 @@ int	doing_here_doc_util(t_program *p, t_parser *lr, char *tempfile, int mode)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
-	close(fd);
-	return (0);
+	return (close(fd), 0);
 }
 
 int	checking_is_delimiter(t_parser *temp, int *mode)
