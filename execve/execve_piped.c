@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/26 14:55:24 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 14:41:50 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	execve_with_pipe(t_program *program)
 	int			lpid;
 
 	commands = NULL;
-	parse_commands_with_pipe(&commands, *(program->parsed));
+	parse_commands_with_pipe(&commands, *(program->parsed), program);
 	if (IS_DEBUG)
 	{
 		print_command_list(&commands);

@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 18:12:28 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 17:26:46 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 14:46:46 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**create_cmd_args(t_parser *cmd)
 	return (args);
 }
 
-t_commands	*commands_node_new(t_parser *cmd)
+t_commands	*commands_node_new(t_parser *cmd, t_program *program)
 {
 	t_commands	*new;
 
@@ -66,7 +66,7 @@ t_commands	*commands_node_new(t_parser *cmd)
 		free(new);
 		return (NULL);
 	}
-	if (check_for_redirections(cmd, new) == 1)
+	if (check_for_redirections(cmd, new, program) == 1)
 	{
 		clearmatrix(new->args);
 		free(new);
@@ -94,7 +94,8 @@ void	free_all_commands(t_commands **commands)
 	free_t_command(curr);
 }
 
-void	parse_commands_with_pipe(t_commands **commands, t_parser *parsed)
+void	parse_commands_with_pipe(t_commands **commands,
+		t_parser *parsed, t_program *program)
 {
 	t_parser	*temp;
 	t_commands	*new_cmd;
@@ -105,7 +106,7 @@ void	parse_commands_with_pipe(t_commands **commands, t_parser *parsed)
 	{
 		if (temp->type == CMD || temp->type == DELIMITER)
 		{
-			new_cmd = commands_node_new(temp);
+			new_cmd = commands_node_new(temp, program);
 			if (!new_cmd)
 			{
 				free_all_commands(commands);

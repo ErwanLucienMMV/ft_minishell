@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands_files.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 06:22:16 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/27 15:27:21 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 14:48:10 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,45 @@ static int	handle_input_redir(t_parser *temp, t_commands *tofill)
 	return (0);
 }
 
-static int	handle_here_doc(t_parser **temp, t_commands *tofill)
+int	get_heredoc_mod(t_parser *temp)
 {
+	int		mode;
+	char	*str;
+
+	mode = 1;
+	if (ft_strchr(temp->next->s, '"') || ft_strchr(temp->next->s, '\''))
+		mode = 0;
+	if (ft_strchr(temp->next->s, '"'))
+	{
+		str = ft_strtrim(temp->next->s, "\"");
+		if (!str)
+			return (perror("here_doc: strtrim"), 1);
+		free(temp->next->s);
+		temp->next->s = str;
+	}
+	if (ft_strchr(temp->next->s, '\''))
+	{
+		str = ft_strtrim(temp->next->s, "'");
+		if (!str)
+			return (perror("here_doc: strtrim"), 1);
+		free(temp->next->s);
+		temp->next->s = str;
+	}
+	return (mode);
+}
+
+static int	handle_here_doc(t_parser **temp,
+	t_commands *tofill, t_program *program)
+{
+	int	mode;
+
 	free(tofill->infile);
 	tofill->infile = get_a_valid_name();
 	if (!tofill->infile)
 		return (1);
 	tofill->inputtype = DELIMITER;
-	// doing_here_doc_util(*temp, tofill->infile, 0);
+	mode = get_heredoc_mod(*temp);
+	doing_here_doc_util(program, *temp, tofill->infile, mode);
 	*temp = (*temp)->next;
 	return (0);
 }
@@ -76,7 +107,7 @@ static int	handle_output_redir(t_parser *temp, t_commands *tofill)
 	return (0);
 }
 
-int	check_for_redirections(t_parser *cmd, t_commands *tofill)
+int	check_for_redirections(t_parser *cmd, t_commands *tofill, t_program *program)
 {
 	t_parser	*temp;
 
@@ -89,7 +120,7 @@ int	check_for_redirections(t_parser *cmd, t_commands *tofill)
 			if (handle_input_redir(temp, tofill))
 				return (1);
 		if (temp->type == DELIMITER && temp->next)
-			if (handle_here_doc(&temp, tofill))
+			if (handle_here_doc(&temp, tofill, program))
 				return (1);
 		if ((temp->type == REDIR_OUTPUT
 				|| temp->type == REDIR_OUTPUT_APP) && temp->next)

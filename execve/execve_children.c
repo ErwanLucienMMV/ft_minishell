@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 21:20:42 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/26 14:55:14 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 14:24:38 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_middle_child(t_program *program, t_commands *cmd,
 	int		exitcode;
 
 	if (is_a_buildin(cmd->cmd->s))
-	{		
+	{
 		if (is_exit(cmd->cmd->s))
 		{
 			exit_piped(program, cmd, first);
