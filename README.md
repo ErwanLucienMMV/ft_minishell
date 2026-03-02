@@ -85,8 +85,8 @@ make fclean
 
 # Resources
 
-![Mes conseils si je devais recommencer minishell](https://medium.com/@mostafa.omrane/mes-conseils-si-je-devais-recommencer-minishell-a9783c51ba1b)
-![Mes conseils si je devais recommencer minishell (avant que central ne le ferme)](https://42-cursus.gitbook.io/guide/3-rank-03/minishell)
+![Mes conseils si je devais recommencer minishell](https://medium.com/@mostafa.omrane/mes-conseils-si-je-devais-recommencer-minishell-a9783c51ba1b) \
+![Mes conseils si je devais recommencer minishell (avant que central ne le ferme)](https://42-cursus.gitbook.io/guide/3-rank-03/minishell) \
 
 ### IA
 
