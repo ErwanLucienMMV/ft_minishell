@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:30:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 16:36:34 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 16:40:12 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	is_only_delimiter(t_parser *lr, char *line)
 	return (0);
 }
 
-static char	*read_heredoc_line()
+static char	*read_heredoc_line(void)
 {
 	char	*line;
 	size_t	len;
