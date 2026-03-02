@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include "../envpath/envpath.h"
 # include "../terminal/program.h"
+# include "../signals/signals.h"
 
 int	doing_here_doc_util(t_program *program, t_parser *lineread, char *tempfile, int mode);
 int	doing_here_doc(t_program *program, char *tempfile);

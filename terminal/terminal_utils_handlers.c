@@ -29,7 +29,10 @@ int	handle_redirections(t_program *program)
 		program->here_doc_tempfile = HERE_DOC_TMPFILE;
 		if(doing_here_doc(program, HERE_DOC_TMPFILE))
 		{
-			program->last_exit_status = 1;
+			if (access(HERE_DOC_TMPFILE, F_OK) == 0)
+				unlink(HERE_DOC_TMPFILE);
+			if (program->last_exit_status != 130)
+				program->last_exit_status = 1;
 			parser_clear(program->parsed);
 			return (1);
 		}
@@ -56,8 +59,6 @@ void	execute_and_restore(t_program *program)
 	if (!((*program->parsed)->s[0] == ':'
 			&& ft_strlen((*program->parsed)->s) == 1))
 		execve_handler(program);
-	rl_replace_line("", 0);
-	rl_redisplay();
 	if (program->saved_stdin >= 0)
 	{
 		dup2(program->saved_stdin, STDIN_FILENO);

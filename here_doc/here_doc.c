@@ -12,6 +12,8 @@
 
 #include "here_doc.h"
 
+extern volatile sig_atomic_t	g_signal;
+
 char *ft_strndup(const char *s, size_t n)
 {
 	char	*dup;
@@ -76,20 +78,48 @@ char	*expand_line(t_program *program, char *line, t_parser *lineread)
 	}
 	return (line);
 }
-	
+
+void	sigint_handler_heredoc(int signal)
+{
+	if (signal == SIGINT)
+	{
+		g_signal = SIGINT;
+		write(2, "\n", 1);
+		close(STDIN_FILENO);
+	}
+}
+
 int	doing_here_doc_util(t_program *program, t_parser *lineread, char *tempfile, int mode)
 {
-	int		fd;
-	char	*line;
+	int					fd;
+	char				*line;
+	struct sigaction	act;
+	int					stdin_backup;
 
+	stdin_backup = dup(STDIN_FILENO);
+	ft_bzero(&act, sizeof(act));
+	act.sa_handler = &sigint_handler_heredoc;
+	sigaction(SIGINT, &act, NULL);
 	fd = open(tempfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
-		return (perror("here_doc: open"), -1);
+		return (close(stdin_backup), perror("here_doc: open"), -1);
 	while (1)
 	{
 		line = readline("> ");
+		if (g_signal == SIGINT)
+		{
+			g_signal = 0;
+			program->last_exit_status = 130;
+			dup2(stdin_backup, STDIN_FILENO);
+			close(stdin_backup);
+			if (line)
+				free(line);
+			close(fd);
+			return (1);
+		}
 		if (!line)
 		{
+			write(2, "\n", 1);
 			ft_printf_fd(2, "minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", lineread->next->s);
 			break ;
 		}
@@ -105,6 +135,7 @@ int	doing_here_doc_util(t_program *program, t_parser *lineread, char *tempfile, 
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
+	close(stdin_backup);
 	close(fd);
 	return (0);
 }
@@ -139,7 +170,8 @@ int	doing_here_doc(t_program *program, char *tempfile)
 				free(temp->next->s);
 				temp->next->s = str;
 			}
-			doing_here_doc_util(program, temp, tempfile, mode);
+			if (doing_here_doc_util(program, temp, tempfile, mode) == 1)
+				return (1);
 		}
 		mode = 1;
 		temp = temp->next;
