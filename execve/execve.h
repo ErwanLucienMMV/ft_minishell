@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/26 14:54:42 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 14:49:57 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,13 @@ void			handle_the_child(t_program *program, t_commands *cmd,
 					t_commands *first);
 
 //				---Piped redirections---	//
-int				check_for_redirections(t_parser *cmd, t_commands *tofill);
+int				check_for_redirections(t_parser *cmd, t_commands *tofill,
+					t_program *program);
 int				setinputs(t_commands *commands);
 int				setoutputs(t_commands *commands);
 int				exit_piped(t_program *program, t_commands *cmd,
 					t_commands *first);
+int				get_heredoc_mod(t_parser *temp);
 
 //				---Checks---			//
 int				there_is_at_least_one_pipe(t_parser *lineread);
@@ -90,7 +92,7 @@ void			do_command(t_program *program, t_parser *cmd,
 					char *path, char **envp);
 int				execve_with_pipe(t_program *program);
 void			parse_commands_with_pipe(t_commands **commands,
-					t_parser *parsed);
+					t_parser *parsed, t_program *program);
 int				make_redirection(t_parser *parsed);
 
 //				---Debug---				//

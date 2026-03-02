@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:30:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/27 15:37:59 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 14:26:39 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	sigint_handler_heredoc(int signal)
 	}
 }
 
+//Modes: 1 = expand || 0 = pas expand
 int	doing_here_doc_util(t_program *program, t_parser *lineread, char *tempfile, int mode)
 {
 	int					fd;
