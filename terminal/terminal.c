@@ -15,14 +15,18 @@
 
 volatile sig_atomic_t	g_signal;
 
-int	handle_sigint(char *line)
+static int	handle_sigint(t_program *program, char *line)
 {
 	if (g_signal == SIGINT)
 	{
 		g_signal = 0;
-		if (line)
-			free(line);
-		return (1);
+		program->last_exit_status = 130;
+		if (!line || !*line)
+		{
+			if (line)
+				free(line);
+			return (1);
+		}
 	}
 	return (0);
 }
@@ -54,10 +58,12 @@ int	process_parsing_and_sanitize(t_program *program, char *line)
 	*program->parsed = parsing(line);
 	if (!(*program->parsed) || sanitize(program->parsed))
 	{
+		free(line);
 		program->last_exit_status = 258;
 		parser_clear(program->parsed);
 		return (1);
 	}
+	free(line);
 	return (0);
 }
 
@@ -69,17 +75,15 @@ void	main_loop(t_program *program)
 	{
 		set_signal_action();
 		line = readline("$miniswag> ");
+		if (handle_sigint(program, line))
+			continue ;
 		if (!line)
 			break ;
 		if (line && *line)
 		{
 			add_history(line);
 			if (process_parsing_and_sanitize(program, line))
-			{
-				free(line);
 				continue ;
-			}
-			free(line);
 			handle_expansions(program);
 			if (check_at_least_one_node(program)
 				|| handle_redirections(program))
