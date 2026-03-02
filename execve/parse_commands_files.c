@@ -6,7 +6,7 @@
 /*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 06:22:16 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/02 14:48:10 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 14:49:28 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,6 @@ static int	handle_input_redir(t_parser *temp, t_commands *tofill)
 	if (access(tofill->infile, F_OK | R_OK) != 0)
 		return (1);
 	return (0);
-}
-
-int	get_heredoc_mod(t_parser *temp)
-{
-	int		mode;
-	char	*str;
-
-	mode = 1;
-	if (ft_strchr(temp->next->s, '"') || ft_strchr(temp->next->s, '\''))
-		mode = 0;
-	if (ft_strchr(temp->next->s, '"'))
-	{
-		str = ft_strtrim(temp->next->s, "\"");
-		if (!str)
-			return (perror("here_doc: strtrim"), 1);
-		free(temp->next->s);
-		temp->next->s = str;
-	}
-	if (ft_strchr(temp->next->s, '\''))
-	{
-		str = ft_strtrim(temp->next->s, "'");
-		if (!str)
-			return (perror("here_doc: strtrim"), 1);
-		free(temp->next->s);
-		temp->next->s = str;
-	}
-	return (mode);
 }
 
 static int	handle_here_doc(t_parser **temp,
