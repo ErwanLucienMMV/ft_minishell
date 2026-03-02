@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 19:19:32 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/27 17:54:08 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,8 @@ void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
 {
 	char		**splited_cmd;
 	char		*new_cmd;
-	int			i;
 	struct stat	path_stat;
 
-	i = 1;
 	splited_cmd = malloc(sizeof(char *) * (count_cmd_args(cmd) + 2));
 	if (!splited_cmd)
 		exit(1);

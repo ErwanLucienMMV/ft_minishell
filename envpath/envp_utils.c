@@ -6,13 +6,13 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 12:21:35 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/06 18:08:42 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/27 17:51:56 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "envpath.h"
 
-void static	assign_temps_envpath(t_envpath *temp)
+static void	assign_temps_envpath(t_envpath *temp)
 {
 	char	*tmp_index;
 	char	*tmp_value;
@@ -25,7 +25,7 @@ void static	assign_temps_envpath(t_envpath *temp)
 	temp->next->value = tmp_value;
 }
 
-void static	print_and_clear_envp(t_envpath *copy)
+static void	print_and_clear_envp(t_envpath *copy)
 {
 	print_envpath_list(copy, 1);
 	envp_clear(&copy);

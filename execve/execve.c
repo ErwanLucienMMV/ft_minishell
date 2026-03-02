@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:44:15 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/27 14:20:18 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/02/27 17:52:45 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,10 @@ int	wait_for_childrens(void)
 int	execve_handler(t_program *program)
 {
 	int					last_status;
-	int					already_n;
 	t_signal_handlers	handlers;
 
 	program->last_exit_status = 0;
 	handlers = setup_signals_before_fork();
-	already_n = 0;
 	last_status = execve_maker(program);
 	if (last_status == 0)
 		return (1);
