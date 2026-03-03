@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_s_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:00:39 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 07:00:55 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/03 16:07:22 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	expand_s_quote(t_parser **node, t_program *program)
 	char	*new_str;
 	int		len;
 
+	(void)program;
 	len = ft_strlen((*node)->s);
 	new_str = malloc((len - 1) * sizeof(char));
 	if (!new_str)
@@ -24,8 +25,13 @@ int	expand_s_quote(t_parser **node, t_program *program)
 	ft_strlcpy(new_str, (*node)->s + 1, len - 1);
 	free((*node)->s);
 	(*node)->s = new_str;
-	if ((*node)->s[0] == 0)
-		return (parser_clear_one(node, program), 0);
+	if (new_str[0] == '\0')
+	{
+		free(new_str);
+		(*node)->s = ft_strdup("\'\'");
+	}
+	else
+		(*node)->s = new_str;
 	(*node)->type = WAS_EXPANDED;
 	return (0);
 }

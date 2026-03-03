@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:30:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 11:24:28 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:52:08 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,12 @@ int	doing_here_doc_util(t_program *p, t_parser *lr, char *tempfile, int mode)
 
 int	checking_is_delimiter(t_parser *temp, int *mode)
 {
-	char	*str;
-
 	if (ft_strchr(temp->next->s, '"') || ft_strchr(temp->next->s, '\''))
 		*mode = 0;
 	if (ft_strchr(temp->next->s, '"'))
-	{
-		str = ft_strtrim(temp->next->s, "\"");
-		if (!str)
-			return (perror("here_doc: strtrim"), 1);
-		free(temp->next->s);
-		temp->next->s = str;
-	}
+		search_and_replace(temp->next, '"');
 	if (ft_strchr(temp->next->s, '\''))
-	{
-		str = ft_strtrim(temp->next->s, "'");
-		if (!str)
-			return (perror("here_doc: strtrim"), 1);
-		free(temp->next->s);
-		temp->next->s = str;
-	}
+		search_and_replace(temp->next, '\'');
 	return (0);
 }
 

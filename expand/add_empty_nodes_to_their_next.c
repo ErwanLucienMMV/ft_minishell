@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:14:17 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/27 12:15:11 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:11:53 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,6 @@ static int	calc_group_len(t_parser *cur)
 	return (count);
 }
 
-static int	merge_nodes(t_program *program, t_parser *cur, int len)
-{
-	t_parser	*tmp;
-	t_parser	*to_remove;
-	char		*str;
-
-	tmp = cur->next;
-	if (!tmp || tmp->type == T_SPACE)
-		return (0);
-	str = malloc(sizeof(char) * (len + 1));
-	if (!str)
-		return (1);
-	str[0] = '\0';
-	ft_strlcat(str, cur->s, len + 1);
-	while (tmp && tmp->type != T_SPACE)
-	{
-		to_remove = tmp;
-		ft_strlcat(str, tmp->s, len + 1);
-		tmp = tmp->next;
-		parser_clear_one(&to_remove, program);
-	}
-	free(cur->s);
-	cur->s = str;
-	cur->next = tmp;
-	return (0);
-}
-
 static int	has_was_expanded_next(t_parser *cur)
 {
 	t_parser	*tmp;
@@ -68,6 +41,40 @@ static int	has_was_expanded_next(t_parser *cur)
 	return (0);
 }
 
+static int	group_has_is_delimiter(t_parser *cur)
+{
+	t_parser	*tmp;
+
+	tmp = cur;
+	while (tmp && tmp->type != T_SPACE)
+	{
+		if (tmp->type == IS_DELIMITER)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+static void	strip_quotes_if_no_delimiter(t_parser *cur)
+{
+	t_parser	*tmp;
+
+	if (group_has_is_delimiter(cur))
+		return ;
+	tmp = cur;
+	while (tmp && tmp->type != T_SPACE)
+	{
+		if (tmp->type == WAS_EXPANDED
+			&& (ft_strncmp(tmp->s, "\"\"", 3) == 0
+				|| ft_strncmp(tmp->s, "\'\'", 3) == 0))
+		{
+			free(tmp->s);
+			tmp->s = ft_strdup("");
+		}
+		tmp = tmp->next;
+	}
+}
+
 int	add_empty_nodes_to_their_next(t_program *program)
 {
 	t_parser	*cur;
@@ -80,6 +87,7 @@ int	add_empty_nodes_to_their_next(t_program *program)
 		if (cur->type != T_SPACE
 			&& (cur->type == WAS_EXPANDED || has_was_expanded_next(cur)))
 		{
+			strip_quotes_if_no_delimiter(cur);
 			len = calc_group_len(cur);
 			if (merge_nodes(program, cur, len))
 				return (1);

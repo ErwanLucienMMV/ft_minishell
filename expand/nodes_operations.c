@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:04:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/27 14:25:53 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:12:02 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,31 @@ void	parser_clear_one(t_parser **node, t_program *program)
 	free((*node)->s);
 	free((*node));
 	(*node) = 0;
+}
+
+static int	merge_nodes(t_program *program, t_parser *cur, int len)
+{
+	t_parser	*tmp;
+	t_parser	*to_remove;
+	char		*str;
+
+	tmp = cur->next;
+	if (!tmp || tmp->type == T_SPACE)
+		return (0);
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (1);
+	str[0] = '\0';
+	ft_strlcat(str, cur->s, len + 1);
+	while (tmp && tmp->type != T_SPACE)
+	{
+		to_remove = tmp;
+		ft_strlcat(str, tmp->s, len + 1);
+		tmp = tmp->next;
+		parser_clear_one(&to_remove, program);
+	}
+	free(cur->s);
+	cur->s = str;
+	cur->next = tmp;
+	return (0);
 }

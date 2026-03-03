@@ -6,7 +6,7 @@
 #    By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/11 14:50:09 by abarthes          #+#    #+#              #
-#    Updated: 2026/02/10 15:23:48 by abarthes         ###   ########.fr        #
+#    Updated: 2026/03/03 14:07:35 by abarthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,20 +32,20 @@ NAME= libft.a
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "$(BLUE)[LIBFT] $(GREEN).o created $(RESET)"
+	@printf "$(BLUE)[LIBFT] $(GREEN).o created$(RESET)\n"
 	@ar rcs $(NAME) $(OBJ)
-	@echo "$(BLUE)[LIBFT] $(GREEN).a created$(RESET)"
+	@printf "$(BLUE)[LIBFT] $(GREEN).a created$(RESET)\n"
 
 .o: .c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	rm -rf $(OBJ)
-	@echo "$(BLUE)[LIBFT] $(RED).o deleted$(RESET)"
+	@printf "$(BLUE)[LIBFT] $(RED).o deleted$(RESET)\n"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(BLUE)[LIBFT] $(RED).a deleted$(RESET)"
+	@printf "$(BLUE)[LIBFT] $(RED).a deleted$(RESET)\n"
 
 re: fclean $(NAME)
 

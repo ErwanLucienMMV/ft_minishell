@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:29:58 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 11:23:54 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:51:33 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ void	sigint_handler_heredoc(int signal);
 void	create_signal(void);
 void	enable_echoctl(void);
 int		handle_signal(t_program *program, int fd, char *line);
+char	*search_and_replace(t_parser *node, char c);
 
 #endif
