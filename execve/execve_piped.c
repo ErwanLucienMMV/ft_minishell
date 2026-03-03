@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_piped.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 14:41:50 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 17:37:17 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,6 @@ int	execve_with_pipe(t_program *program)
 
 	commands = NULL;
 	parse_commands_with_pipe(&commands, *(program->parsed), program);
-	if (IS_DEBUG)
-	{
-		print_command_list(&commands);
-		print_size_of_structs();
-	}
 	if (commands == NULL)
 		return (0);
 	first = commands;
@@ -137,6 +132,8 @@ int	execve_with_pipe(t_program *program)
 		commands = commands->next;
 	}
 	lpid = last_exec(program, commands, first);
+	if (program->saved_stdin >= 0)
+		dup2(program->saved_stdin, STDIN_FILENO);
 	free_t_commands_and_args(first);
 	return (lpid);
 }

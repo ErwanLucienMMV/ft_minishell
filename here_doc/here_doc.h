@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:29:58 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 16:14:04 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 11:23:54 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		doing_here_doc(t_program *program, char *tempfile);
 char	*expand_line(t_program *program, char *line, t_parser *lineread);
 void	sigint_handler_heredoc(int signal);
 void	create_signal(void);
+void	enable_echoctl(void);
 int		handle_signal(t_program *program, int fd, char *line);
 
 #endif

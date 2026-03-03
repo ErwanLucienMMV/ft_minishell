@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:30:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 17:02:31 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 11:24:28 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ int	doing_here_doc(t_program *program, char *tempfile)
 		temp = temp->next;
 	}
 	get_next_line(-1);
+	enable_echoctl();
 	return (0);
 }

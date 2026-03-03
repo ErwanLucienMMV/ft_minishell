@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 17:11:34 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 17:00:10 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/02 17:10:29 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,25 +127,3 @@ char	*get_next_line(int fd)
 		return (0);
 	return (line);
 }
-
-// int main(void)
-// {
-// 	#include <stdio.h>
-// 	#include <fcntl.h>
-// 	int fd = open("test.txt", O_RDONLY);
-// 	while(1)
-// 	{
-// 		char *temp = get_next_line(fd);
-// 		if(temp == NULL)
-// 		{
-// 			free(temp);
-// 			return 1;
-// 		}
-// 		else
-// 		{
-// 			printf("%s", temp);
-// 			free(temp);
-// 		}
-// 	}
-// 	return 0;
-// }

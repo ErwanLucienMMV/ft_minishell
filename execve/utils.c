@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/27 17:54:08 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/02 17:59:59 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	do_command(t_program *program, t_parser *cmd, char *path, char **envp)
 		clean_exit(program, splited_cmd, 127);
 	if (stat(new_cmd, &path_stat) == 0 && S_ISDIR(path_stat.st_mode))
 	{
+		free(new_cmd);
 		error_message_is_a_directory(cmd->s);
 		clean_exit(program, splited_cmd, 126);
 	}
