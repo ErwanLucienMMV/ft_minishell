@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 12:16:32 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/03 11:59:59 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 18:17:54 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_for_exit_arguments_piped(t_program *p, t_commands *cmd)
 	if (!is_numeric_string(current->s) || ft_strtol(current->s) == -256)
 	{
 		ft_printf_fd(2, "exit: %s: numeric argument required\n", current->s);
-		p->last_exit_status = 255;
+		p->last_exit_status = 2;
 		return (0);
 	}
 	p->last_exit_status = ft_strtol(current->s) % 256;

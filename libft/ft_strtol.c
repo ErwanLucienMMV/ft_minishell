@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:22:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 11:53:50 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 18:14:47 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,22 @@ long	ft_strtol(const char *str)
 	long long	result;
 	int			sign;
 
-	if (!str || !*str)
-		return (0);
 	i = 0;
 	result = 0;
-	sign = 1;
+	sign = 0;
 	while (ft_isspace(str[i]))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
-	{
-		sign += -2 * (str[i] == '-');
-		i++;
-	}
+		sign += (str[i++] == '-');
 	while (str[i] && ft_isdigit(str[i]))
 	{
-		result = result * 10 + (str[i] - '0');
-		if ((result > LLONG_MAX && sign == 1)
-			|| (result < LLONG_MIN && sign == -1))
+		if (result > LLONG_MAX / 10)
 			return (-256);
+		result = result * 10 + (str[i] - '0');
 		i++;
 	}
-	return (result * sign);
+	if (sign)
+		return (result * -1);
+	else
+		return (result);
 }
