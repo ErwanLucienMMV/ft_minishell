@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:28:43 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/27 14:41:45 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 11:58:07 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,28 @@ void	mark_expanded_nodes(t_parser *start, t_parser *stop)
 	}
 }
 
+static int	set_empty_was_expanded(t_parser **node)
+{
+	free((*node)->s);
+	(*node)->s = ft_strdup("");
+	if (!(*node)->s)
+		return (1);
+	(*node)->type = WAS_EXPANDED;
+	return (0);
+}
+
 int	expand_env_var(t_parser **node, t_envpath *envpath, t_program *program)
 {
 	char		*value;
 	t_parser	*expanded;
 	t_parser	*next;
 
+	(void)program;
 	if (ft_strlen((*node)->s) == 0)
 		return (set_node_type(*node), 0);
 	value = get_env_value_by_key(&envpath, (*node)->s);
 	if (!value)
-		return (parser_clear_one(node, program), 0);
+		return (set_empty_was_expanded(node));
 	expanded = parsing(value);
 	if (!expanded)
 		return (1);

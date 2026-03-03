@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtol.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 15:22:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/26 12:27:00 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/03 11:53:50 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ long	ft_strtol(const char *str)
 	{
 		result = result * 10 + (str[i] - '0');
 		if ((result > LLONG_MAX && sign == 1)
-			|| (result > LLONG_MIN && sign == -1))
-			return (0);
+			|| (result < LLONG_MIN && sign == -1))
+			return (-256);
 		i++;
 	}
 	return (result * sign);

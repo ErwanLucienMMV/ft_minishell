@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_exit_piped.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 12:16:32 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/26 14:54:53 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/03 11:59:59 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_for_exit_arguments_piped(t_program *p, t_commands *cmd)
 		|| cmd->cmd->next->type != CMD_ARG)
 		return (0);
 	current = cmd->cmd->next;
-	if (!is_numeric_string(current->s) || !ft_strtol(current->s))
+	if (!is_numeric_string(current->s) || ft_strtol(current->s) == -256)
 	{
 		ft_printf_fd(2, "exit: %s: numeric argument required\n", current->s);
 		p->last_exit_status = 255;
