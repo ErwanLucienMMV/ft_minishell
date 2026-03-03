@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 13:34:18 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/17 22:27:43 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/03 17:18:08 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ typedef enum e_lexer
 	DELIMITER,
 	IS_DELIMITER,
 	T_SPACE,
-	WAS_EXPANDED
+	WAS_EXPANDED,
+	WAS_SQUOTED,
+	WAS_DQUOTED
 }	t_lexer;
 
 #endif

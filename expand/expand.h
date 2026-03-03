@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:19 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 16:17:53 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 17:31:56 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,10 @@ int		check_and_count_for_envvar(t_parser *n, t_envpath *ep);
 
 int		calculate_final_size(t_parser *node, t_envpath *envpath, int len);
 int		merge_nodes(t_program *program, t_parser *cur, int len);
+int		is_expanded_type(t_lexer type);
+int		group_has_is_delimiter(t_parser *cur);
+void	strip_quotes_if_no_delimiter(t_parser *cur);
+char	*wrap_with_quote(char *s, char quote);
+int		add_quotes_for_delimiter(t_parser *cur);
 
 #endif
