@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:14:17 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/03 16:11:53 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:17:16 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	group_has_is_delimiter(t_parser *cur)
 	t_parser	*tmp;
 
 	tmp = cur;
-	while (tmp && tmp->type != T_SPACE)
+	while (tmp && tmp->type != T_SPACE && tmp->type != PIPE)
 	{
 		if (tmp->type == IS_DELIMITER)
 			return (1);

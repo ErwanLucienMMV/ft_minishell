@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:19 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 18:04:41 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:17:53 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ int		is_env_var(t_parser *node, int i);
 int		check_and_count_for_envvar(t_parser *n, t_envpath *ep);
 
 int		calculate_final_size(t_parser *node, t_envpath *envpath, int len);
+int		merge_nodes(t_program *program, t_parser *cur, int len);
 
 #endif

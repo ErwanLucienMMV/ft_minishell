@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:43:04 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 15:52:50 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:23:33 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*search_and_replace(t_parser *node, char c)
 	i = 0;
 	j = 0;
 	result = malloc((count_real_char(node->s, c) + 1) * sizeof(char));
+	if (!result)
+		return (perror("here_doc: malloc"), NULL);
 	while (node->s[i])
 	{
 		if (node->s[i] != c)

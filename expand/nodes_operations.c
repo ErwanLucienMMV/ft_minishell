@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:04:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/03 16:12:02 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:18:00 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	parser_clear_one(t_parser **node, t_program *program)
 	(*node) = 0;
 }
 
-static int	merge_nodes(t_program *program, t_parser *cur, int len)
+int	merge_nodes(t_program *program, t_parser *cur, int len)
 {
 	t_parser	*tmp;
 	t_parser	*to_remove;

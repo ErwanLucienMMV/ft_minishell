@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:30:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 15:52:08 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:20:52 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,15 @@ int	checking_is_delimiter(t_parser *temp, int *mode)
 	if (ft_strchr(temp->next->s, '"') || ft_strchr(temp->next->s, '\''))
 		*mode = 0;
 	if (ft_strchr(temp->next->s, '"'))
-		search_and_replace(temp->next, '"');
+	{
+		if (!search_and_replace(temp->next, '"'))
+			return (1);
+	}
 	if (ft_strchr(temp->next->s, '\''))
-		search_and_replace(temp->next, '\'');
+	{
+		if (!search_and_replace(temp->next, '\''))
+			return (1);
+	}
 	return (0);
 }
 

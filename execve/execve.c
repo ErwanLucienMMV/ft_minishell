@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:44:15 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/27 17:52:45 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/03 16:28:35 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	handle_piped_exec_exit(t_program *program, int pid)
 	{
 		if (WTERMSIG(store_status) == SIGQUIT)
 			write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
-		else
+		else if (WTERMSIG(store_status) != SIGPIPE)
 			write(STDOUT_FILENO, "\n", 1);
 		program->last_exit_status = 128 + WTERMSIG(store_status);
 	}
@@ -71,7 +71,7 @@ int	wait_for_childrens(void)
 		{
 			if (WTERMSIG(status) == SIGQUIT)
 				write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
-			else
+			else if (WTERMSIG(status) != SIGPIPE)
 				write(STDOUT_FILENO, "\n", 1);
 			already_n = 1;
 		}

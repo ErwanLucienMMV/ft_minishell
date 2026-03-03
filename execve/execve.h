@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 14:49:57 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/03 16:22:47 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int				setinputs(t_commands *commands);
 int				setoutputs(t_commands *commands);
 int				exit_piped(t_program *program, t_commands *cmd,
 					t_commands *first);
-int				get_heredoc_mod(t_parser *temp);
+int				get_heredoc_mod(t_parser *temp, int *mode);
 
 //				---Checks---			//
 int				there_is_at_least_one_pipe(t_parser *lineread);

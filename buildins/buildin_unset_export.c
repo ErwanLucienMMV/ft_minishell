@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 08:14:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/02 15:50:32 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:31:45 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	buildin_export(t_parser *cmd, t_envpath *envpath, t_program *program)
 	{
 		if (!is_valid_identifier(cmd->s))
 		{
-			printf("export: '%s': not a valid identifier\n", cmd->s);
+			ft_printf_fd(2, "export: '%s': not a valid identifier\n", cmd->s);
 			program->last_exit_status = 1;
 		}
 		else if (!process_export_arg(cmd, envpath))

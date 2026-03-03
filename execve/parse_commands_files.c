@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 06:22:16 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/02 15:51:58 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:22:14 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,13 @@ static int	handle_here_doc(t_parser **temp,
 {
 	int	mode;
 
+	mode = 1;
 	free(tofill->infile);
 	tofill->infile = get_a_valid_name();
 	if (!tofill->infile)
 		return (1);
 	tofill->inputtype = DELIMITER;
-	mode = get_heredoc_mod(*temp);
+	get_heredoc_mod(*temp, &mode);
 	doing_here_doc_util(program, *temp, tofill->infile, mode);
 	*temp = (*temp)->next;
 	return (0);

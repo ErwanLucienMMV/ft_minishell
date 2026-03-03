@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin_envpath.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:15:48 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 08:16:09 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/03 16:30:59 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	buildin_env(t_program *program)
 {
 	if (get_env_value_by_key(program->envpath, "PATH") == NULL)
 	{
-		printf("minishell: env: No such file or directory\n");
+		write(STDERR_FILENO, "minishell: env: No such file or directory\n", 39);
 		program->last_exit_status = 127;
 		return (0);
 	}

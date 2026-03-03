@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:40:00 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 16:29:46 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:31:15 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	cd_dash_case(t_envpath *envpath, t_program *program)
 	oldpwd = get_env_value_by_key(&envpath, "OLDPWD");
 	if (!oldpwd || !oldpwd[0])
 	{
-		printf("miniswag: cd: OLDPWD not set\n");
+		write(STDERR_FILENO, "minishell: cd: OLDPWD not set\n", 29);
 		program->last_exit_status = 1;
 		return (1);
 	}
@@ -47,7 +47,7 @@ static int	cd_no_arg_case(t_envpath *envpath, t_program *program)
 	home = get_env_value_by_key(&envpath, "HOME");
 	if (!home)
 	{
-		printf("minishell: cd: HOME not set\n");
+		write(STDERR_FILENO, "minishell: cd: HOME not set\n", 28);
 		program->last_exit_status = 1;
 		return (1);
 	}
