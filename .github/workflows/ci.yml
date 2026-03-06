@@ -1,0 +1,81 @@
+name: CI - build and test
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libreadline-dev libncurses-dev valgrind
+
+      - name: Build (make)
+        run: |
+          set -o pipefail
+          mkdir -p ci_logs
+          make 2>&1 | tee ci_logs/build.log
+        continue-on-error: false
+
+      - name: Run scripted tests and produce summary
+        run: |
+          set -o pipefail
+          mkdir -p ci_logs
+          SUMMARY=ci_logs/summary.txt
+          TESTLOG=ci_logs/test.log
+          echo "Minishell CI test run - $(date)" > "$SUMMARY"
+          echo "" > "$TESTLOG"
+
+          if [ -x minishell ]; then
+            echo "COMPILE: OK" >> "$SUMMARY"
+          else
+            echo "COMPILE: FAIL - minishell executable missing" >> "$SUMMARY"
+            echo "No executable found, aborting tests." >> "$SUMMARY"
+            exit 1
+          fi
+
+          run_case() {
+            local name="$1"
+            local input="$2"
+            local outfile="$3"
+            echo "=== TEST: $name ===" | tee -a "$TESTLOG" "$SUMMARY"
+            printf "%s\n" "$input" | ./minishell 2>&1 | tee -a "$TESTLOG" > "$outfile"
+            rc=$?
+            if [ $rc -eq 0 ]; then
+              echo "RESULT: PASS (exit $rc)" | tee -a "$TESTLOG" "$SUMMARY"
+            else
+              echo "RESULT: FAIL (exit $rc)" | tee -a "$TESTLOG" "$SUMMARY"
+            fi
+            echo "" >> "$TESTLOG"
+          }
+
+          # Non-interactive test cases (feed commands and exit)
+          run_case "echo_basic" $'echo Hello\nexit' ci_logs/echo_basic.out
+          run_case "echo_n_option" $'echo -n Hello\nexit' ci_logs/echo_n.out
+          run_case "pwd_builtin" $'pwd\nexit' ci_logs/pwd.out
+          run_case "cd_and_pwd" $'cd /\npwd\nexit' ci_logs/cd_pwd.out
+          run_case "env_and_export" $'export CI_TEST=42\necho $CI_TEST\nenv\nexit' ci_logs/env_export.out
+          run_case "unset" $'export CI_TEST=42\nunset CI_TEST\necho $CI_TEST\nexit' ci_logs/unset.out
+          run_case "pipe" $'echo hello | cat\nexit' ci_logs/pipe.out
+          run_case "redir_output" $'echo out > ci_logs/tmp_file\ncat ci_logs/tmp_file\nexit' ci_logs/redir.out
+          run_case "redir_input" $'cat < ci_logs/tmp_file\nexit' ci_logs/redir_in.out
+          run_case "append" $'echo a >> ci_logs/tmp_append\ncat ci_logs/tmp_append\nexit' ci_logs/append.out
+          run_case "heredoc" $'cat <<EOF\nhello_heredoc\nEOF\nexit' ci_logs/heredoc.out
+          # $? handling
+          run_case "last_status" $'false\necho $?\nexit' ci_logs/last_status.out
+
+          echo "" >> "$SUMMARY"
+          echo "Full logs are in ci_logs/ (build.log, test.log, *.out)" >> "$SUMMARY"
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: minishell-ci-logs
+          path: ci_logs
