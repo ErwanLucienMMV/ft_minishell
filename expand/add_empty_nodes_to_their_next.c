@@ -6,11 +6,19 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:14:17 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/03 17:30:56 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/06 15:01:17 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
+
+static int	is_redir_type(t_lexer type)
+{
+	if (type == DELIMITER || type == REDIR_OUTPUT
+		|| type == REDIR_INPUT || type == REDIR_OUTPUT_APP || type == PIPE)
+		return (1);
+	return (0);
+}
 
 static int	calc_group_len(t_parser *cur)
 {
@@ -19,7 +27,7 @@ static int	calc_group_len(t_parser *cur)
 
 	count = ft_strlen(cur->s);
 	tmp = cur->next;
-	while (tmp && tmp->type != T_SPACE)
+	while (tmp && tmp->type != T_SPACE && !is_redir_type(tmp->type))
 	{
 		count += ft_strlen(tmp->s);
 		tmp = tmp->next;
@@ -32,7 +40,7 @@ static int	has_was_expanded_next(t_parser *cur)
 	t_parser	*tmp;
 
 	tmp = cur->next;
-	while (tmp && tmp->type != T_SPACE)
+	while (tmp && tmp->type != T_SPACE && !is_redir_type(tmp->type))
 	{
 		if (is_expanded_type(tmp->type))
 			return (1);
@@ -43,11 +51,14 @@ static int	has_was_expanded_next(t_parser *cur)
 
 static int	should_merge_group(t_parser *cur)
 {
+	if (is_redir_type(cur->type))
+		return (0);
 	if (is_expanded_type(cur->type))
 		return (1);
 	if (has_was_expanded_next(cur))
 		return (1);
-	if (cur->type == IS_DELIMITER && cur->next && cur->next->type != T_SPACE)
+	if (cur->type == IS_DELIMITER && cur->next
+		&& cur->next->type != T_SPACE && !is_redir_type(cur->next->type))
 		return (1);
 	return (0);
 }
