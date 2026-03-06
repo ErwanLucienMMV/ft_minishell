@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:24:30 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/06 19:15:21 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/06 19:18:21 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ t_parser	*init_if_cmd(t_parser *lparser, t_parser **head, char *s, int x)
 	new = NULL;
 	if (get_prev_non_space(lparser) && is_parser_redir(head))
 		new = parser_node_new(FILENAME, (s), x);
+	else if (get_prev_non_space(lparser)
+			&& get_prev_non_space(lparser)->type == DELIMITER)
+			new = parser_node_new(IS_DELIMITER, (s), x);
 	else if (get_prev_non_space(lparser) && get_prev_cmd(lparser))
 		new = parser_node_new(CMD_ARG, (s), x);
-	else if (get_prev_non_space(lparser)
-		&& get_prev_non_space(lparser)->type == DELIMITER)
-		new = parser_node_new(IS_DELIMITER, (s), x);
 	return (new);
 }
 
