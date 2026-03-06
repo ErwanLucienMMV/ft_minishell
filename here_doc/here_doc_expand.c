@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 15:55:01 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 16:02:58 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/06 15:21:39 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,25 @@ char	*ft_strndup(const char *s, size_t n)
 	}
 	dup[i] = '\0';
 	return (dup);
+}
+
+static char	*expand_exit_status_var(t_program *program, char *line,
+	int i, int *new_i)
+{
+	char	*status_str;
+	char	*prefix;
+	char	*result;
+
+	status_str = ft_itoa(program->last_exit_status);
+	if (!status_str)
+		return (free(line), NULL);
+	prefix = ft_strndup(line, i);
+	result = ft_strjoin_gnl(prefix, status_str);
+	free(status_str);
+	*new_i = ft_strlen(result);
+	result = ft_strjoin_gnl(result, line + i + 2);
+	free(line);
+	return (result);
 }
 
 static char	*expand_one_var(t_program *program, char *line, int i, int *new_i)
@@ -63,6 +82,14 @@ char	*expand_line(t_program *program, char *line, t_parser *lineread)
 	i = 0;
 	while (line[i])
 	{
+		if (line[i] == '$' && line[i + 1] == '?')
+		{
+			line = expand_exit_status_var(program, line, i, &new_i);
+			if (!line)
+				return (NULL);
+			i = new_i;
+			continue ;
+		}
 		if (line[i] == '$' && (ft_isalnum(line[i + 1]) || line[i + 1] == '_'))
 		{
 			line = expand_one_var(program, line, i, &new_i);
