@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:26 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/26 11:30:44 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/06 19:13:34 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	buildin_pwd(t_program *program)
 int	check_buildin_piped(t_parser *cmd, t_envpath *envpath,
 	t_program *program)
 {
+	delete_redirections(program);
 	if (cmd->type == CMD && ft_strncmp(cmd->s, "cd", 2) == 0
 		&& ft_strlen(cmd->s) == 2)
 		return (buildin_cd(cmd, envpath, program));
@@ -64,6 +65,7 @@ int	check_buildin(t_parser *cmd, t_envpath *envpath, t_program *program)
 		&& ft_strlen(cmd->s) == 4)
 		return (buildin_exit(program));
 	make_redirection(*program->parsed);
+	delete_redirections(program);
 	if (cmd->type == CMD && ft_strncmp(cmd->s, "cd", 2) == 0
 		&& ft_strlen(cmd->s) == 2)
 		return (buildin_cd(cmd, envpath, program));

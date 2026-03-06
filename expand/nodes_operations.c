@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:04:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/03 16:18:00 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/06 18:34:23 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	set_node_type(t_parser *node)
 			|| node->prev->type == REDIR_OUTPUT
 			|| node->prev->type == REDIR_OUTPUT_APP))
 		node->type = FILENAME;
-	else if (node->prev && (node->prev->type == CMD
-			|| node->prev->type == CMD_ARG))
+	else if (node->prev && get_prev_cmd(node))
 		node->type = CMD_ARG;
 	else
 		node->type = CMD;

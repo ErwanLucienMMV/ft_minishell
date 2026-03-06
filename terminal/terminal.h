@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:34 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/27 17:02:32 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/06 18:56:23 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ int			check_at_least_one_node(t_program *program);
 int			handle_redirections(t_program *program);
 void		handle_expansions(t_program *program);
 void		execute_and_restore(t_program *program);
+void	    delete_redirections(t_program *program);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 17:19:35 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/20 06:37:49 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/06 19:13:17 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ static t_parser	*skip_n_flags(t_parser *temp, int *is_n)
 
 static void	print_echo_args(t_parser *temp)
 {
-	while (temp && (temp->type == CMD || temp->type == CMD_ARG))
+	while (temp && temp->type == CMD_ARG)
 	{
 		if (!is_space_token(temp->s))
 			printf("%s", temp->s);
 		temp = temp->next;
-		if (temp && (temp->type == CMD || temp->type == CMD_ARG))
+		if (temp && temp->type == CMD_ARG)
 			printf(" ");
 	}
 }

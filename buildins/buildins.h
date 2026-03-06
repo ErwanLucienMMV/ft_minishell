@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:06 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/26 12:26:44 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/06 18:43:49 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <signal.h>
 # include <readline/history.h>
 # include <stdio.h>
+# include "../expand/expand.h"
 
 //			--- Handle the env ---			//
 int		buildin_export(t_parser *cmd, t_envpath *envpath, t_program *program);

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:53:12 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/23 15:48:05 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/06 18:17:27 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,6 @@ int	sanitize_pipe(t_parser *token, t_parser **head)
 	if (!get_next_token_non_space(token)
 		|| !get_prev_token_non_space(token)
 		|| token == *head)
-		return (error_near_pipe(), 1);
-	if (get_next_token_non_space(token)->type != CMD
-		&& get_next_token_non_space(token)->type != ENVVAR
-		&& get_next_token_non_space(token)->type != REDIR_INPUT)
 		return (error_near_pipe(), 1);
 	if (get_prev_token_non_space(token)->type != CMD
 		&& get_prev_token_non_space(token)->type != CMD_ARG

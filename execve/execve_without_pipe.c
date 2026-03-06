@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 08:26:42 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/26 18:01:11 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/06 19:11:58 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	execve_without_pipe(t_program *program,
 	if (!cmd)
 		return (1);
 	make_redirection(*parsed);
+	delete_redirections(program);
 	if (lstat(HERE_DOC_TMPFILE, &st) == 0)
 		unlink(HERE_DOC_TMPFILE);
 	return (exec_one_command(program, cmd,

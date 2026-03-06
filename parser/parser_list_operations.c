@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:34:15 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/26 17:55:09 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/06 19:15:28 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,20 @@ int	its_env_var(t_parser **head, char *s, int *i)
 		return (0);
 	*i += x;
 	return (1);
+}
+
+t_parser	*get_prev_cmd(t_parser *lparser)
+{
+	t_parser	*temp;
+
+	temp = lparser->prev;
+	while (temp)
+	{
+		if (temp->type == CMD)
+			return (temp);
+		if (temp->type == PIPE)
+			return (0);
+		temp = temp->prev;
+	}
+	return (0);
 }

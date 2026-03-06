@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:53:07 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/24 16:01:37 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/06 18:33:50 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ t_parser	*get_prev_token_non_space(t_parser *token);
 
 t_parser	*get_next_non_space(t_parser *token);
 t_parser	*get_prev_non_space(t_parser *token);
+
+t_parser	*get_prev_cmd(t_parser *lparser);
 
 #endif
