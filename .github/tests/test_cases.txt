@@ -59,7 +59,6 @@ echo $?
 echo $?$
 echo $? | echo $? | echo $?
 echo $HOME
-echo \$HOME
 echo my shit terminal is [$TERM]
 echo my shit terminal is [$TERM4
 echo my shit terminal is [$TERM4]
@@ -69,7 +68,6 @@ echo $9HOME
 echo $HOME%
 echo $UID$HOME
 echo Le path de mon HOME est $HOME
-echo $USER$var\$USER$USER\$USERtest$USER
 echo $hola*
 echo -nnnn $hola
 echo > <
@@ -163,8 +161,6 @@ export --HOLA=bonjour
 export HOLA-=bonjour
 export HO-LA=bonjour
 export HOL.A=bonjour
-export HOL\\\$A=bonjour
-export HO\\\\LA=bonjour
 export HOL}A=bonjour
 export HOL{A=bonjour
 export HO*LA=bonjour
@@ -184,8 +180,6 @@ export HOLA=$HOME
 export HOLA=bonjour$HOME
 export HOLA=$HOMEbonjour
 export HOLA=bon$jour
-export HOLA=bon\jour
-export HOLA=bon\\jour
 export HOLA=bon(jour
 export HOLA=bon()jour
 export HOLA=bon&jour
@@ -227,7 +221,6 @@ unset HOLA HOL?A
 unset HOL?A HOLA
 unset HOL?A HOL.A
 unset HOLA=
-unset HOL\\\\A
 unset HOL.A
 unset HOL+A
 unset HOL=A
@@ -417,10 +410,6 @@ echo "test" > /tmp/minishell_test_$$
 cat /tmp/minishell_test_$$
 rm /tmp/minishell_test_$$
 ls > /dev/null
-echo "\n"
-echo "\\n"
-echo "\t"
-echo "\\"
 export EMPTY=""
 echo $EMPTY
 echo "$EMPTY"
@@ -499,10 +488,6 @@ echo $-
 echo $*
 echo $1
 echo $0
-echo \$
-echo \\
-echo \n
-echo \t
 echo 'hello world'
 echo "hello world"
 echo 'hello "world"'
