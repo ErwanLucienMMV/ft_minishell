@@ -46,6 +46,8 @@ jobs:
             exit 1
           fi
           echo "" >> "$SUMMARY"
+          echo "Only failed tests are written to $TESTLOG" >> "$SUMMARY"
+          echo "" >> "$SUMMARY"
 
           # Counters
           TOTAL=0
@@ -62,19 +64,16 @@ jobs:
             
             # Skip tests that require interactive input (Ctrl-C, Ctrl-D, etc.)
             if echo "$cmd" | grep -qE "Ctlr-|ctrl-|Ctrl\\\\"; then
-              echo "[TEST $test_num] SKIPPED (interactive): $cmd" >> "$TESTLOG"
               return
             fi
             
             # Skip history test
             if echo "$cmd" | grep -qE "history|\\[touche du haut\\]"; then
-              echo "[TEST $test_num] SKIPPED (history): $cmd" >> "$TESTLOG"
               return
             fi
             
             # Skip chmod minishell test
             if echo "$cmd" | grep -q "chmod.*minishell"; then
-              echo "[TEST $test_num] SKIPPED (chmod minishell): $cmd" >> "$TESTLOG"
               return
             fi
             
@@ -124,7 +123,6 @@ jobs:
             # Check for syntax errors in bash
             if grep -qE "syntax error|parse error" "$BASH_ERR"; then
               SYNTAX_ERROR=$((SYNTAX_ERROR + 1))
-              echo "[TEST $test_num] SYNTAX ERROR in bash: $cmd" >> "$TESTLOG"
               return
             fi
             
@@ -134,7 +132,6 @@ jobs:
             # Check if outputs match (ignoring minor whitespace at end of lines)
             if [ -z "$DIFF_OUT" ] || diff -wB "$BASH_OUT" "$MINI_OUT" > /dev/null 2>&1; then
               PASSED=$((PASSED + 1))
-              echo "[TEST $test_num] ✓ PASS: $cmd" >> "$TESTLOG"
             else
               FAILED=$((FAILED + 1))
               echo "[TEST $test_num] ✗ FAIL: $cmd" >> "$TESTLOG"
