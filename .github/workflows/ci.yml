@@ -88,8 +88,8 @@ jobs:
             printf "%s\n" "$cmd" | bash --posix > "$BASH_OUT" 2> "$BASH_ERR"
             BASH_RC=$?
             
-            # Run in minishell (add exit at end)
-            printf "%s\nexit\n" "$cmd" | timeout 5 ./minishell > "ci_logs/mini_${test_num}_raw.out" 2> "$MINI_ERR"
+            # Run in minishell
+            printf "%s\n" "$cmd" | timeout 5 ./minishell > "ci_logs/mini_${test_num}_raw.out" 2> "$MINI_ERR"
             MINI_RC=$?
             set -e
             
@@ -121,14 +121,6 @@ jobs:
             FIRST_LINE=$(head -n 1 "$MINI_OUT" 2>/dev/null || echo "")
             if [ "$FIRST_LINE" = "$cmd" ]; then
               tail -n +2 "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
-            fi
-
-            # Remove last line if it's exactly "exit" (from the appended command)
-            if [ -s "$MINI_OUT" ]; then
-              LAST_LINE=$(tail -n 1 "$MINI_OUT" 2>/dev/null || true)
-              if echo "$LAST_LINE" | grep -qE '^[[:space:]]*exit[[:space:]]*$'; then
-                sed '$d' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
-              fi
             fi
             
             # Check for syntax errors in bash
