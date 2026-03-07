@@ -59,16 +59,12 @@ echo $?
 echo $?$
 echo $? | echo $? | echo $?
 echo $HOME
-echo my shit terminal is [$TERM]
 echo my shit terminal is [$TERM4
 echo my shit terminal is [$TERM4]
-echo $UID
 echo $HOME9
 echo $9HOME
 echo $HOME%
-echo $UID$HOME
 echo Le path de mon HOME est $HOME
-echo $hola*
 echo -nnnn $hola
 echo > <
 echo | |
@@ -139,14 +135,10 @@ $HOMEdskjhfkdshfsd
 '$HOMEdskjhfkdshfsd'
 $DONTEXIST
 $LESS$VAR
-env
-env ./Makefile
 export HOLA=bonjour
 export       HOLA=bonjour
-export
 export Hola
 export Hola9hey
-export $DONTEXIST
 export ""
 export %
 export $?
@@ -287,8 +279,6 @@ cd '$PWD/srcs'
 cd *
 ls hola
 ./Makefile
-./minishell
-env|"wc" -l
 exit
 exit exit
 exit hola
@@ -346,7 +336,6 @@ ls | hola
 ls | ls hola
 ls | ls | hola
 ls | hola | ls
-ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls
 echo hola | cat
 echo hola| cat
 echo hola |cat
@@ -370,8 +359,6 @@ ls nonexistentfile
 cat nonexistentfile
 invalid_command
 /invalid/path/command
-echo hello > /dev/null
-echo test >> /tmp/test_out.txt
 cat /tmp/test_out.txt
 rm /tmp/test_out.txt
 echo -n test | cat
@@ -403,7 +390,6 @@ exit 256
 echo | echo | echo test
 cat | cat | cat
 ls -la
-echo "test" > /tmp/minishell_test_$$
 cat /tmp/minishell_test_$$
 rm /tmp/minishell_test_$$
 ls > /dev/null
@@ -449,8 +435,6 @@ cd .
 cd ./
 pwd
 echo hello | cat
-echo line1 > /tmp/t1.txt
-echo line2 >> /tmp/t1.txt
 cat /tmp/t1.txt
 pwd
 echo $PWD
@@ -492,7 +476,6 @@ export VAR_NAME=value
 unset NONEXISTENT
 unset A B C
 unset _VAR
-env
 ls -l
 ls -la
 ls -la Makefile

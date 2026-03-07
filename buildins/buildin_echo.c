@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 17:19:35 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/06 19:13:17 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:26:19 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	valid_argument_n(char *str)
 {
 	int	i;
 
+	if (!str || str[0] != '-' || str[1] == '\0')
+		return (0);
 	i = 1;
 	while (str[i])
 	{

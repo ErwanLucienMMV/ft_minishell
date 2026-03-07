@@ -77,9 +77,9 @@ jobs:
               return
             fi
             
-            # Create temp files for outputs
-            BASH_OUT="ci_logs/bash_${test_num}.out"
-            BASH_ERR="ci_logs/bash_${test_num}.err"
+            # Create temp files for outputs (bash files stay outside ci_logs)
+            BASH_OUT="$(mktemp)"
+            BASH_ERR="$(mktemp)"
             MINI_OUT="ci_logs/mini_${test_num}.out"
             MINI_ERR="ci_logs/mini_${test_num}.err"
             
@@ -101,6 +101,7 @@ jobs:
               echo "[TEST $test_num] TIMEOUT: $cmd" >> "$TESTLOG"
               echo "TEST $test_num TIMEOUT: $cmd" >> "$DIFFLOG"
               FAILED=$((FAILED + 1))
+              rm -f "$BASH_OUT" "$BASH_ERR" 2>/dev/null || true
               return
             fi
             
@@ -133,6 +134,7 @@ jobs:
             # Check for syntax errors in bash
             if grep -qE "syntax error|parse error" "$BASH_ERR"; then
               SYNTAX_ERROR=$((SYNTAX_ERROR + 1))
+              rm -f "$BASH_OUT" "$BASH_ERR" 2>/dev/null || true
               return
             fi
             
@@ -162,6 +164,7 @@ jobs:
               echo "DIFF:" >> "$DIFFLOG"
               echo "$DIFF_OUT" >> "$DIFFLOG"
               echo "" >> "$DIFFLOG"
+              rm -f "$BASH_OUT" "$BASH_ERR" 2>/dev/null || true
             fi
           }
 
@@ -216,17 +219,16 @@ jobs:
           echo "Generated files in ci_logs:"
           ls -lah ci_logs || true
           
-          # Print result (don't fail the build, just report)
+          # Print result and fail the job if at least one test failed
           if [ $FAILED -gt 0 ]; then
             echo ""
             echo "❌ $FAILED test(s) failed. Check ci_logs/differences.log for details."
+            exit 1
           else
             echo ""
             echo "✅ All tests passed!"
+            exit 0
           fi
-          
-          # Always succeed to allow artifact upload
-          exit 0
 
       - name: Upload logs
         if: always()
