@@ -24,55 +24,168 @@ jobs:
           make 2>&1 | tee ci_logs/build.log
         continue-on-error: false
 
-      - name: Run scripted tests and produce summary
+      - name: Run comprehensive test suite
         run: |
           set -o pipefail
           mkdir -p ci_logs
           SUMMARY=ci_logs/summary.txt
           TESTLOG=ci_logs/test.log
-          echo "Minishell CI test run - $(date)" > "$SUMMARY"
+          DIFFLOG=ci_logs/differences.log
+          
+          echo "========================================" > "$SUMMARY"
+          echo "Minishell CI Test Suite - $(date)" >> "$SUMMARY"
+          echo "========================================" >> "$SUMMARY"
+          echo "" >> "$SUMMARY"
           echo "" > "$TESTLOG"
+          echo "" > "$DIFFLOG"
 
           if [ -x minishell ]; then
-            echo "COMPILE: OK" >> "$SUMMARY"
+            echo "✓ COMPILE: OK" >> "$SUMMARY"
           else
-            echo "COMPILE: FAIL - minishell executable missing" >> "$SUMMARY"
-            echo "No executable found, aborting tests." >> "$SUMMARY"
+            echo "✗ COMPILE: FAIL - minishell executable missing" >> "$SUMMARY"
+            exit 1
+          fi
+          echo "" >> "$SUMMARY"
+
+          # Counters
+          TOTAL=0
+          PASSED=0
+          FAILED=0
+          SYNTAX_ERROR=0
+          
+          # Test comparison function
+          run_test() {
+            local test_num="$1"
+            local cmd="$2"
+            
+            TOTAL=$((TOTAL + 1))
+            
+            # Skip tests that require interactive input (Ctrl-C, Ctrl-D, etc.)
+            if echo "$cmd" | grep -qE "Ctlr-|ctrl-|Ctrl\\\\"; then
+              echo "[TEST $test_num] SKIPPED (interactive): $cmd" >> "$TESTLOG"
+              return
+            fi
+            
+            # Skip history test
+            if echo "$cmd" | grep -qE "history|\\[touche du haut\\]"; then
+              echo "[TEST $test_num] SKIPPED (history): $cmd" >> "$TESTLOG"
+              return
+            fi
+            
+            # Skip chmod minishell test
+            if echo "$cmd" | grep -q "chmod.*minishell"; then
+              echo "[TEST $test_num] SKIPPED (chmod minishell): $cmd" >> "$TESTLOG"
+              return
+            fi
+            
+            # Create temp files for outputs
+            BASH_OUT="ci_logs/bash_${test_num}.out"
+            BASH_ERR="ci_logs/bash_${test_num}.err"
+            MINI_OUT="ci_logs/mini_${test_num}.out"
+            MINI_ERR="ci_logs/mini_${test_num}.err"
+            
+            # Run in bash POSIX mode
+            printf "%s\n" "$cmd" | bash --posix > "$BASH_OUT" 2> "$BASH_ERR"
+            BASH_RC=$?
+            
+            # Run in minishell (add exit at end)
+            printf "%s\nexit\n" "$cmd" | timeout 5 ./minishell > "$MINI_OUT" 2> "$MINI_ERR"
+            MINI_RC=$?
+            
+            # Handle timeout
+            if [ $MINI_RC -eq 124 ]; then
+              echo "[TEST $test_num] TIMEOUT: $cmd" >> "$TESTLOG"
+              echo "TEST $test_num TIMEOUT: $cmd" >> "$DIFFLOG"
+              FAILED=$((FAILED + 1))
+              return
+            fi
+            
+            # Filter out minishell prompt and other noise
+            sed -i.bak '/^minishell>/d; /^exit$/d' "$MINI_OUT" 2>/dev/null || true
+            sed -i.bak '/^minishell>/d' "$MINI_ERR" 2>/dev/null || true
+            
+            # Check for syntax errors in bash
+            if grep -qE "syntax error|parse error" "$BASH_ERR"; then
+              SYNTAX_ERROR=$((SYNTAX_ERROR + 1))
+              echo "[TEST $test_num] SYNTAX ERROR in bash: $cmd" >> "$TESTLOG"
+              return
+            fi
+            
+            # Compare outputs (stdout only, stderr can differ in error messages)
+            DIFF_OUT=$(diff -u "$BASH_OUT" "$MINI_OUT" 2>&1 || true)
+            
+            # Check if outputs match (ignoring minor whitespace at end of lines)
+            if [ -z "$DIFF_OUT" ] || diff -wB "$BASH_OUT" "$MINI_OUT" > /dev/null 2>&1; then
+              PASSED=$((PASSED + 1))
+              echo "[TEST $test_num] ✓ PASS: $cmd" >> "$TESTLOG"
+            else
+              FAILED=$((FAILED + 1))
+              echo "[TEST $test_num] ✗ FAIL: $cmd" >> "$TESTLOG"
+              echo "========================================" >> "$DIFFLOG"
+              echo "TEST $test_num: $cmd" >> "$DIFFLOG"
+              echo "----------------------------------------" >> "$DIFFLOG"
+              echo "BASH OUTPUT:" >> "$DIFFLOG"
+              cat "$BASH_OUT" >> "$DIFFLOG"
+              echo "MINISHELL OUTPUT:" >> "$DIFFLOG"
+              cat "$MINI_OUT" >> "$DIFFLOG"
+              echo "DIFF:" >> "$DIFFLOG"
+              echo "$DIFF_OUT" >> "$DIFFLOG"
+              echo "" >> "$DIFFLOG"
+            fi
+          }
+
+          # Read and execute tests from file
+          TEST_FILE=".github/tests/test_cases.txt"
+          if [ -f "$TEST_FILE" ]; then
+            echo "Running tests from $TEST_FILE..." >> "$TESTLOG"
+            TEST_NUM=0
+            while IFS= read -r line || [ -n "$line" ]; do
+              # Skip empty lines and comments
+              if [ -z "$line" ] || echo "$line" | grep -q "^#"; then
+                continue
+              fi
+              TEST_NUM=$((TEST_NUM + 1))
+              run_test "$TEST_NUM" "$line"
+            done < "$TEST_FILE"
+          else
+            echo "ERROR: Test file $TEST_FILE not found!" >> "$SUMMARY"
             exit 1
           fi
 
-          run_case() {
-            local name="$1"
-            local input="$2"
-            local outfile="$3"
-            echo "=== TEST: $name ===" | tee -a "$TESTLOG" "$SUMMARY"
-            printf "%s\n" "$input" | ./minishell 2>&1 | tee -a "$TESTLOG" > "$outfile"
-            rc=$?
-            if [ $rc -eq 0 ]; then
-              echo "RESULT: PASS (exit $rc)" | tee -a "$TESTLOG" "$SUMMARY"
-            else
-              echo "RESULT: FAIL (exit $rc)" | tee -a "$TESTLOG" "$SUMMARY"
-            fi
-            echo "" >> "$TESTLOG"
-          }
-
-          # Non-interactive test cases (feed commands and exit)
-          run_case "echo_basic" $'echo Hello\nexit' ci_logs/echo_basic.out
-          run_case "echo_n_option" $'echo -n Hello\nexit' ci_logs/echo_n.out
-          run_case "pwd_builtin" $'pwd\nexit' ci_logs/pwd.out
-          run_case "cd_and_pwd" $'cd /\npwd\nexit' ci_logs/cd_pwd.out
-          run_case "env_and_export" $'export CI_TEST=42\necho $CI_TEST\nenv\nexit' ci_logs/env_export.out
-          run_case "unset" $'export CI_TEST=42\nunset CI_TEST\necho $CI_TEST\nexit' ci_logs/unset.out
-          run_case "pipe" $'echo hello | cat\nexit' ci_logs/pipe.out
-          run_case "redir_output" $'echo out > ci_logs/tmp_file\ncat ci_logs/tmp_file\nexit' ci_logs/redir.out
-          run_case "redir_input" $'cat < ci_logs/tmp_file\nexit' ci_logs/redir_in.out
-          run_case "append" $'echo a >> ci_logs/tmp_append\ncat ci_logs/tmp_append\nexit' ci_logs/append.out
-          run_case "heredoc" $'cat <<EOF\nhello_heredoc\nEOF\nexit' ci_logs/heredoc.out
-          # $? handling
-          run_case "last_status" $'false\necho $?\nexit' ci_logs/last_status.out
-
+          # Generate summary
+          echo "----------------------------------------" >> "$SUMMARY"
+          echo "TEST RESULTS" >> "$SUMMARY"
+          echo "----------------------------------------" >> "$SUMMARY"
+          echo "Total tests:        $TOTAL" >> "$SUMMARY"
+          echo "Passed:             $PASSED" >> "$SUMMARY"
+          echo "Failed:             $FAILED" >> "$SUMMARY"
+          echo "Syntax errors:      $SYNTAX_ERROR (skipped)" >> "$SUMMARY"
           echo "" >> "$SUMMARY"
-          echo "Full logs are in ci_logs/ (build.log, test.log, *.out)" >> "$SUMMARY"
+          
+          if [ $TOTAL -gt 0 ]; then
+            SUCCESS_RATE=$((PASSED * 100 / TOTAL))
+            echo "Success rate:       ${SUCCESS_RATE}%" >> "$SUMMARY"
+          fi
+          
+          echo "" >> "$SUMMARY"
+          echo "Full logs:" >> "$SUMMARY"
+          echo "  - Build:       ci_logs/build.log" >> "$SUMMARY"
+          echo "  - Tests:       ci_logs/test.log" >> "$SUMMARY"
+          echo "  - Differences: ci_logs/differences.log" >> "$SUMMARY"
+          echo "" >> "$SUMMARY"
+          
+          # Print summary to console
+          cat "$SUMMARY"
+          
+          # Fail if any tests failed
+          if [ $FAILED -gt 0 ]; then
+            echo ""
+            echo "❌ $FAILED test(s) failed. Check ci_logs/differences.log for details."
+            exit 1
+          else
+            echo ""
+            echo "✅ All tests passed!"
+          fi
 
       - name: Upload logs
         uses: actions/upload-artifact@v4
