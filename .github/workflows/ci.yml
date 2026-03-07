@@ -117,13 +117,23 @@ jobs:
               mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
             fi
 
-            # Remove explicit "exit" line emitted by some minishell versions
-            sed -E '/^[[:space:]]*exit[[:space:]]*$/d' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
-            mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
-            
-            # Also remove "exit" at the end of lines (after echo -n output)
+            # Remove "exit" at the end of lines (after echo -n output)
             sed -E 's/exit[[:space:]]*$//' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
             mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
+            
+            # Remove the last line if it's just "exit" (with possible whitespace)
+            if [ -f "$MINI_OUT" ] && [ -s "$MINI_OUT" ]; then
+              LAST_LINE=$(tail -n 1 "$MINI_OUT" | tr -d '[:space:]')
+              if [ "$LAST_LINE" = "exit" ]; then
+                head -n -1 "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
+                mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
+              fi
+            fi
+            
+            # Ensure file ends with exactly one newline (like bash does)
+            # Remove all trailing newlines, then add exactly one
+            perl -i -pe 'chomp if eof' "$MINI_OUT" 2>/dev/null || true
+            echo "" >> "$MINI_OUT"
             
             # Check for syntax errors in bash
             if grep -qE "syntax error|parse error" "$BASH_ERR"; then
