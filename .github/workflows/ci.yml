@@ -89,8 +89,11 @@ jobs:
             BASH_RC=$?
             
             # Run in minishell (add exit at end)
-            printf "%s\nexit\n" "$cmd" | timeout 5 ./minishell > "$MINI_OUT" 2> "$MINI_ERR" || true
+            printf "%s\nexit\n" "$cmd" | timeout 5 ./minishell > "ci_logs/mini_${test_num}_raw.out" 2> "$MINI_ERR" || true
             MINI_RC=$?
+            
+            # Copy raw output before filtering
+            cp "ci_logs/mini_${test_num}_raw.out" "$MINI_OUT"
             
             # Handle timeout
             if [ $MINI_RC -eq 124 ]; then
@@ -101,8 +104,11 @@ jobs:
             fi
             
             # Filter out minishell prompt and other noise
-            sed -i '/^minishell>/d; /^exit$/d' "$MINI_OUT" 2>/dev/null || true
-            sed -i '/^minishell>/d' "$MINI_ERR" 2>/dev/null || true
+            # Remove prompts, exit command, welcome messages, etc.
+            grep -v "^minishell>" "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
+            grep -v "^exit$" "${MINI_OUT}.tmp" > "${MINI_OUT}.tmp2" 2>/dev/null || true
+            mv "${MINI_OUT}.tmp2" "$MINI_OUT" 2>/dev/null || true
+            rm -f "${MINI_OUT}.tmp" 2>/dev/null || true
             
             # Check for syntax errors in bash
             if grep -qE "syntax error|parse error" "$BASH_ERR"; then
@@ -121,10 +127,15 @@ jobs:
             else
               FAILED=$((FAILED + 1))
               echo "[TEST $test_num] ✗ FAIL: $cmd" >> "$TESTLOG"
-              echo "========================================" >> "$DIFFLOG"
-              echo "TEST $test_num: $cmd" >> "$DIFFLOG"
+              echo "=========== ($(wc -l < "$BASH_OUT") lines):" >> "$DIFFLOG"
+              cat "$BASH_OUT" >> "$DIFFLOG"
               echo "----------------------------------------" >> "$DIFFLOG"
-              echo "BASH OUTPUT:" >> "$DIFFLOG"
+              echo "MINISHELL OUTPUT ($(wc -l < "$MINI_OUT") lines):" >> "$DIFFLOG"
+              cat "$MINI_OUT" >> "$DIFFLOG"
+              echo "----------------------------------------" >> "$DIFFLOG"
+              echo "MINISHELL RAW OUTPUT:" >> "$DIFFLOG"
+              cat "ci_logs/mini_${test_num}_raw.out" 2>/dev/null || echo "(not saved)" >> "$DIFFLOG"
+              echo "----------------------------------------PUT:" >> "$DIFFLOG"
               cat "$BASH_OUT" >> "$DIFFLOG"
               echo "MINISHELL OUTPUT:" >> "$DIFFLOG"
               cat "$MINI_OUT" >> "$DIFFLOG"
