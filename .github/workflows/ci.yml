@@ -198,6 +198,14 @@ jobs:
           
           # Print summary to console
           cat "$SUMMARY"
+
+          # Ensure differences log exists even if no diff was written
+          [ -f "$DIFFLOG" ] || touch "$DIFFLOG"
+
+          # Debug: show generated files
+          echo ""
+          echo "Generated files in ci_logs:"
+          ls -lah ci_logs || true
           
           # Print result (don't fail the build, just report)
           if [ $FAILED -gt 0 ]; then
@@ -216,4 +224,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: minishell-ci-logs
-          path: ci_logs
+          path: |
+            ci_logs/summary.txt
+            ci_logs/test.log
+            ci_logs/differences.log
+            ci_logs/build.log
+            ci_logs/*.out
+            ci_logs/*.err
