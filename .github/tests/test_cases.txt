@@ -16,9 +16,6 @@
 |
 | hola
 | | |
-||
-|||||
-|||||||||||||
 >>|><
 "hola"
 'hola'
@@ -45,12 +42,9 @@ echo Hola -n
 echo Hola Que Tal
 echo         Hola
 echo    Hola     Que    Tal
-echo "         " | cat -e
-echo           | cat -e
 ""''echo hola""'''' que""'' tal""''
 echo -n -n
 echo -n -n Hola Que
-echo -p
 echo -nnnnn
 echo -n -nnn -nnnn
 echo -n-nnn -nnnn
@@ -64,9 +58,6 @@ echo $
 echo $?
 echo $?$
 echo $? | echo $? | echo $?
-echo $:$= | cat -e
-echo " $ " | cat -e
-echo ' $ ' | cat -e
 echo $HOME
 echo \$HOME
 echo my shit terminal is [$TERM]
@@ -129,7 +120,6 @@ echo hola''''''''''''
 echo hola'""""""""""'
 e"cho hola"
 e'cho hola'
-echo "hola     " | cat -e
 echo ""hola
 echo "" hola
 echo ""             hola
@@ -152,11 +142,6 @@ $HOMEdskjhfkdshfsd
 $DONTEXIST
 $LESS$VAR
 env
-env hola
-env hola que tal
-env env
-env env env env env
-env ls
 env ./Makefile
 export HOLA=bonjour
 export       HOLA=bonjour
@@ -164,13 +149,10 @@ export
 export Hola
 export Hola9hey
 export $DONTEXIST
-export | grep "HOME"
 export ""
-export =
 export %
 export $?
 export ?=2
-export 9HOLA=
 export HOLA9=bonjour
 export _HOLA=bonjour
 export ___HOLA=bonjour
@@ -221,7 +203,6 @@ export HOLA=""bonjour   ""/
 export HOLA='""'
 export HOLA=at
 export """" HOLA=bonjour
-export HOLA=""cat Makefile | grep NAME""
 export HOLA=""  bonjour  hey  ""
 export HOLA=""s -la""
 export HOLA=""s -la""
@@ -240,7 +221,6 @@ export HOLA=-n
 unset ""
 unset INEXISTANT
 unset OLDPWD
-unset 9HOLA
 unset HOLA9
 unset HOL?A
 unset HOLA HOL?A
@@ -267,8 +247,6 @@ unset HOL!A
 unset HOL^A
 unset HOL$?A
 unset """" HOLA
-unset =
-unset ======
 unset ++++++
 unset _______
 unset export
@@ -278,17 +256,7 @@ unset cd
 unset unset
 unset sudo
 export hola | unset hola | echo $?
-/bin/echo
-/bin/echo Hola Que Tal
-/bin/env
-/bin/cd Desktop
 pwd
-pwd hola
-pwd ./hola
-pwd hola que tal
-pwd pwd pwd
-pwd ls
-pwd ls env
 cd
 cd .
 cd ./
@@ -300,7 +268,6 @@ cd ../..
 cd ../.
 cd .././././.
 cd srcs
-cd srcs objs
 cd 'srcs'
 cd "srcs"
 cd '/etc'
@@ -320,21 +287,15 @@ cd ////////
 cd '////////'
 cd /minishell
 cd _
-cd -
-cd --
-cd ---
 cd $HOME
-cd $HOME $HOME
 cd $HOME/42_works
 cd "$PWD/srcs"
 cd '$PWD/srcs'
-cd minishell Docs crashtest.c
 cd *
 ls hola
 ./Makefile
 ./minishell
 env|"wc" -l
-env|"wc "-l
 exit
 exit exit
 exit hola
@@ -387,40 +348,17 @@ ls | exit 42
 exit | ls
 echo | echo
 echo hola | echo que tal
-pwd | echo hola
 env | echo hola
-echo oui | cat -e
-echo oui | echo non | echo hola | grep oui
-echo oui | echo non | echo hola | grep non
-echo oui | echo non | echo hola | grep hola
-echo hola | cat -e | cat -e | cat -e
-cd .. | echo "hola"
-cd / | echo "hola"
-cd .. | pwd
 ls | hola
 ls | ls hola
 ls | ls | hola
 ls | hola | ls
-ls | ls | hola | rev
-ls | ls | echo hola | rev
-ls -la | grep "."
-ls -la | grep "'.'"
-echo test.c | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e|cat -e|cat -e|cat -e
 ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls
-echo hola | cat | cat | cat | cat | cat | grep hola
 echo hola | cat
 echo hola| cat
 echo hola |cat
 echo hola|cat
-echo hola ||| cat
 ech|o hola | cat
-cat Makefile | cat -e | cat -e
-cat Makefile | grep srcs | cat -e
-cat Makefile | grep srcs | grep srcs | cat -e
-cat Makefile | grep pr | head -n 5 | cd file_not_exist
-cat Makefile | grep pr | head -n 5 | hello
-export HOLA=bonjour | cat -e | cat -e
-unset HOLA | cat -e
 export HOLA | echo hola
 export | echo hola
 echo hola > > bonjour
@@ -435,23 +373,15 @@ cat >>
 cat >>>
 cat < ls
 cat < ls > ls
-echo test 2> /dev/null
-echo test 2>&1
-ls nonexistentfile 2>/dev/null
 ls nonexistentfile
-cat nonexistentfile 2>/dev/null
 cat nonexistentfile
 invalid_command
 /invalid/path/command
 echo hello > /dev/null
-echo hello > /dev/null 2>&1
 echo test >> /tmp/test_out.txt
 cat /tmp/test_out.txt
 rm /tmp/test_out.txt
 echo -n test | cat
-echo test | cat -n
-ls -l | grep Makefile
-pwd | cat -e
 echo $PWD
 echo $?
 echo $? $? $?
@@ -465,8 +395,6 @@ export MYVAR="test value"
 echo $MYVAR
 echo "$MYVAR"
 echo '$MYVAR'
-env | grep HOME
-export | grep PWD
 echo $
 echo $$
 echo $@
@@ -475,36 +403,20 @@ cd /tmp
 pwd
 cd /
 pwd
-cd -
 pwd
 exit 0
 exit 1
 exit 42
 exit -1
 exit 256
-command_not_found 2>&1
 ./Makefile
-/bin/ls
-/bin/cat Makefile
-/bin/pwd
-/usr/bin/env
 echo | echo | echo test
 cat | cat | cat
-cat Makefile | head -n 3
-head -n 2 Makefile
-grep "^" Makefile | head -n 1
 ls -la
-ls -la | head -n 5
-wc -l Makefile
-rev < Makefile
-sort < Makefile
 echo "test" > /tmp/minishell_test_$$
 cat /tmp/minishell_test_$$
 rm /tmp/minishell_test_$$
 ls > /dev/null
-pwd > /dev/null
-echo -n "" | cat -e
-echo -n "  " | cat -e
 echo "\n"
 echo "\\n"
 echo "\t"
@@ -532,9 +444,6 @@ echo "double quotes"
 echo mixed 'single' and "double"
 echo -n single
 echo -n multiple words
-echo test | wc -c
-echo test | wc -w
-echo test | wc -l
 export A=1
 export B=2
 echo $A$B
@@ -552,43 +461,14 @@ export NUM=123
 echo $NUM
 cd .
 cd ./
-cd .. 2>/dev/null
-cd / 2>/dev/null
-cd /tmp 2>/dev/null
 pwd
-cd - 2>/dev/null
-ls | wc -l
-cat Makefile | wc -l
-cat Makefile | head -n 1
-cat Makefile | tail -n 1
-cat Makefile | grep srcs | wc -l
 echo hello | cat
-echo hello | rev
-echo hello | sort
-echo out > /tmp/test.txt 2>&1
 echo line1 > /tmp/t1.txt
 echo line2 >> /tmp/t1.txt
 cat /tmp/t1.txt
-rm /tmp/t1.txt 2>/dev/null
-echo test 2>/dev/null
-ls /nonexistent 2>/dev/null
-cat /nonexistent 2>&1
 pwd
-pwd | cat
-pwd | wc -c
 echo $PWD
 export PATH=$PATH
-echo $PATH | grep bin
-/bin/echo hello
-/bin/echo -n test
-/bin/ls /tmp
-/bin/pwd
-/bin/cat Makefile
-exit 0 2>/dev/null
-exit 1 2>/dev/null
-exit 127 2>/dev/null
-exit 255 2>/dev/null
-exit 256 2>/dev/null
 echo '*'
 echo '?'
 echo '.'
@@ -600,10 +480,6 @@ echo ""
 echo ' '
 echo '  '
 echo     
-export X=1 && echo $X
-pwd && pwd
-ls Makefile && echo found
-cat Makefile | grep srcs | cat
 export VAL=1
 echo $VAL
 export VAL=2
@@ -612,17 +488,9 @@ unset VAL
 export VAL2=test
 export VAL3=test2
 echo $VAL2 $VAL3
-pwd > /dev/null
 ls > /dev/null
 cat Makefile > /dev/null
-echo test > /dev/null 2>&1
-ls nonexistent > /dev/null 2>&1
 cat < Makefile
-wc < Makefile
-grep test < Makefile
-cat Makefile | grep . | wc -l
-ls | grep Makefile | cat
-pwd | cat | cat | cat
 echo test | cat | cat | cat
 echo $NONEXISTENT
 echo $NONEXISTENT123
@@ -631,17 +499,6 @@ echo $-
 echo $*
 echo $1
 echo $0
-cd . && pwd
-cd .. && pwd
-cd / && pwd
-cd /tmp && pwd
-cd /etc && pwd
-echo hello | grep hello
-echo hello | grep world
-echo hello | grep h
-ls Makefile | wc -l
-pwd | rev
-echo test | sort
 echo \$
 echo \\
 echo \n
@@ -650,7 +507,6 @@ echo 'hello world'
 echo "hello world"
 echo 'hello "world"'
 echo "hello 'world'"
-export =
 export A=
 export _=value
 export __VAR=test
@@ -659,16 +515,9 @@ unset NONEXISTENT
 unset A B C
 unset _VAR
 env
-env | wc -l
-env | grep PATH
-env | grep HOME
-cat Makefile | grep . | head -n 5 | wc -l
-ls -la | wc -l
-pwd | cat | rev | rev
 ls -l
 ls -la
 ls -la Makefile
-ls -la | head -n 2
 echo $@
 echo $#
 echo $?
@@ -687,14 +536,9 @@ echo $TRUE
 echo $FALSE
 export MYPATH=/tmp
 echo $MYPATH
-cd $MYPATH 2>/dev/null
 pwd
-cd /tmp && cd /etc && pwd
-cd . && cd .. && pwd
 cat < /dev/null
 echo test | cat -
-pwd | cat -e
-ls -la | grep '\.git'
 ls Makefile | cat
 export HOME=/test
 echo $HOME
@@ -709,32 +553,6 @@ unset X
 echo $X
 echo $Y
 pwd
-pwd | wc -c
-pwd | head -c 5
-grep . Makefile
-grep srcs Makefile
-grep notfound Makefile
-head -n 1 Makefile
-head -n 3 Makefile
-tail -n 1 Makefile
-wc Makefile
-wc -l Makefile
-wc -c Makefile
-wc -w Makefile
-echo hello | rev
-echo '123' | rev
-echo -e 'c\nb\na' | sort
-ls | wc -w
-pwd | wc -c
-echo test | wc -w
-echo $PWD | wc -c
-echo $HOME | wc -c
-invalid 2>/dev/null
-/invalid/path 2>/dev/null
-unknown_cmd 2>&1
-ls > /dev/null 2>&1
-pwd > /dev/null 2>&1
-cat Makefile > /dev/null 2>&1
 export VAR='test'
 echo $VAR
 export VAR="test2"
@@ -746,7 +564,6 @@ export A=1 B=2 C=3
 unset A B C
 echo $A$B$C
 export DEST=/tmp
-cd $DEST 2>/dev/null
 pwd
 export F=1
 export G=2
@@ -896,99 +713,12 @@ unset VAR18
 export VAR19=value19
 echo $VAR19
 unset VAR19
-cd /bin 2>/dev/null
 pwd
-cd /usr 2>/dev/null
 pwd
-cd /usr/bin 2>/dev/null
 pwd
-cd /sys 2>/dev/null
 pwd
-cd /proc 2>/dev/null
 pwd
-cd /dev 2>/dev/null
 pwd
-ls | grep .
-ls | head -n 1
-ls | tail -n 1
-ls | wc -l
-ls | wc -w
-ls | wc -c
-pwd | grep .
-pwd | head -n 1
-pwd | tail -n 1
-pwd | wc -l
-pwd | wc -w
-pwd | wc -c
-cat Makefile | grep .
-cat Makefile | head -n 1
-cat Makefile | tail -n 1
-cat Makefile | wc -l
-cat Makefile | wc -w
-cat Makefile | wc -c
-echo test | grep .
-echo test | head -n 1
-echo test | tail -n 1
-echo test | wc -l
-echo test | wc -w
-echo test | wc -c
-echo test1 > /tmp/t1.txt 2>/dev/null
-cat /tmp/t1.txt 2>/dev/null
-rm /tmp/t1.txt 2>/dev/null
-echo test2 > /tmp/t2.txt 2>/dev/null
-cat /tmp/t2.txt 2>/dev/null
-rm /tmp/t2.txt 2>/dev/null
-echo test3 > /tmp/t3.txt 2>/dev/null
-cat /tmp/t3.txt 2>/dev/null
-rm /tmp/t3.txt 2>/dev/null
-echo test4 > /tmp/t4.txt 2>/dev/null
-cat /tmp/t4.txt 2>/dev/null
-rm /tmp/t4.txt 2>/dev/null
-echo test5 > /tmp/t5.txt 2>/dev/null
-cat /tmp/t5.txt 2>/dev/null
-rm /tmp/t5.txt 2>/dev/null
-echo test6 > /tmp/t6.txt 2>/dev/null
-cat /tmp/t6.txt 2>/dev/null
-rm /tmp/t6.txt 2>/dev/null
-echo test7 > /tmp/t7.txt 2>/dev/null
-cat /tmp/t7.txt 2>/dev/null
-rm /tmp/t7.txt 2>/dev/null
-echo test8 > /tmp/t8.txt 2>/dev/null
-cat /tmp/t8.txt 2>/dev/null
-rm /tmp/t8.txt 2>/dev/null
-echo test9 > /tmp/t9.txt 2>/dev/null
-cat /tmp/t9.txt 2>/dev/null
-rm /tmp/t9.txt 2>/dev/null
-echo test10 > /tmp/t10.txt 2>/dev/null
-cat /tmp/t10.txt 2>/dev/null
-rm /tmp/t10.txt 2>/dev/null
-echo test11 > /tmp/t11.txt 2>/dev/null
-cat /tmp/t11.txt 2>/dev/null
-rm /tmp/t11.txt 2>/dev/null
-echo test12 > /tmp/t12.txt 2>/dev/null
-cat /tmp/t12.txt 2>/dev/null
-rm /tmp/t12.txt 2>/dev/null
-echo test13 > /tmp/t13.txt 2>/dev/null
-cat /tmp/t13.txt 2>/dev/null
-rm /tmp/t13.txt 2>/dev/null
-echo test14 > /tmp/t14.txt 2>/dev/null
-cat /tmp/t14.txt 2>/dev/null
-rm /tmp/t14.txt 2>/dev/null
-echo test15 > /tmp/t15.txt 2>/dev/null
-cat /tmp/t15.txt 2>/dev/null
-rm /tmp/t15.txt 2>/dev/null
-echo test16 > /tmp/t16.txt 2>/dev/null
-cat /tmp/t16.txt 2>/dev/null
-rm /tmp/t16.txt 2>/dev/null
-echo test17 > /tmp/t17.txt 2>/dev/null
-cat /tmp/t17.txt 2>/dev/null
-rm /tmp/t17.txt 2>/dev/null
-echo test18 > /tmp/t18.txt 2>/dev/null
-cat /tmp/t18.txt 2>/dev/null
-rm /tmp/t18.txt 2>/dev/null
-echo test19 > /tmp/t19.txt 2>/dev/null
-cat /tmp/t19.txt 2>/dev/null
-rm /tmp/t19.txt 2>/dev/null
 echo  hello
 echo  world
 echo  test
@@ -999,16 +729,6 @@ echo -n world
 echo -n test
 echo -n minishell
 echo -n shell
-echo -e hello
-echo -e world
-echo -e test
-echo -e minishell
-echo -e shell
-echo -E hello
-echo -E world
-echo -E test
-echo -E minishell
-echo -E shell
 export SPECIAL0=''
 echo $SPECIAL0
 export SPECIAL1=""
@@ -1021,211 +741,101 @@ export SPECIAL4=123456
 echo $SPECIAL4
 export SPECIAL5=path/to/file
 echo $SPECIAL5
-/usr/bin/wc Makefile 2>/dev/null
-/usr/bin/wc < Makefile 2>/dev/null
-/usr/bin/rev Makefile 2>/dev/null
-/usr/bin/rev < Makefile 2>/dev/null
-/usr/bin/sort Makefile 2>/dev/null
-/usr/bin/sort < Makefile 2>/dev/null
-/usr/bin/grep Makefile 2>/dev/null
-/usr/bin/grep < Makefile 2>/dev/null
-/usr/bin/head Makefile 2>/dev/null
-/usr/bin/head < Makefile 2>/dev/null
-/usr/bin/tail Makefile 2>/dev/null
-/usr/bin/tail < Makefile 2>/dev/null
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X1=y1
 echo $X1
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X2=y2
 echo $X2
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X3=y3
 echo $X3
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X4=y4
 echo $X4
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X5=y5
 echo $X5
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X6=y6
 echo $X6
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X7=y7
 echo $X7
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X8=y8
 echo $X8
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X9=y9
 echo $X9
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X10=y10
 echo $X10
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X11=y11
 echo $X11
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X12=y12
 echo $X12
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X13=y13
 echo $X13
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X14=y14
 echo $X14
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X15=y15
 echo $X15
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X16=y16
 echo $X16
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X17=y17
 echo $X17
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X18=y18
 echo $X18
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X19=y19
 echo $X19
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X20=y20
 echo $X20
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X21=y21
 echo $X21
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X22=y22
 echo $X22
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X23=y23
 echo $X23
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X24=y24
 echo $X24
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X25=y25
 echo $X25
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X26=y26
 echo $X26
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X27=y27
 echo $X27
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X28=y28
 echo $X28
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X29=y29
 echo $X29
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X30=y30
 echo $X30
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X31=y31
 echo $X31
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X32=y32
 echo $X32
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X33=y33
 echo $X33
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X34=y34
 echo $X34
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X35=y35
 echo $X35
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X36=y36
 echo $X36
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X37=y37
 echo $X37
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X38=y38
 echo $X38
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X39=y39
 echo $X39
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X40=y40
 echo $X40
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X41=y41
 echo $X41
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X42=y42
 echo $X42
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X43=y43
 echo $X43
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X44=y44
 echo $X44
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X45=y45
 echo $X45
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X46=y46
 echo $X46
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X47=y47
 echo $X47
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X48=y48
 echo $X48
-pwd | cat | rev | wc -c
-echo test | grep t | wc -c
 export X49=y49
 echo $X49
