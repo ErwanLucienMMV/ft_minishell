@@ -85,12 +85,14 @@ jobs:
             MINI_ERR="ci_logs/mini_${test_num}.err"
             
             # Run in bash POSIX mode
-            printf "%s\n" "$cmd" | bash --posix > "$BASH_OUT" 2> "$BASH_ERR" || true
+            set +e
+            printf "%s\n" "$cmd" | bash --posix > "$BASH_OUT" 2> "$BASH_ERR"
             BASH_RC=$?
             
             # Run in minishell (add exit at end)
-            printf "%s\nexit\n" "$cmd" | timeout 5 ./minishell > "ci_logs/mini_${test_num}_raw.out" 2> "$MINI_ERR" || true
+            printf "%s\nexit\n" "$cmd" | timeout 5 ./minishell > "ci_logs/mini_${test_num}_raw.out" 2> "$MINI_ERR"
             MINI_RC=$?
+            set -e
             
             # Copy raw output before filtering
             cp "ci_logs/mini_${test_num}_raw.out" "$MINI_OUT"
@@ -103,12 +105,21 @@ jobs:
               return
             fi
             
-            # Filter out minishell prompt and other noise
-            # Remove prompts, exit command, welcome messages, etc.
-            grep -v "^minishell>" "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
-            grep -v "^exit$" "${MINI_OUT}.tmp" > "${MINI_OUT}.tmp2" 2>/dev/null || true
-            mv "${MINI_OUT}.tmp2" "$MINI_OUT" 2>/dev/null || true
-            rm -f "${MINI_OUT}.tmp" 2>/dev/null || true
+            # Filter out minishell prompt and echoed command
+            # Examples handled: "minishell> cmd", "$miniswag> cmd", "user-shell> cmd"
+            sed -E 's/^\$?[^>]*> ?//' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
+            mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
+
+            # If first line is the echoed command itself, drop it
+            FIRST_LINE=$(head -n 1 "$MINI_OUT" 2>/dev/null || true)
+            if [ "$FIRST_LINE" = "$cmd" ]; then
+              tail -n +2 "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
+              mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
+            fi
+
+            # Remove explicit "exit" line emitted by some minishell versions
+            sed -E '/^[[:space:]]*exit[[:space:]]*$/d' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
+            mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
             
             # Check for syntax errors in bash
             if grep -qE "syntax error|parse error" "$BASH_ERR"; then
