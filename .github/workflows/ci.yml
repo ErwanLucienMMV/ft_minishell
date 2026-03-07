@@ -106,7 +106,8 @@ jobs:
             
             # Filter out minishell prompt and echoed command
             # Examples handled: "minishell> cmd", "$miniswag> cmd", "user-shell> cmd"
-            sed -E 's/^\$?[^>]*> ?//' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
+            # Use /g flag to replace prompts anywhere in the line (important for echo -n)
+            sed -E 's/\$?[^>]*> ?//g' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
             mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
 
             # If first line is the echoed command itself, drop it
