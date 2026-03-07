@@ -105,8 +105,16 @@ jobs:
             fi
             
             # Filter out minishell prompt and echoed command
-            # Remove prompts: "minishell> ", "$miniswag> ", etc. (anywhere in line for echo -n)
-            sed -E 's/\$?[^>]*> ?//g' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
+            # 1) Remove leading prompt (e.g. "$miniswag> ", "minishell> ")
+            # Do not match if a '$' appears before '>' (prevents eating real output like "Hola$miniswag> ...")
+            sed -E 's/^\$?[^$[:space:]>]*> ?//' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
+
+            # 2) Remove appended prompt+exit at end of output lines (echo -n case)
+            # Example: "Hola$miniswag> exit" -> "Hola"
+            sed -E 's/\$[^[:space:]>]*>[[:space:]]*exit[[:space:]]*$//' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
+
+            # 3) Remove any remaining inline "$prompt> " sequences without touching normal output
+            sed -E 's/\$[^[:space:]>]*> ?//g' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
 
             # If first line is the echoed command itself, drop it
             FIRST_LINE=$(head -n 1 "$MINI_OUT" 2>/dev/null || echo "")
@@ -114,11 +122,13 @@ jobs:
               tail -n +2 "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
             fi
 
-            # Remove trailing "exit" strings (but not lines that are just empty)
-            sed -E 's/exit[[:space:]]*$//' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
-            
-            # Remove last line if it's blank or just whitespace (the exit line after filtering)
-            sed -i -e '${ /^[[:space:]]*$/d; }' "$MINI_OUT" 2>/dev/null || sed -i '' -e '${ /^[[:space:]]*$/d; }' "$MINI_OUT" 2>/dev/null || true
+            # Remove last line if it's exactly "exit" (from the appended command)
+            if [ -s "$MINI_OUT" ]; then
+              LAST_LINE=$(tail -n 1 "$MINI_OUT" 2>/dev/null || true)
+              if echo "$LAST_LINE" | grep -qE '^[[:space:]]*exit[[:space:]]*$'; then
+                sed '$d' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
+              fi
+            fi
             
             # Check for syntax errors in bash
             if grep -qE "syntax error|parse error" "$BASH_ERR"; then
