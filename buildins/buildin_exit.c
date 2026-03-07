@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:10:31 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/07 23:18:40 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/08 00:35:28 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	buildin_exit(t_program *program)
 		exit(1);
 	if (check_for_exit_arguments(program) == -1)
 		return (1);
-	ft_printf_fd(2, "exit\n");
+	write(1, "exit\n", 5);
 	ft_exit(program);
 	exit_status = program->last_exit_status;
 	if (program->parsed)
