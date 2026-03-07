@@ -105,35 +105,20 @@ jobs:
             fi
             
             # Filter out minishell prompt and echoed command
-            # Examples handled: "minishell> cmd", "$miniswag> cmd", "user-shell> cmd"
-            # Use /g flag to replace prompts anywhere in the line (important for echo -n)
-            sed -E 's/\$?[^>]*> ?//g' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
-            mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
+            # Remove prompts: "minishell> ", "$miniswag> ", etc. (anywhere in line for echo -n)
+            sed -E 's/\$?[^>]*> ?//g' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
 
             # If first line is the echoed command itself, drop it
-            FIRST_LINE=$(head -n 1 "$MINI_OUT" 2>/dev/null || true)
+            FIRST_LINE=$(head -n 1 "$MINI_OUT" 2>/dev/null || echo "")
             if [ "$FIRST_LINE" = "$cmd" ]; then
-              tail -n +2 "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
-              mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
+              tail -n +2 "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
             fi
 
-            # Remove "exit" at the end of lines (after echo -n output)
-            sed -E 's/exit[[:space:]]*$//' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
-            mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
+            # Remove trailing "exit" strings (but not lines that are just empty)
+            sed -E 's/exit[[:space:]]*$//' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null && mv "${MINI_OUT}.tmp" "$MINI_OUT"
             
-            # Remove the last line if it's just "exit" (with possible whitespace)
-            if [ -f "$MINI_OUT" ] && [ -s "$MINI_OUT" ]; then
-              LAST_LINE=$(tail -n 1 "$MINI_OUT" | tr -d '[:space:]')
-              if [ "$LAST_LINE" = "exit" ]; then
-                head -n -1 "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
-                mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
-              fi
-            fi
-            
-            # Ensure file ends with exactly one newline (like bash does)
-            # Remove all trailing newlines, then add exactly one
-            perl -i -pe 'chomp if eof' "$MINI_OUT" 2>/dev/null || true
-            echo "" >> "$MINI_OUT"
+            # Remove last line if it's blank or just whitespace (the exit line after filtering)
+            sed -i -e '${ /^[[:space:]]*$/d; }' "$MINI_OUT" 2>/dev/null || sed -i '' -e '${ /^[[:space:]]*$/d; }' "$MINI_OUT" 2>/dev/null || true
             
             # Check for syntax errors in bash
             if grep -qE "syntax error|parse error" "$BASH_ERR"; then
@@ -147,6 +132,8 @@ jobs:
             # Check if outputs match (ignoring minor whitespace at end of lines)
             if [ -z "$DIFF_OUT" ] || diff -wB "$BASH_OUT" "$MINI_OUT" > /dev/null 2>&1; then
               PASSED=$((PASSED + 1))
+              # Clean up files for passing tests to save space
+              rm -f "$BASH_OUT" "$BASH_ERR" "$MINI_OUT" "$MINI_ERR" "ci_logs/mini_${test_num}_raw.out" 2>/dev/null || true
             else
               FAILED=$((FAILED + 1))
               echo "[TEST $test_num] ✗ FAIL: $cmd" >> "$TESTLOG"
