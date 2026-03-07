@@ -101,8 +101,8 @@ jobs:
             fi
             
             # Filter out minishell prompt and other noise
-            sed -i.bak '/^minishell>/d; /^exit$/d' "$MINI_OUT" 2>/dev/null || true
-            sed -i.bak '/^minishell>/d' "$MINI_ERR" 2>/dev/null || true
+            sed -i '/^minishell>/d; /^exit$/d' "$MINI_OUT" 2>/dev/null || true
+            sed -i '/^minishell>/d' "$MINI_ERR" 2>/dev/null || true
             
             # Check for syntax errors in bash
             if grep -qE "syntax error|parse error" "$BASH_ERR"; then
