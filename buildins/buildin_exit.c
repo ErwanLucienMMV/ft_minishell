@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:10:31 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/03 18:16:25 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 23:02:18 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,22 @@ int	check_for_exit_arguments(t_program *p)
 	if (!p->parsed || !*(p->parsed) || !(*p->parsed)->next)
 		return (0);
 	cur = (*p->parsed)->next;
-	while (cur)
-	{
-		if (!is_numeric_string(cur->s) || ft_strtol(cur->s) == -256)
-		{
-			ft_printf_fd(2, "exit: %s: numeric argument required\n", cur->s);
-			p->last_exit_status = 2;
-			return (0);
-		}
-		cur = cur->next;
-	}
 	if (p->parsed && *(p->parsed)
 		&& (*p->parsed)->next && (*p->parsed)->next->next)
 	{
 		ft_printf_fd(2, "exit: too many arguments\n");
 		p->last_exit_status = 1;
 		return (-1);
+	}
+	while (cur)
+	{
+		if (!is_numeric_string(cur->s) || ft_strtol(cur->s) == -256)
+		{
+			ft_printf_fd(2, "exit: %s: numeric argument required\n", cur->s);
+			p->last_exit_status = 255;
+			return (0);
+		}
+		cur = cur->next;
 	}
 	if (p->parsed && *(p->parsed) && (*p->parsed)->next)
 		p->last_exit_status = ft_strtol((*p->parsed)->next->s) % 256;
@@ -112,9 +112,9 @@ int	buildin_exit(t_program *program)
 
 	if (!program)
 		exit(1);
-	ft_printf_fd(2, "exit\n");
 	if (check_for_exit_arguments(program) == -1)
 		return (1);
+	printf("exit\n");
 	ft_exit(program);
 	exit_status = program->last_exit_status;
 	if (program->parsed)

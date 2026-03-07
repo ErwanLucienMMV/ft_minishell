@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:26 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/06 19:13:34 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:58:24 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,14 @@ int	check_buildin(t_parser *cmd, t_envpath *envpath, t_program *program)
 	if (cmd->type == CMD && ft_strncmp(cmd->s, "exit", 4) == 0
 		&& ft_strlen(cmd->s) == 4)
 		return (buildin_exit(program));
-	make_redirection(*program->parsed);
+	if (!(cmd->type == CMD && is_a_buildin(cmd->s)))
+		return (0);
+	if (make_redirection(*program->parsed))
+	{
+		program->last_exit_status = 1;
+		delete_redirections(program);
+		return (1);
+	}
 	delete_redirections(program);
 	if (cmd->type == CMD && ft_strncmp(cmd->s, "cd", 2) == 0
 		&& ft_strlen(cmd->s) == 2)
@@ -94,7 +101,10 @@ int	buildins(t_parser **parser, t_envpath *envpath, t_program *program)
 	if (!parser || !*parser)
 		return (0);
 	temp = *(program->parsed);
-	if (check_buildin(temp, envpath, program))
+	if (temp->type == CMD && is_a_buildin(temp->s))
+	{
+		check_buildin(temp, envpath, program);
 		return (1);
+	}
 	return (0);
 }

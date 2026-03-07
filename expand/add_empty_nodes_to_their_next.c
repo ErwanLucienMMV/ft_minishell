@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:14:17 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/07 20:41:51 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:50:36 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ int	add_empty_nodes_to_their_next(t_program *program)
 	while (cur)
 	{
 		next = cur->next;
+		if (cur->type == WAS_EXPANDED && cur->s && cur->s[0] == '\0')
+		{
+			parser_clear_one(&cur, program);
+			cur = next;
+			continue ;
+		}
 		if (cur->type == CMD && ft_strncmp(cur->s, "$", 1) == 0 
 			&& next && next->type != T_SPACE 
 			&& (is_expanded_type(next->type) || next->type == WAS_SQUOTED || next->type == WAS_DQUOTED))

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 06:22:16 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/03 16:22:14 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:58:24 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ static int	handle_input_redir(t_parser *temp, t_commands *tofill)
 	free(tofill->infile);
 	tofill->infile = ft_strdup(temp->next->s);
 	if (!tofill->infile)
-		return (1);
-	if (access(tofill->infile, F_OK | R_OK) != 0)
 		return (1);
 	return (0);
 }

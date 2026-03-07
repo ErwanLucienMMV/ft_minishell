@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:27 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/24 15:05:48 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/07 22:49:04 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	expand_exit_status(t_parser *node, int status)
 		return (1);
 	free(node->s);
 	node->s = status_str;
-	node->type = CMD_ARG;
+	node->type = WAS_EXPANDED;
 	return (0);
 }
 
@@ -31,7 +31,8 @@ int	expand_specifics(t_envpath *envpath, t_program *program, t_parser *temp)
 {
 	if (temp && temp->type == ENVVAR && expand_env_var(&temp, envpath, program))
 		return (1);
-	else if (temp && temp->type == DQUOTE && expand_d_quote(&temp, envpath))
+	else if (temp && temp->type == DQUOTE
+		&& expand_d_quote(&temp, envpath, program))
 		return (1);
 	else if (temp && temp->type == SQUOTE && expand_s_quote(&temp, program))
 		return (1);
@@ -39,7 +40,8 @@ int	expand_specifics(t_envpath *envpath, t_program *program, t_parser *temp)
 		&& expand_exit_status(temp, program->last_exit_status))
 		return (1);
 	else if (temp && (temp->type == CMD
-			|| temp->type == CMD_ARG) && expand_plain_text(temp, envpath))
+			|| temp->type == CMD_ARG)
+		&& expand_plain_text(temp, envpath, program))
 		return (1);
 	return (0);
 }

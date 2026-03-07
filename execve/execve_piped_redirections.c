@@ -6,48 +6,73 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 00:51:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 18:47:22 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:58:24 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execve.h"
 
-int	setinputs(t_commands *commands)
+static int	open_and_set_input(char *filename)
 {
 	int	fd;
 
-	if (commands->infile)
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (error_message_file_not_found(filename), 1);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	return (0);
+}
+
+static int	open_and_set_output(char *filename, t_lexer redir_type)
+{
+	int	fd;
+
+	if (redir_type == REDIR_OUTPUT_APP)
+		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+		return (error_message_file_not_found(filename), 1);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	return (0);
+}
+
+int	setinputs(t_commands *commands)
+{
+	t_parser	*temp;
+
+	temp = commands->cmd;
+	while (temp && temp->prev && temp->prev->type != PIPE)
+		temp = temp->prev;
+	while (temp && temp->type != PIPE)
 	{
-		fd = open(commands->infile, O_RDONLY);
-		if (fd < 0)
-			return (perror("open"), 1);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-		if (commands->inputtype == DELIMITER)
+		if (temp->type == REDIR_INPUT && temp->next)
 		{
-			if (unlink(commands->infile) < 0)
-				return (perror("unlink"), 1);
+			if (open_and_set_input(temp->next->s))
+				return (1);
 		}
+		else if ((temp->type == REDIR_OUTPUT
+				|| temp->type == REDIR_OUTPUT_APP) && temp->next)
+		{
+			if (open_and_set_output(temp->next->s, temp->type))
+				return (1);
+		}
+		temp = temp->next;
+	}
+	if (commands->inputtype == DELIMITER && commands->infile)
+	{
+		if (open_and_set_input(commands->infile))
+			return (1);
+		if (unlink(commands->infile) < 0)
+			return (perror("unlink"), 1);
 	}
 	return (0);
 }
 
 int	setoutputs(t_commands *commands)
 {
-	int	fd;
-
-	if (commands->outfile)
-	{
-		if (commands->redir_type == REDIR_OUTPUT_APP)
-		{
-			fd = open(commands->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		}
-		else
-			fd = open(commands->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd < 0)
-			return (perror("open"), 1);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-	}
+	(void)commands;
 	return (0);
 }

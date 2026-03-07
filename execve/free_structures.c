@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 06:15:20 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 14:21:36 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 23:00:36 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ void	free_t_parser(t_parser *parser)
 
 void	free_t_cmd_prgrm_exit(t_commands *cmd, t_program *program)
 {
+	(void)cmd;
 	if (IS_DEBUG)
 	{
 		ft_printf_fd(2, "an issue while setting %s",
 			"the pipes append and we exited\n");
 	}
-	free_t_command(cmd);
 	free_t_program(program);
 	exit(1);
 }

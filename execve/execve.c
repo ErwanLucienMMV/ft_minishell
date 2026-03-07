@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:44:15 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 16:28:35 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 23:01:06 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	wait_for_childrens(void)
 	int	last_status;
 
 	already_n = 0;
+	last_status = 0;
 	while (waitpid(-1, &status, 0) > 0)
 	{
 		if (WIFSIGNALED(status) && !already_n)
@@ -75,7 +76,10 @@ int	wait_for_childrens(void)
 				write(STDOUT_FILENO, "\n", 1);
 			already_n = 1;
 		}
-		last_status = WEXITSTATUS(status);
+		if (WIFEXITED(status))
+			last_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			last_status = 128 + WTERMSIG(status);
 	}
 	return (last_status);
 }
@@ -84,12 +88,20 @@ int	execve_handler(t_program *program)
 {
 	int					last_status;
 	t_signal_handlers	handlers;
+	int				has_pipe;
 
 	program->last_exit_status = 0;
+	has_pipe = there_is_at_least_one_pipe(*(program->parsed));
 	handlers = setup_signals_before_fork();
 	last_status = execve_maker(program);
 	if (last_status == 0)
 		return (1);
+	if (!has_pipe && last_status == 1)
+	{
+		restore_signals(handlers);
+		tcsetattr(STDIN_FILENO, TCSANOW, &program->g_term_orig);
+		return (program->last_exit_status);
+	}
 	setup_signals_after_fork();
 	if (last_status != 1)
 		handle_piped_exec_exit(program, last_status);

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:11:25 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/07 21:18:25 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:47:40 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	contains_env_var(const char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '$' && (ft_isalnum(s[i + 1]) || s[i + 1] == '_'))
+		if (s[i] == '$'
+			&& (ft_isalnum(s[i + 1]) || s[i + 1] == '_' || s[i + 1] == '?'))
 			return (1);
 		i++;
 	}
@@ -27,14 +28,17 @@ static int	contains_env_var(const char *s)
 }
 
 int	handle_plain_env_var(t_parser *node, t_envpath *envpath,
-	char *new_str, int *indices)
+	char *new_str, int *indices, int status)
 {
 	char	*key;
 	char	*value;
+	char	*status_str;
 	int		end;
 
 	end = indices[0] + 1;
-	if (ft_isdigit(node->s[end]))
+	if (node->s[end] == '?')
+		end++;
+	else if (ft_isdigit(node->s[end]))
 		end++;
 	else
 	{
@@ -44,21 +48,30 @@ int	handle_plain_env_var(t_parser *node, t_envpath *envpath,
 	key = ft_substr(node->s, indices[0] + 1, end - (indices[0] + 1));
 	if (!key)
 		return (1);
-	value = get_env_value_by_key(&envpath, key);
+	status_str = NULL;
+	if (key[0] == '?' && key[1] == '\0')
+	{
+		status_str = ft_itoa(status);
+		if (!status_str)
+			return (free(key), 1);
+		value = status_str;
+	}
+	else
+		value = get_env_value_by_key(&envpath, key);
 	copy_env_value(new_str, &indices[1], value);
 	indices[0] = end;
-	return (free(key), 0);
+	return (free(status_str), free(key), 0);
 }
 
 static int	build_plain_expansion(t_parser *node,
-	t_envpath *envpath, char **new_str)
+	t_envpath *envpath, char **new_str, int status)
 {
 	int	indices[2];
 	int	all_len;
 
 	if (!contains_env_var(node->s))
 		return (0);
-	all_len = check_and_count_for_envvar(node, envpath);
+	all_len = check_and_count_for_envvar(node, envpath, status);
 	if (all_len < 0)
 		return (1);
 	*new_str = malloc(sizeof(char) * (all_len + 1));
@@ -70,9 +83,10 @@ static int	build_plain_expansion(t_parser *node,
 	{
 		if (node->s[indices[0]] == '$'
 			&& (ft_isalnum(node->s[indices[0] + 1])
-				|| node->s[indices[0] + 1] == '_'))
+				|| node->s[indices[0] + 1] == '_'
+				|| node->s[indices[0] + 1] == '?'))
 		{
-			if (handle_plain_env_var(node, envpath, *new_str, indices))
+			if (handle_plain_env_var(node, envpath, *new_str, indices, status))
 				return (free(*new_str), 1);
 		}
 		else
@@ -97,12 +111,13 @@ static int	reparse_and_replace(t_parser *node)
 	return (0);
 }
 
-int	expand_plain_text(t_parser *node, t_envpath *envpath)
+int	expand_plain_text(t_parser *node, t_envpath *envpath, t_program *program)
 {
 	char	*new_str;
 	int		status;
 
-	status = build_plain_expansion(node, envpath, &new_str);
+	status = build_plain_expansion(node, envpath,
+			&new_str, program->last_exit_status);
 	if (status == 0)
 		return (0);
 	if (status == 1)

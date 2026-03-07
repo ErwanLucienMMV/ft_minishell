@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:19 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 17:31:56 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:47:40 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 # include "../envpath/envpath.h"
 
 //			---expand types functions---	//
-int		expand_plain_text(t_parser *node, t_envpath *envpath);
-int		expand_d_quote(t_parser **node, t_envpath *envpath);
+int		expand_plain_text(t_parser *node, t_envpath *envpath,
+			t_program *program);
+int		expand_d_quote(t_parser **node, t_envpath *envpath,
+			t_program *program);
 int		expand_s_quote(t_parser **node, t_program *program);
 int		expand_env_var(t_parser **node, t_envpath *envpath, t_program *program);
 
@@ -42,9 +44,10 @@ int		copy_env_value(char *new_str, int *j, char *value);
 
 //			---Checks---					//
 int		is_env_var(t_parser *node, int i);
-int		check_and_count_for_envvar(t_parser *n, t_envpath *ep);
+int		check_and_count_for_envvar(t_parser *n, t_envpath *ep, int status);
 
-int		calculate_final_size(t_parser *node, t_envpath *envpath, int len);
+int		calculate_final_size(t_parser *node, t_envpath *envpath,
+			int len, int status);
 int		merge_nodes(t_program *program, t_parser *cur, int len);
 int		is_expanded_type(t_lexer type);
 int		group_has_is_delimiter(t_parser *cur);

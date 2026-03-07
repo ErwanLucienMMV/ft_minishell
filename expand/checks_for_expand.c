@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:08:50 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/07 21:18:25 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:47:40 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	get_key_len(char *s, int i)
 {
 	int	j;
 
+	if (s[i + 1] == '?')
+		return (1);
 	if (ft_isdigit(s[i + 1]))
 		return (1);
 	if (!(ft_isalpha(s[i + 1]) || s[i + 1] == '_'))
@@ -43,17 +45,27 @@ static int	get_env_len(char *s, int i, t_envpath *ep)
 	return (len);
 }
 
-int	check_and_count_for_envvar(t_parser *n, t_envpath *ep)
+int	check_and_count_for_envvar(t_parser *n, t_envpath *ep, int status)
 {
 	int	i;
 	int	t_count;
 	int	env_len;
+	char	*status_str;
 
 	i = 0;
 	t_count = 0;
 	while (n->s[i])
 	{
-		if (n->s[i] == '$'
+		if (n->s[i] == '$' && n->s[i + 1] == '?')
+		{
+			status_str = ft_itoa(status);
+			if (!status_str)
+				return (-1);
+			t_count += ft_strlen(status_str);
+			free(status_str);
+			i += 2;
+		}
+		else if (n->s[i] == '$'
 			&& (ft_isalnum(n->s[i + 1]) || n->s[i + 1] == '_'))
 		{
 			env_len = get_env_len(n->s, i, ep);
@@ -74,5 +86,7 @@ int	check_and_count_for_envvar(t_parser *n, t_envpath *ep)
 int	is_env_var(t_parser *node, int i)
 {
 	return (node->s[i] == '$'
-		&& (ft_isalnum(node->s[i + 1]) || node->s[i + 1] == '_'));
+		&& (ft_isalnum(node->s[i + 1])
+			|| node->s[i + 1] == '_'
+			|| node->s[i + 1] == '?'));
 }
