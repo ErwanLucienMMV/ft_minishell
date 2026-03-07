@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks_for_expand.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:08:50 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 07:19:57 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/07 21:18:25 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@ static int	get_key_len(char *s, int i)
 {
 	int	j;
 
+	if (ft_isdigit(s[i + 1]))
+		return (1);
+	if (!(ft_isalpha(s[i + 1]) || s[i + 1] == '_'))
+		return (0);
 	j = i + 1;
-	while (s[j] && ft_isalnum(s[j]))
+	while (s[j] && (ft_isalnum(s[j]) || s[j] == '_'))
 		j++;
 	return (j - i - 1);
 }
@@ -49,7 +53,8 @@ int	check_and_count_for_envvar(t_parser *n, t_envpath *ep)
 	t_count = 0;
 	while (n->s[i])
 	{
-		if (n->s[i] == '$' && ft_isalnum(n->s[i + 1]))
+		if (n->s[i] == '$'
+			&& (ft_isalnum(n->s[i + 1]) || n->s[i + 1] == '_'))
 		{
 			env_len = get_env_len(n->s, i, ep);
 			if (env_len < 0)

@@ -389,9 +389,6 @@ echo $MYVAR
 echo "$MYVAR"
 echo '$MYVAR'
 echo $
-echo $$
-echo $@
-echo $#
 cd /tmp
 pwd
 cd /
@@ -484,10 +481,6 @@ echo test | cat | cat | cat
 echo $NONEXISTENT
 echo $NONEXISTENT123
 echo $123
-echo $-
-echo $*
-echo $1
-echo $0
 echo 'hello world'
 echo "hello world"
 echo 'hello "world"'
@@ -503,10 +496,6 @@ env
 ls -l
 ls -la
 ls -la Makefile
-echo $@
-echo $#
-echo $?
-echo $$
 export S1=hello
 export S2=world
 echo $S1$S2

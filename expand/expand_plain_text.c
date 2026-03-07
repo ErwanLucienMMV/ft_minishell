@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_plain_text.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:11:25 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/20 08:02:23 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/07 21:18:25 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	contains_env_var(const char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '$' && ft_isalnum(s[i + 1]))
+		if (s[i] == '$' && (ft_isalnum(s[i + 1]) || s[i + 1] == '_'))
 			return (1);
 		i++;
 	}
@@ -34,8 +34,13 @@ int	handle_plain_env_var(t_parser *node, t_envpath *envpath,
 	int		end;
 
 	end = indices[0] + 1;
-	while (node->s[end] && ft_isalnum(node->s[end]))
+	if (ft_isdigit(node->s[end]))
 		end++;
+	else
+	{
+		while (node->s[end] && (ft_isalnum(node->s[end]) || node->s[end] == '_'))
+			end++;
+	}
 	key = ft_substr(node->s, indices[0] + 1, end - (indices[0] + 1));
 	if (!key)
 		return (1);
@@ -63,7 +68,9 @@ static int	build_plain_expansion(t_parser *node,
 	indices[1] = 0;
 	while (node->s[indices[0]])
 	{
-		if (node->s[indices[0]] == '$' && ft_isalnum(node->s[indices[0] + 1]))
+		if (node->s[indices[0]] == '$'
+			&& (ft_isalnum(node->s[indices[0] + 1])
+				|| node->s[indices[0] + 1] == '_'))
 		{
 			if (handle_plain_env_var(node, envpath, *new_str, indices))
 				return (free(*new_str), 1);

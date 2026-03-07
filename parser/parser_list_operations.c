@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:34:15 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/07 20:28:34 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:18:25 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,14 @@ int	its_env_var(t_parser **head, char *s, int *i)
 	int		x;
 
 	x = 1;
-	while (s[x] && (ft_isalnum(s[x]) || s[x] == '_')
-		&& s[x] != '"' && s[x] != '\'' && s[x] != ' ')
-		x++;
+	if (ft_isdigit(s[1]))
+		x = 2;
+	else if (ft_isalpha(s[1]) || s[1] == '_')
+	{
+		x = 2;
+		while (s[x] && (ft_isalnum(s[x]) || s[x] == '_'))
+			x++;
+	}
 	if (get_prev_non_space(get_last_parser(*head))
 		&& get_prev_non_space(get_last_parser(*head))->type == DELIMITER)
 	{
