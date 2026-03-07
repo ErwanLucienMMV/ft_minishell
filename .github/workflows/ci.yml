@@ -315,25 +315,27 @@ jobs:
             fi
           }
 
-          VALGRIND_TESTS=(
-            'echo hello'
-            'echo -n hola'
-            'echo $HOME'
-            'export A=1'
-            'echo $A'
-            'unset A'
-            'pwd'
-            'env'
-            'cd .'
-            'echo test | cat'
-            'cat < Makefile'
-          )
+          TEST_FILE=".github/tests/test_cases.txt"
+          if [ ! -f "$TEST_FILE" ]; then
+            echo "ERROR: Test file $TEST_FILE not found" >> "$SUMMARY"
+            exit 1
+          fi
 
           i=0
-          for t in "${VALGRIND_TESTS[@]}"; do
+          while IFS= read -r line || [ -n "$line" ]; do
+            # Skip empty lines and comments
+            if [ -z "$line" ] || echo "$line" | grep -q "^#"; then
+              continue
+            fi
+
+            # Skip tests that require interactive behavior
+            if echo "$line" | grep -qE "Ctlr-|ctrl-|Ctrl\\\\|history|\[touche du haut\]|chmod.*minishell"; then
+              continue
+            fi
+
             i=$((i + 1))
-            run_vg_test "$i" "$t"
-          done
+            run_vg_test "$i" "$line"
+          done < "$TEST_FILE"
 
           echo "----------------------------------------" >> "$SUMMARY"
           echo "VALGRIND RESULTS" >> "$SUMMARY"
