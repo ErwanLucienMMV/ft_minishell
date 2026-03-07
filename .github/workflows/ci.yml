@@ -121,6 +121,10 @@ jobs:
             sed -E '/^[[:space:]]*exit[[:space:]]*$/d' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
             mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
             
+            # Also remove "exit" at the end of lines (after echo -n output)
+            sed -E 's/exit[[:space:]]*$//' "$MINI_OUT" > "${MINI_OUT}.tmp" 2>/dev/null || true
+            mv "${MINI_OUT}.tmp" "$MINI_OUT" 2>/dev/null || true
+            
             # Check for syntax errors in bash
             if grep -qE "syntax error|parse error" "$BASH_ERR"; then
               SYNTAX_ERROR=$((SYNTAX_ERROR + 1))

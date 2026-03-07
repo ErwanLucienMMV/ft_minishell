@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:14:17 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/06 15:01:17 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/07 20:41:51 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,22 @@ static int	should_merge_group(t_parser *cur)
 int	add_empty_nodes_to_their_next(t_program *program)
 {
 	t_parser	*cur;
+	t_parser	*next;
 	int			len;
 
 	print_debug(program);
 	cur = *(program->parsed);
 	while (cur)
 	{
+		next = cur->next;
+		if (cur->type == CMD && ft_strncmp(cur->s, "$", 1) == 0 
+			&& next && next->type != T_SPACE 
+			&& (is_expanded_type(next->type) || next->type == WAS_SQUOTED || next->type == WAS_DQUOTED))
+		{
+			parser_clear_one(&cur, program);
+			cur = next;
+			continue;
+		}
 		if (cur->type != T_SPACE && should_merge_group(cur))
 		{
 			if (add_quotes_for_delimiter(cur))
