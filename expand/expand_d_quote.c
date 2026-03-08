@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:16:39 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/08 01:08:58 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/08 01:14:41 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,23 @@ static int	build_dquote_string(t_dquote_data *data, int len)
 	return (0);
 }
 
-static void	finalize_dquote_result(t_parser **node, char *new_str)
+static int	finalize_dquote_result(t_parser **node, char *new_str)
 {
+	char	*temp;
+
 	free((*node)->s);
 	if (new_str[0] == '\0')
 	{
 		free(new_str);
-		(*node)->s = ft_strdup("\"\"");
+		temp = ft_strdup("\"\"");
+		if (!temp)
+			return (1);
+		(*node)->s = temp;
 	}
 	else
 		(*node)->s = new_str;
 	(*node)->type = WAS_DQUOTED;
+	return (0);
 }
 
 int	expand_d_quote(t_parser **node, t_envpath *envpath, t_program *program)
@@ -108,8 +114,7 @@ int	expand_d_quote(t_parser **node, t_envpath *envpath, t_program *program)
 	new_str = malloc(sizeof(char) * final_size);
 	if (!new_str)
 		return (1);
-	indice[0] = 0;
-	indice[1] = 0;
+	ft_bzero(indice, sizeof(int) * 2);
 	data.node = *node;
 	data.envpath = envpath;
 	data.new_str = new_str;
@@ -117,6 +122,7 @@ int	expand_d_quote(t_parser **node, t_envpath *envpath, t_program *program)
 	data.program = program;
 	if (build_dquote_string(&data, len))
 		return (free(new_str), 1);
-	finalize_dquote_result(node, new_str);
+	if (finalize_dquote_result(node, new_str))
+		return (1);
 	return (0);
 }
