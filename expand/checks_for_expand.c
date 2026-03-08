@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:08:50 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/07 22:47:40 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/08 01:00:44 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,35 @@ static int	get_env_len(char *s, int i, t_envpath *ep)
 	return (len);
 }
 
+static int	process_exit_status(int status, int *t_count, int *i)
+{
+	char	*status_str;
+
+	status_str = ft_itoa(status);
+	if (!status_str)
+		return (-1);
+	*t_count += ft_strlen(status_str);
+	free(status_str);
+	*i += 2;
+	return (0);
+}
+
+static int	process_env_var(t_parser *n, t_envpath *ep, int *t_count, int *i)
+{
+	int	env_len;
+
+	env_len = get_env_len(n->s, *i, ep);
+	if (env_len < 0)
+		return (-1);
+	*t_count += env_len;
+	*i += get_key_len(n->s, *i) + 1;
+	return (0);
+}
+
 int	check_and_count_for_envvar(t_parser *n, t_envpath *ep, int status)
 {
-	int	i;
-	int	t_count;
-	int	env_len;
-	char	*status_str;
+	int		i;
+	int		t_count;
 
 	i = 0;
 	t_count = 0;
@@ -58,21 +81,14 @@ int	check_and_count_for_envvar(t_parser *n, t_envpath *ep, int status)
 	{
 		if (n->s[i] == '$' && n->s[i + 1] == '?')
 		{
-			status_str = ft_itoa(status);
-			if (!status_str)
+			if (process_exit_status(status, &t_count, &i) < 0)
 				return (-1);
-			t_count += ft_strlen(status_str);
-			free(status_str);
-			i += 2;
 		}
 		else if (n->s[i] == '$'
 			&& (ft_isalnum(n->s[i + 1]) || n->s[i + 1] == '_'))
 		{
-			env_len = get_env_len(n->s, i, ep);
-			if (env_len < 0)
+			if (process_env_var(n, ep, &t_count, &i) < 0)
 				return (-1);
-			t_count += env_len;
-			i += get_key_len(n->s, i) + 1;
 		}
 		else
 		{
@@ -81,12 +97,4 @@ int	check_and_count_for_envvar(t_parser *n, t_envpath *ep, int status)
 		}
 	}
 	return (t_count);
-}
-
-int	is_env_var(t_parser *node, int i)
-{
-	return (node->s[i] == '$'
-		&& (ft_isalnum(node->s[i + 1])
-			|| node->s[i + 1] == '_'
-			|| node->s[i + 1] == '?'));
 }

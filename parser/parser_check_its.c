@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 02:24:30 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/07 20:40:05 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/08 01:06:02 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ t_parser	*init_if_cmd(t_parser *lparser, t_parser **head, char *s, int x)
 	if (get_prev_non_space(lparser) && is_parser_redir(head))
 		new = parser_node_new(FILENAME, (s), x);
 	else if (get_prev_non_space(lparser)
-			&& get_prev_non_space(lparser)->type == DELIMITER)
-			new = parser_node_new(IS_DELIMITER, (s), x);
+		&& get_prev_non_space(lparser)->type == DELIMITER)
+		new = parser_node_new(IS_DELIMITER, (s), x);
 	else if (get_prev_non_space(lparser) && get_prev_cmd(lparser))
 		new = parser_node_new(CMD_ARG, (s), x);
 	return (new);
@@ -62,19 +62,9 @@ int	its_command(t_parser **head, char *s, int *i)
 	while (s[x] && s[x] != ' ' && s[x] != '\t' && s[x] != '|' && s[x] != '<'
 		&& s[x] != '>' && s[x] != '\'' && s[x] != '"' && s[x] != '$')
 		x++;
-	if (s[x] == '$' && ((s[x + 1] == '"'
-				&& lparser->type == T_SPACE) || x == 0))
-		*i += 1;
-	if (s[x] == '$' && s[x + 1] == '"' && lparser->type == T_SPACE)
+	if (check_dollar_quote(s, x, lparser, i))
 		return (1);
-	if (*s == '$' && x == 0 && (*(s + 1) == '\'' || *(s + 1) == '"'))
-		new = parser_node_new(CMD, (s), 1);
-	else if (*s == '$' && x == 0)
-		new = parser_node_new(WAS_EXPANDED, (s), 1);
-	else
-		new = init_if_cmd(lparser, head, s, x);
-	if (new == NULL)
-		new = parser_node_new(CMD, (s), x);
+	new = create_cmd_node(s, x, lparser, head);
 	if (new == 0)
 		return (0);
 	new_parser(head, new);

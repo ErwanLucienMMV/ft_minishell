@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:49:19 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/07 22:47:40 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/08 01:08:58 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,33 @@
 # include "../parser/parser.h"
 # include "../terminal/terminal.h"
 # include "../envpath/envpath.h"
+
+typedef struct s_expand_data
+{
+	t_parser	*node;
+	t_envpath	*envpath;
+	char		*new_str;
+	int			*indices;
+	int			status;
+}	t_expand_data;
+
+typedef struct s_env_calc
+{
+	t_parser	*node;
+	t_envpath	*envpath;
+	int			*i;
+	int			*size;
+	int			status;
+}	t_env_calc;
+
+typedef struct s_dquote_data
+{
+	t_parser	*node;
+	t_envpath	*envpath;
+	char		*new_str;
+	int			*indice;
+	t_program	*program;
+}	t_dquote_data;
 
 //			---expand types functions---	//
 int		expand_plain_text(t_parser *node, t_envpath *envpath,
@@ -54,5 +81,19 @@ int		group_has_is_delimiter(t_parser *cur);
 void	strip_quotes_if_no_delimiter(t_parser *cur);
 char	*wrap_with_quote(char *s, char quote);
 int		add_quotes_for_delimiter(t_parser *cur);
+
+//			---expand_plain_text utils---	//
+int		contains_env_var(const char *s);
+int		get_key_end(char *s, int start);
+char	*get_value(char *key, t_envpath *envpath, int status);
+int		is_expandable(char c);
+int		reparse_and_replace(t_parser *node);
+
+//			---add_empty_nodes utils---		//
+int		is_redir_type(t_lexer type);
+int		calc_group_len(t_parser *cur);
+
+//			---expand_d_quote utils---		//
+int		append_value(char **new_str, int *indice, char *value);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:44:15 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/07 23:01:06 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/08 00:56:39 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	execve_handler(t_program *program)
 {
 	int					last_status;
 	t_signal_handlers	handlers;
-	int				has_pipe;
+	int					has_pipe;
 
 	program->last_exit_status = 0;
 	has_pipe = there_is_at_least_one_pipe(*(program->parsed));

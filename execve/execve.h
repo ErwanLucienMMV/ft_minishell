@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 16:22:47 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/08 01:07:03 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,14 @@ char			**provision_commands(t_parser *temp, char **splited_cmd);
 void			*free_incomplete_matrix(char **tab, int lines);
 int				parse_count_cmd_args(t_parser *cmd);
 
+//				---Utils helpers---		//
+void			exit_check_args_cmd(t_program *program, char **args,
+					char *new_cmd);
+void			handle_is_dir(t_commands *cmd, t_commands *first,
+					t_program *program, char **args);
+void			handle_execve_error(t_commands *cmd, char *new_cmd,
+					char **args, t_commands *first);
+
 //				---Children---			//
 void			handle_middle_child(t_program *program,
 					t_commands *cmd, t_commands *first);
@@ -75,6 +83,8 @@ int				check_for_redirections(t_parser *cmd, t_commands *tofill,
 					t_program *program);
 int				setinputs(t_commands *commands);
 int				setoutputs(t_commands *commands);
+int				open_and_set_input(char *filename);
+int				open_and_set_output(char *filename, t_lexer redir_type);
 int				exit_piped(t_program *program, t_commands *cmd,
 					t_commands *first);
 int				get_heredoc_mod(t_parser *temp, int *mode);

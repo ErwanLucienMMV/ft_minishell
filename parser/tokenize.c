@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:53:10 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/07 20:28:24 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/08 00:56:39 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	check_special_char(t_parser **head, char *s, int *i)
 		return (1);
 	else if (*s == '$' && *(s + 1) == '?')
 		return (its_exit_status(head, s, i));
-	else if (*s == '$' && *(s + 1) != '?' && *(s + 1) != '\'' && *(s + 1) != '"')
+	else if (*s == '$' && *(s + 1) != '?'
+		&& *(s + 1) != '\'' && *(s + 1) != '"')
 		return (its_env_var(head, s, i));
 	else if (*s == '"')
 		return (its_d_quote(head, s, i));

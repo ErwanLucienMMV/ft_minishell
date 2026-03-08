@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 14:53:07 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/06 18:33:50 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/08 01:06:02 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,13 @@ t_parser	*get_next_non_space(t_parser *token);
 t_parser	*get_prev_non_space(t_parser *token);
 
 t_parser	*get_prev_cmd(t_parser *lparser);
+
+//			---parser_check_its utils---	//
+int			check_dollar_quote(char *s, int x, t_parser *lparser, int *i);
+t_parser	*create_cmd_node(char *s, int x, t_parser *lparser,
+				t_parser **head);
+
+//			---parser_list utils---			//
+int			get_env_var_len(char *s);
 
 #endif

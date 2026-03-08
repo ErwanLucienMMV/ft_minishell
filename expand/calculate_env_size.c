@@ -6,60 +6,79 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 18:04:04 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/07 22:47:40 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/08 00:56:39 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand.h"
 
-static int	add_env_size(t_parser *node, t_envpath *envpath,
-	int *i, int *size, int status)
+static int	get_env_key_end(char *s, int start)
 {
-	int		start;
-	char	*key;
-	char	*value;
+	int	i;
+
+	i = start;
+	if (s[i] == '?')
+		i++;
+	else
+		while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+			i++;
+	return (i);
+}
+
+static int	add_status_size(char *key, int *size, int status)
+{
 	char	*status_str;
 
-	start = ++(*i);
-	if (node->s[*i] == '?')
-		(*i)++;
-	else
-		while (node->s[*i] && (ft_isalnum(node->s[*i]) || node->s[*i] == '_'))
-		(*i)++;
-	key = ft_substr(node->s, start, *i - start);
-	if (!key)
-		return (1);
-	status_str = NULL;
 	if (key[0] == '?' && key[1] == '\0')
 	{
 		status_str = ft_itoa(status);
 		if (!status_str)
-			return (free(key), 1);
+			return (1);
 		*size += ft_strlen(status_str);
+		free(status_str);
+		return (1);
 	}
-	else
+	return (0);
+}
+
+static int	add_env_size(t_env_calc *calc)
+{
+	int		start;
+	char	*key;
+	char	*value;
+
+	start = ++(*calc->i);
+	*calc->i = get_env_key_end(calc->node->s, *calc->i);
+	key = ft_substr(calc->node->s, start, *calc->i - start);
+	if (!key)
+		return (1);
+	if (add_status_size(key, calc->size, calc->status))
 	{
-		value = get_env_value_by_key(&envpath, key);
-		if (value)
-			*size += ft_strlen(value);
+		free(key);
+		return (0);
 	}
-	free(status_str);
+	value = get_env_value_by_key(&calc->envpath, key);
+	if (value)
+		*calc->size += ft_strlen(value);
 	free(key);
 	return (0);
 }
 
-int	calculate_final_size(t_parser *node, t_envpath *envpath, int len, int status)
+int	calculate_final_size(t_parser *node,
+	t_envpath *envpath, int len, int status)
 {
-	int	i;
-	int	size;
+	t_env_calc	calc;
+	int			i;
+	int			size;
 
 	i = 1;
 	size = 0;
+	calc = (t_env_calc){node, envpath, &i, &size, status};
 	while (i < len - 1)
 	{
 		if (is_env_var(node, i))
 		{
-			if (add_env_size(node, envpath, &i, &size, status))
+			if (add_env_size(&calc))
 				return (-1);
 		}
 		else
