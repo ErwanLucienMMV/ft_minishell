@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:29:58 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 15:51:33 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:26:52 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "../terminal/program.h"
 # include "../signals/signals.h"
 
+int		print_line_result(char *line, int fd);
 int		doing_here_doc_util(t_program *program, t_parser *lineread,
 			char *tempfile, int mode);
 int		doing_here_doc(t_program *program, char *tempfile);

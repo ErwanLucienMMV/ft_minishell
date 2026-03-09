@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 15:55:01 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/06 15:21:39 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:13:10 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*expand_line(t_program *program, char *line, t_parser *lineread)
 
 	(void)lineread;
 	i = 0;
-	while (line[i])
+	while (line && line[i])
 	{
 		if (line[i] == '$' && line[i + 1] == '?')
 		{
