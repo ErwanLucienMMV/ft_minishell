@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal_utils_handlers.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/07 22:58:24 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:08:52 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	execute_and_restore(t_program *program)
 		buildin_handled = buildins(program->parsed, *program->envpath, program);
 	if (!buildin_handled && !((*program->parsed)->s[0] == ':'
 			&& ft_strlen((*program->parsed)->s) == 1))
-		execve_handler(program);
+		if (execve_handler(program) == 1)
+			return ;
 	if (program->saved_stdin >= 0)
 	{
 		dup2(program->saved_stdin, STDIN_FILENO);
