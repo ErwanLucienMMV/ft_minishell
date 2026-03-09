@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 16:40:00 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 16:31:15 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/09 11:46:49 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,13 @@ int	buildin_cd(t_parser *cmd, t_envpath *envpath, t_program *program)
 {
 	if (!cmd->next || cmd->next->type != CMD_ARG)
 		return (cd_no_arg_case(envpath, program));
+	else if (cmd->next->type == CMD_ARG && cmd->next->next
+		&& cmd->next->next->type == CMD_ARG)
+	{
+		ft_printf_fd(2, "cd: too many arguments\n");
+		program->last_exit_status = 1;
+		return (1);
+	}
 	else if (ft_strncmp(cmd->next->s, "~", 2) == 0)
 		return (cd_no_arg_case(envpath, program));
 	else if (ft_strncmp(cmd->next->s, "-", 2) == 0)
