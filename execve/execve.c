@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:44:15 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/08 00:56:39 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/09 17:09:15 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	execve_handler(t_program *program)
 	handlers = setup_signals_before_fork();
 	last_status = execve_maker(program);
 	if (last_status == 0)
-		return (1);
+		return (-999);
 	if (!has_pipe && last_status == 1)
 	{
 		restore_signals(handlers);

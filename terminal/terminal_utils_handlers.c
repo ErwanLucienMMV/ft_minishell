@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal_utils_handlers.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 03:17:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/09 16:08:52 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/09 17:09:52 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,15 @@ void	handle_expansions(t_program *program)
 void	execute_and_restore(t_program *program)
 {
 	int	buildin_handled;
+	int	error;
 
 	buildin_handled = 0;
+	error = 0;
 	if (!there_is_at_least_one_pipe(*(program->parsed)))
 		buildin_handled = buildins(program->parsed, *program->envpath, program);
 	if (!buildin_handled && !((*program->parsed)->s[0] == ':'
 			&& ft_strlen((*program->parsed)->s) == 1))
-		if (execve_handler(program) == 1)
-			return ;
+		error = execve_handler(program);
 	if (program->saved_stdin >= 0)
 	{
 		dup2(program->saved_stdin, STDIN_FILENO);
@@ -70,5 +71,7 @@ void	execute_and_restore(t_program *program)
 		close(program->saved_stdout);
 		program->saved_stdout = -1;
 	}
+	if (error == -999)
+		return ;
 	parser_clear(program->parsed);
 }
