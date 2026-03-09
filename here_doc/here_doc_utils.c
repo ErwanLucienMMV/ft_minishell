@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 15:43:04 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/03 16:23:33 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:27:38 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,16 @@ char	*search_and_replace(t_parser *node, char c)
 	free(node->s);
 	node->s = result;
 	return (result);
+}
+
+int	print_line_result(char *line, int fd)
+{
+	if (!line)
+	{
+		ft_printf_fd(2, "Error while processing the line for heredoc\n");
+		return (get_next_line(-1), close(fd), 1);
+	}
+	ft_putendl_fd(line, fd);
+	free(line);
+	return (0);
 }
