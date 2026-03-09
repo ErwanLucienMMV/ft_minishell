@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 13:30:51 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/06 15:34:42 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:16:56 by emaigne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	doing_here_doc_util(t_program *p, t_parser *lr, char *tempfile, int mode)
 			break ;
 		if (mode == 1)
 			line = expand_line(p, line, lr);
+		if (!line)
+			return (get_next_line(-1), close(fd), 1);
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
