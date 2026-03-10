@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envpath.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 18:31:45 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/24 14:29:11 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/09 19:36:35 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	already_in_env(t_envpath **envpath, char *index)
 	temp = *envpath;
 	while (temp)
 	{
-		if (ft_strncmp(temp->index, index, ft_strlen(index)) == 0)
+		if (ft_strncmp(temp->index, index, ft_strlen(index)) == 0
+			&& ft_strlen(temp->index) == ft_strlen(index))
 			return (1);
 		temp = temp->next;
 	}
@@ -83,26 +84,26 @@ int	new_envpath(t_envpath **head, char *index, char *value)
 int	create_envpath_list(t_envpath **envpath, char **envp)
 {
 	int		i;
-	char	**array;
-	int		j;
+	char	*toto;
+	char	*key;
+	char	*value;
 
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strchr(envp[i], '='))
+		toto = ft_strchr(envp[i], '=');
+		if (toto)
 		{
-			array = ft_split(envp[i], '=');
-			if (!array)
+			key = ft_substr(envp[i], 0, toto - envp[i]);
+			if (!key)
 				return (0);
-			if (new_envpath(envpath, array[0], array[1]) == 0)
-				return (free_matrix(array), 0);
-			if (array)
-			{
-				j = -1;
-				while (array[++j])
-					free(array[j]);
-				free(array);
-			}
+			value = ft_strdup(toto + 1);
+			if (!value)
+				return (free(key), 0);
+			if (new_envpath(envpath, key, value) == 0)
+				return (0);
+			free(key);
+			free(value);
 		}
 		i++;
 	}

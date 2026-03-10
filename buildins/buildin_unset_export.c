@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 08:14:52 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/06 18:20:29 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 12:27:05 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,21 +99,12 @@ int	buildin_export(t_parser *cmd, t_envpath *envpath, t_program *program)
 int	buildin_unset(t_parser *cmd, t_envpath *envpath, t_program *program)
 {
 	t_parser	*temp;
-	t_envpath	*env_temp;
 
+	(void)envpath;
 	temp = cmd->next;
 	while (temp && temp->type == CMD_ARG)
 	{
-		env_temp = envpath;
-		while (env_temp)
-		{
-			if (ft_strncmp(env_temp->index, temp->s, ft_strlen(temp->s)) == 0)
-			{
-				envp_delone(env_temp);
-				break ;
-			}
-			env_temp = env_temp->next;
-		}
+		del_env_node_by_key(program->envpath, temp->s);
 		temp = temp->next;
 	}
 	program->last_exit_status = 0;

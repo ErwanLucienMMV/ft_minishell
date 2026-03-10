@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envpath.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 18:30:47 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/24 14:27:02 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/09 19:39:56 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ int			print_envpath_list_sorted(t_envpath *envpath);
 void		envp_delone(t_envpath *node);
 void		del_env_node_by_key(t_envpath **head, char *key);
 void		update_pwd_and_oldpwd(t_envpath *envpath);
+int			already_in_env(t_envpath **envpath, char *index);
 
 #endif

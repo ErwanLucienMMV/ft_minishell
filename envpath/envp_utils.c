@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 12:21:35 by abarthes          #+#    #+#             */
-/*   Updated: 2026/02/27 17:51:56 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/10 12:23:26 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,11 @@ void	envp_delone(t_envpath *node)
 	if (next)
 		next->prev = prev;
 	free(node->index);
+	node->index = NULL;
 	free(node->value);
+	node->value = NULL;
 	free(node);
+	node = NULL;
 }
 
 void	update_pwd_and_oldpwd(t_envpath *envpath)

@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:50:18 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/07 22:51:50 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 12:53:37 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ char	*find_path_line(char **env)
 	return (NULL);
 }
 
+char	*no_path(char *command)
+{
+	char	*pathtested;
+
+	pathtested = ft_strjoin(".", command);
+	if (!pathtested)
+		return (NULL);
+	if (pathtested && access(pathtested, X_OK) == 0)
+		return (pathtested);
+	ft_printf_fd(2, "miniswag: %s: command not found\n", command + 1);
+	return (free(pathtested), NULL);
+}
+
 char	*test_all_paths(char *command, char *pathline)
 {
 	char	*pathtested;
@@ -44,17 +57,15 @@ char	*test_all_paths(char *command, char *pathline)
 
 	i = 0;
 	if (pathline == NULL)
-	{
-		pathtested = ft_strjoin(".", command);
-		if (pathtested && access(pathtested, X_OK) == 0)
-			return (pathtested);
-		ft_printf_fd(2, "miniswag: %s: command not found\n", command + 1);
-		return (free(pathtested), NULL);
-	}
+		return (no_path(command));
 	possiblepaths = ft_split(pathline, ':');
+	if (!possiblepaths)
+		return (NULL);
 	while (possiblepaths && possiblepaths[i])
 	{
 		pathtested = ft_strjoin(possiblepaths[i], command);
+		if (!pathtested)
+			return (clearmatrix(possiblepaths), NULL);
 		if (pathtested && access(pathtested, X_OK) == 0)
 			return (clearmatrix(possiblepaths), pathtested);
 		free(pathtested);

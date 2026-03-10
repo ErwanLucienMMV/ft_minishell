@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 16:21:24 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/09 19:56:53 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	init_program(t_program **program, char **envp)
 	(*program)->saved_stdout = -1;
 	if (create_envpath_list((*program)->envpath, envp) == 0)
 		return (buildin_exit(*program), 0);
-	if (new_envpath((*program)->envpath, "OLDPWD", "") == 0)
+	if (already_in_env((*program)->envpath, "OLDPWD") == 0
+		&& new_envpath((*program)->envpath, "OLDPWD", "") == 0)
 		buildin_exit(*program);
 	return (1);
 }
