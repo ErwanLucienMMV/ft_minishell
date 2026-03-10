@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/10 18:29:19 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 18:56:29 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ void	get_path_for_exec(t_commands *cmd, t_program *program,
 	char	*path;
 	int		i;
 
+	if (!cmd->args || !cmd->args[0])
+	{
+		free_t_commands_and_args(first);
+		free_t_program(program);
+		exit(0);
+	}
 	if (is_a_buildin(cmd->cmd->s))
 	{
 		if (is_exit(cmd->cmd->s))
-		{
 			exit_piped(program, cmd, first);
-		}
 		i = check_buildin_piped(cmd->cmd, *program->envpath, program);
 		free_t_commands_and_args(first);
 		free_t_program(program);

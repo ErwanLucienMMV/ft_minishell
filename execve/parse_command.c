@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 18:12:28 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 14:46:46 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/10 19:07:54 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,20 @@ void	free_all_commands(t_commands **commands)
 void	parse_commands_with_pipe(t_commands **commands,
 		t_parser *parsed, t_program *program)
 {
-	t_parser	*temp;
+	t_parser	*segment_start;
+	t_parser	*cmd_start;
 	t_commands	*new_cmd;
 
 	*commands = NULL;
-	temp = parsed;
-	while (temp)
+	while (parsed)
 	{
-		if (temp->type == CMD || temp->type == DELIMITER)
+		segment_start = parsed;
+		while (parsed && parsed->type != PIPE)
+			parsed = parsed->next;
+		cmd_start = find_cmd_start_in_segment(segment_start, parsed);
+		if (cmd_start)
 		{
-			new_cmd = commands_node_new(temp, program);
+			new_cmd = commands_node_new(cmd_start, program);
 			if (!new_cmd)
 			{
 				free_all_commands(commands);
@@ -114,10 +118,8 @@ void	parse_commands_with_pipe(t_commands **commands,
 				return ;
 			}
 			commands_add_back(commands, new_cmd);
-			while (temp && temp->type != PIPE)
-				temp = temp->next;
 		}
-		if (temp)
-			temp = temp->next;
+		if (parsed)
+			parsed = parsed->next;
 	}
 }

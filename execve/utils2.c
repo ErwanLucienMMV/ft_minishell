@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 17:45:14 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/10 18:29:58 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 18:59:33 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,26 @@ int	get_last_pid_and_return(t_program *p, t_commands *cmd, t_commands *first)
 		dup2(p->saved_stdin, STDIN_FILENO);
 	free_t_commands_and_args(first);
 	return (lpid);
+}
+
+t_parser	*find_cmd_start_in_segment(t_parser *segment_start,
+		t_parser *segment_end)
+{
+	t_parser	*temp;
+	t_parser	*fallback;
+
+	temp = segment_start;
+	fallback = NULL;
+	while (temp && temp != segment_end)
+	{
+		if (!fallback && (temp->type == REDIR_INPUT
+				|| temp->type == REDIR_OUTPUT
+				|| temp->type == REDIR_OUTPUT_APP
+				|| temp->type == DELIMITER))
+			fallback = temp;
+		if (temp->type == CMD || temp->type == DELIMITER)
+			return (temp);
+		temp = temp->next;
+	}
+	return (fallback);
 }

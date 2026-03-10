@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve_children.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emaigne <emaigne@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 21:20:42 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/02 14:24:38 by emaigne          ###   ########.fr       */
+/*   Updated: 2026/03/10 18:56:12 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ void	handle_middle_child(t_program *program, t_commands *cmd,
 	char	*path;
 	int		exitcode;
 
+	if (!cmd->args || !cmd->args[0])
+	{
+		free_t_commands_and_args(first);
+		free_t_program(program);
+		exit(0);
+	}
 	if (is_a_buildin(cmd->cmd->s))
 	{
 		if (is_exit(cmd->cmd->s))
-		{
 			exit_piped(program, cmd, first);
-		}
 		exitcode = check_buildin_piped(cmd->cmd,
 				*program->envpath, program);
 		free_t_commands_and_args(first);
@@ -42,12 +46,16 @@ void	handle_the_child(t_program *program, t_commands *cmd, t_commands *first)
 	char		*path;
 	int			exitcode;
 
+	if (!cmd->args || !cmd->args[0])
+	{
+		free_t_commands_and_args(first);
+		free_t_program(program);
+		exit(0);
+	}
 	if (is_a_buildin(cmd->cmd->s))
 	{
 		if (is_exit(cmd->cmd->s))
-		{
 			exit_piped(program, cmd, first);
-		}
 		exitcode = check_buildin_piped(cmd->cmd, *program->envpath, program);
 		free_t_commands_and_args(first);
 		free_t_program(program);

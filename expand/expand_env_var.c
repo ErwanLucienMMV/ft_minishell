@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 07:28:43 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/03 11:58:07 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 19:02:50 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	expand_env_var(t_parser **node, t_envpath *envpath, t_program *program)
 	if (ft_strlen((*node)->s) == 0)
 		return (set_node_type(*node), 0);
 	value = get_env_value_by_key(&envpath, (*node)->s);
-	if (!value)
+	if (!value || value[0] == '\0')
 		return (set_empty_was_expanded(node));
 	expanded = parsing(value);
 	if (!expanded)

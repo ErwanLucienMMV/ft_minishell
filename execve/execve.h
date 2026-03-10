@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/10 18:27:20 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 18:59:56 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,7 @@ int				last_exec(t_program *program,
 					t_commands *cmd, t_commands *first);
 int				get_last_pid_and_return(t_program *p,
 					t_commands *cmd, t_commands *first);
+t_parser		*find_cmd_start_in_segment(t_parser *segment_start,
+					t_parser *segment_end);
 
 #endif
