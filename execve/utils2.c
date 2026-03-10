@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 17:45:14 by emaigne           #+#    #+#             */
-/*   Updated: 2026/02/23 18:23:49 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 18:29:58 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,15 @@ char	**provision_commands(t_parser *temp, char **splited_cmd)
 	}
 	splited_cmd[i] = NULL;
 	return (splited_cmd);
+}
+
+int	get_last_pid_and_return(t_program *p, t_commands *cmd, t_commands *first)
+{
+	int	lpid;
+
+	lpid = last_exec(p, cmd, first);
+	if (p->saved_stdin >= 0)
+		dup2(p->saved_stdin, STDIN_FILENO);
+	free_t_commands_and_args(first);
+	return (lpid);
 }

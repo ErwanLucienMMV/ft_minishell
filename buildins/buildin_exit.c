@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 23:10:31 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/09 17:32:33 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 18:13:11 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	is_numeric_string(char *str)
 	i = 0;
 	if (str[0] == '-' || str[0] == '+')
 		i++;
+	if (!str[i])
+		return (0);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -79,30 +81,25 @@ int	is_numeric_string(char *str)
 
 int	check_for_exit_arguments(t_program *p)
 {
-	t_parser	*cur;
+	t_parser	*first_arg;
+	long		exit_status;
 
 	if (!p->parsed || !*(p->parsed) || !(*p->parsed)->next)
 		return (0);
-	cur = (*p->parsed)->next;
-	if (p->parsed && *(p->parsed)
-		&& (*p->parsed)->next && (*p->parsed)->next->next)
+	first_arg = (*p->parsed)->next;
+	if (!parse_exit_status(first_arg->s, &exit_status))
+	{
+		ft_printf_fd(2, "exit: %s: numeric argument required\n", first_arg->s);
+		p->last_exit_status = 2;
+		return (0);
+	}
+	if (first_arg->next)
 	{
 		ft_printf_fd(2, "exit: too many arguments\n");
 		p->last_exit_status = 1;
 		return (-1);
 	}
-	while (cur)
-	{
-		if (!is_numeric_string(cur->s) || ft_strtol(cur->s) == -256)
-		{
-			ft_printf_fd(2, "exit: %s: numeric argument required\n", cur->s);
-			p->last_exit_status = 2;
-			return (0);
-		}
-		cur = cur->next;
-	}
-	if (p->parsed && *(p->parsed) && (*p->parsed)->next)
-		p->last_exit_status = ft_strtol((*p->parsed)->next->s) % 256;
+	p->last_exit_status = (unsigned char)exit_status;
 	return (0);
 }
 
@@ -114,7 +111,7 @@ int	buildin_exit(t_program *program)
 		exit(1);
 	if (check_for_exit_arguments(program) == -1)
 		return (1);
-	write(2, "exit\n", 5);
+	write(1, "exit\n", 5);
 	ft_exit(program);
 	exit_status = program->last_exit_status;
 	if (program->parsed)

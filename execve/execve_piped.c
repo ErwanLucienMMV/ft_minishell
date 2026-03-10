@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:16:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/02 17:37:17 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 18:29:19 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int	execve_with_pipe(t_program *program)
 	if (commands == NULL)
 		return (0);
 	first = commands;
+	if (!commands->next)
+		return (get_last_pid_and_return(program, commands, first));
 	first_exec(program, commands, first);
 	commands = commands->next;
 	while (commands && commands->next)

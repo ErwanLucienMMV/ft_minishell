@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 00:51:09 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/08 01:06:02 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 18:01:44 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	setinputs(t_commands *commands)
 {
 	t_parser	*temp;
 
+	if (!commands || !commands->cmd)
+		return (0);
 	temp = commands->cmd;
 	while (temp && temp->prev && temp->prev->type != PIPE)
 		temp = temp->prev;

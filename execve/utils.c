@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:53:31 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/08 01:06:02 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 17:56:37 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	do_command_piped(t_program *program, t_commands *cmd,
 
 	if (cmd->cmd->type == DELIMITER)
 	{
-		free_t_command(cmd);
+		free_t_commands_and_args(first);
 		free_t_program(program);
 		exit(1);
 	}

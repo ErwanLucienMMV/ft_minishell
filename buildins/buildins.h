@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 16:41:06 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/06 18:43:49 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 17:54:07 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		check_buildin_piped(t_parser *cmd,
 			t_envpath *envpath, t_program *program);
 int		check_for_exit_arguments(t_program *p);
 int		is_numeric_string(char *str);
+int		parse_exit_status(char *str, long *value);
 
 //		--- Main buildin function ---		//
 int		buildins(t_parser **parser, t_envpath *envpath, t_program *program);
@@ -46,5 +47,6 @@ int		buildin_pwd(t_program *program);
 
 //			--- Handle the cd ---			//
 int		buildin_cd(t_parser *cmd, t_envpath *envpath, t_program *program);
+int		parse_exit_status(char *str, long *value);
 
 #endif

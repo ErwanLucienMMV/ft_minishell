@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 12:16:32 by emaigne           #+#    #+#             */
-/*   Updated: 2026/03/03 18:17:54 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 17:49:14 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,25 @@
 int	check_for_exit_arguments_piped(t_program *p, t_commands *cmd)
 {
 	t_parser	*current;
+	long		exit_status;
 
 	if (!p->parsed || !cmd->cmd || !cmd->cmd->next
 		|| cmd->cmd->next->type != CMD_ARG)
 		return (0);
 	current = cmd->cmd->next;
-	if (!is_numeric_string(current->s) || ft_strtol(current->s) == -256)
+	if (!parse_exit_status(current->s, &exit_status))
 	{
 		ft_printf_fd(2, "exit: %s: numeric argument required\n", current->s);
 		p->last_exit_status = 2;
 		return (0);
 	}
-	p->last_exit_status = ft_strtol(current->s) % 256;
+	if (current->next && current->next->type == CMD_ARG)
+	{
+		ft_printf_fd(2, "exit: too many arguments\n");
+		p->last_exit_status = 1;
+		return (0);
+	}
+	p->last_exit_status = (unsigned char)exit_status;
 	return (0);
 }
 

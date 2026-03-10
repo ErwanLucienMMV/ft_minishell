@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:43:59 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/08 01:07:03 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/10 18:27:20 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,9 @@ void			print_size_of_structs(void);
 void			print_command_node(t_commands *node);
 
 void			ft_exit(t_program *program);
+int				last_exec(t_program *program,
+					t_commands *cmd, t_commands *first);
+int				get_last_pid_and_return(t_program *p,
+					t_commands *cmd, t_commands *first);
 
 #endif
