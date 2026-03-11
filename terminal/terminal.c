@@ -6,7 +6,7 @@
 /*   By: abarthes <abarthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:04:41 by abarthes          #+#    #+#             */
-/*   Updated: 2026/03/09 19:56:53 by abarthes         ###   ########.fr       */
+/*   Updated: 2026/03/11 13:59:06 by abarthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	process_parsing_and_sanitize(t_program *program, char *line)
 	if (!(*program->parsed) || sanitize(program->parsed))
 	{
 		free(line);
-		program->last_exit_status = 258;
+		program->last_exit_status = 2;
 		parser_clear(program->parsed);
 		return (1);
 	}
